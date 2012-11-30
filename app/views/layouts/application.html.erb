@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= generate_title %></title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div id="wrapper">
+
+  <div id="header">
+
+    <h1><%= link_to t("application.name"), root_path %> <span style="font-size: 20px"><%= t "application.status" %></span></h1>
+
+    <% if user_signed_in? %>
+        <div id="user_nav">
+          <%= t "header.user_nav.welcome", :username => current_user.username %>
+          <%= link_to t("header.user_nav.logout"), destroy_user_session_path, method: :delete %>
+        </div>
+
+        <div id="modules_nav">
+          <ul id="modules">
+            <% modules.each do |module_name, module_path| %>
+            <li><%= link_to module_name, module_path %></li>
+            <% end %>
+          </ul>
+        </div>
+
+    <% end %>
+
+    <% if flash[:notice] %>
+        <div class="notice" style="background-color:yellow">
+          <%= flash[:notice] %>
+        </div>
+    <% end %>
+    <% if flash[:alert] %>
+        <div class="alert" style="background-color:#ff9e99">
+          <%= flash[:alert] %>
+        </div>
+    <% end %>
+  </div>
+
+  <div id="content">
+    <%= yield %>
+  </div>
+
+  <div id="footer">
+    <%= link_to t("imprint"), imprint_path %>
+  </div>
+
+</div>
+</body>
+</html>

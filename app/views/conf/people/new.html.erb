@@ -1,0 +1,26 @@
+<% @action_name = t "conf.people.new" %>
+
+<%= render "conf/conf/conf_head" %>
+
+<%= form_for @person, url: conf_people_path do |f| %>
+    <%= error_messages! @person %>
+    <table>
+
+      <tr>
+        <td><%= f.label :name %></td>
+        <td><%= f.text_field :name %></td>
+      </tr>
+      <%= set_focus_to "person_name" %>
+
+      <tr>
+        <td><%= f.label :email %></td>
+        <td><%= f.email_field :email %></td>
+      </tr>
+
+      <tr>
+        <td></td>
+        <td><%= f.submit t("conf.people.create.button") %></td>
+      </tr>
+
+    </table>
+<% end %>

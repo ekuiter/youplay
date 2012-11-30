@@ -1,0 +1,60 @@
+<%= title @video.title, link: @video.player_url %>
+
+<% if @video.access_control["embed"] == "allowed" then %>
+    <%= player %>
+<% else %>
+    *embedding is not allowed
+<% end %>
+
+<div id="meta">
+  <%= @video.author.name %>
+  | <%= l @video.uploaded_at, format: :short %>
+  | <%= @video.duration %> *seconds
+  | <%= @video.view_count %> *views
+  | <%= @video.favorite_count %> *favorites
+  <% if @video.access_control["comment"] == "allowed" then %>| <%= @video.comment_count %> *comments<% end %>
+  | <% @video.categories.each do |category| %><%= category.label %> <% end %>
+</div>
+
+<% if @video.access_control["rate"] == "allowed" then %>
+    <div id="rating">
+      <%= @video.rating.rater_count %> *raters
+      | <%= @video.rating.average %> *stars
+      | <%= @video.rating.likes %> *likes
+      | <%= @video.rating.dislikes %> *dislikes
+    </div>
+<% end %>
+
+<div id="keywords" style="display: none">
+  <% @video.keywords.each do |keyword| %><%= keyword %> <% end %>
+</div>
+
+<div id="thumbnails" style="display: none">
+  <% @video.thumbnails.each do |thumbnail| %>
+      <%= image_tag thumbnail.url, width: thumbnail.width, height: thumbnail.height %>
+  <% end %>
+</div>
+
+<div>
+  <%= link_to t("player.download.download"), video_download_url(@video.unique_id) %>
+</div>
+
+<div id="description">
+  <%= description %>
+</div>
+
+<% if @video.access_control["comment"] == "allowed" then %>
+    <div id="write_comment">
+
+    </div>
+
+    <div id="comments">
+      <% if @video.access_control["commentVote"] == "allowed" then %><!-- commentVote placeholder --><% end %>
+    </div>
+<% end %>
+
+<div>
+  <% @downloads.each do |download| %>
+      <%= link_to download[:link], download[:link] %><br />
+  <% end %>
+</div>

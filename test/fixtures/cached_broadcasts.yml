@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  station: MyString
+  topic: MyString
+  title: MyString
+  date: MyString
+  time: MyString
+  url: MyString
+  topic_url: MyString
+  md5: MyString
+
+two:
+  station: MyString
+  topic: MyString
+  title: MyString
+  date: MyString
+  time: MyString
+  url: MyString
+  topic_url: MyString
+  md5: MyString

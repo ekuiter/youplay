@@ -1,0 +1,2 @@
+module Conf::PeopleHelper
+end

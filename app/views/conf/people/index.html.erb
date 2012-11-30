@@ -1,0 +1,24 @@
+<% @action_name = t "conf.manage_people" %>
+
+<%= render "conf/conf/conf_head" %>
+
+<%= link_to t("conf.people.new"), new_conf_person_path %>
+
+<% if @people.empty? %>
+    <p><%= t "conf.people.no_people_found" %></p>
+<% else %>
+<table>
+  <tr>
+    <th><%= t "conf.people.name" %></th>
+    <th><%= t "devise.email" %></th>
+  </tr>
+  <% @people.each do |person| %>
+      <tr>
+        <td><%= link_to person.name, edit_conf_person_path(person) %></td>
+        <td><%= person.email %></td>
+        <td><%= link_to image_tag("edit.png"), edit_conf_person_path(person) %></td>
+        <td><%= link_to image_tag("delete.png"), conf_person_path(person), method: :delete, confirm: t("confirm") %></td>
+      </tr>
+  <% end %>
+</table>
+<% end %>

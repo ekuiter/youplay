@@ -1,0 +1,11 @@
+<%= @module = "reader"; render "/head" %>
+
+<div id="actions_nav">
+  <ul id="actions">
+    <% reader_actions.each do |action_name, action_path| %>
+        <li><%= link_to action_name, action_path %></li>
+    <% end %>
+  </ul>
+</div>
+
+<h3><%= @action_name %></h3>
