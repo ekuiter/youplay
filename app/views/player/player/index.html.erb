@@ -1,20 +1,21 @@
-<%= @module = "player"; render "/head" %>
+<%= @module = 'player'
+    ; render '/head' %>
 
 <%= form_tag player_video_path, method: :get do %>
-    <%= label_tag :url, t("player.play_video") %>
-    <%= text_field_tag :url, "", size: 50 %>
-    <%= submit_tag t("player.play") %>
-    <%= set_focus_to "url" %>
+    <%= label_tag :url, t('player.play_video') %>
+    <%= text_field_tag :url, '', size: 50 %>
+    <%= submit_tag t('player.play') %>
+    <%= set_focus_to 'url' %>
 <% end %>
 
 <% unless @recently_watched_videos.empty? %>
     <div class="recently_watched_videos">
-      <h3><%= t "video_list.recently_watched_videos" %></h3>
+      <h3><%= t 'video_list.recently_watched_videos' %></h3>
       <table>
         <tr>
-          <th><%= t "video_list.date" %></th>
-          <th><%= t "video_list.title" %></th>
-          <th><%= t "video_list.channel_topic" %></th>
+          <th><%= t 'video_list.date' %></th>
+          <th><%= t 'video_list.title' %></th>
+          <th><%= t 'video_list.channel_topic' %></th>
         </tr>
         <% @recently_watched_videos.each do |video| %>
             <tr>

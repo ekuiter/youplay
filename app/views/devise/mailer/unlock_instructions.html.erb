@@ -1,7 +1,7 @@
-<p><%= t "devise.mailer.hello", username: @resource.username %></p>
+<p><%= t 'devise.mailer.hello', username: @resource.username %></p>
 
-<p><%= t "devise.mailer.locked_text" %></p>
+<p><%= t 'devise.mailer.locked_text' %></p>
 
-<p><%= t "devise.mailer.unlock_text" %></p>
+<p><%= t 'devise.mailer.unlock_text' %></p>
 
-<p><%= link_to t("devise.mailer.unlock"), unlock_url(@resource, :unlock_token => @resource.unlock_token) %></p>
+<p><%= link_to t('devise.mailer.unlock'), unlock_url(@resource, :unlock_token => @resource.unlock_token) %></p>

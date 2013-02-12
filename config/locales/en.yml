@@ -53,13 +53,29 @@ en:
       unlock_text: "Click the link below to unlock your account:"
       unlock: "Unlock account"
   confirm: "Are you sure?"
-  header:
+  sidebar:
     user_nav:
+      logged_in_as: "Logged in as:"
       welcome: "Welcome, %{username}!"
       logout: "Logout"
   player:
     play_video: "Play video with YouTube url"
     play: "Play"
+    noembed: "Unfortunately, embedding this video is not possible."
+    noembed2: "Maybe you want to play it %{link}?"
+    noembed_link: "directly on Youtube"
+    meta:
+      channel: "Channel"
+      date: "Date"
+      duration: "Duration"
+      minutes:
+        one: "minute"
+        other: "minutes"
+      views: "Views"
+      comments: "Comments"
+      category: "Category"
+      likes: "Likes"
+      dislikes: "Dislikes"
     download:
       download: "Download this video"
       formats:

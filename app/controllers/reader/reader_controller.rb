@@ -6,8 +6,10 @@ class Reader::ReaderController < ApplicationController
 
   def index
     @new_videos = current_user.new_videos
-    @broadcast_number = @broadcast_number.value if @broadcast_number = CachedBroadcastsInfo.find_by_key("broadcast_number")
-    @database_datetime = @database_datetime.value.to_datetime if @database_datetime = CachedBroadcastsInfo.find_by_key("database_datetime")
+    @broadcast_number = CachedBroadcastsInfo.find_by_key('broadcast_number')
+    @database_datetime = CachedBroadcastsInfo.find_by_key('database_datetime')
+    @broadcast_number = @broadcast_number.value if @broadcast_number
+    @database_datetime = @database_datetime.value.to_datetime if @database_datetime
   end
 
   def hide
@@ -21,9 +23,9 @@ class Reader::ReaderController < ApplicationController
   end
 
   def update
-    logger.debug "updating videos now"
+    logger.debug 'updating videos now'
     update_videos
-    logger.debug "updating broadcasts now"
+    logger.debug 'updating broadcasts now'
     update_broadcasts
     redirect_to reader_path
   end

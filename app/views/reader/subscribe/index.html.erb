@@ -1,34 +1,34 @@
-<%= render "reader/reader/reader_head" %>
+<%= render 'reader/reader/reader_head' %>
 
-<h3><%= t("reader.subscribe.channels") %></h3>
+<h3><%= t('reader.subscribe.channels') %></h3>
 <%= form_tag(reader_add_channel_path, method: :post) do %>
     <%= text_field_tag :channel %>
-    <%= submit_tag t("reader.subscribe.subscribe") %>
+    <%= submit_tag t('reader.subscribe.subscribe') %>
 <% end %>
-   <div><%= link_to t("reader.subscribe.delete_all"), reader_delete_channel_path, method: :delete, confirm: t("confirm")  %></div>
+   <div><%= link_to t('reader.subscribe.delete_all'), reader_delete_channel_path, method: :delete, confirm: t('confirm')  %></div>
 <div>
   <% if @subscribed_channels.nil? %>
-      <%= t("reader.subscribe.no_channels") %>
+      <%= t('reader.subscribe.no_channels') %>
   <% else %>
       <ul>
         <% @subscribed_channels.each do |channel| %>
             <li><%= link_to channel.channel, "http://www.youtube.com/user/#{channel.channel}", target: :blank %>
-              - <%= link_to "X", reader_delete_channel_path(channel), method: :delete, confirm: t("confirm") %></li>
+              - <%= link_to 'X', reader_delete_channel_path(channel), method: :delete, confirm: t('confirm') %></li>
         <% end %>
       </ul>
   <% end %>
 </div>
 
-<h3><%= t("reader.subscribe.broadcasts") %></h3>
-<div><%= link_to t("reader.subscribe.delete_all"), reader_delete_broadcast_path, method: :delete, confirm: t("confirm") %></div>
+<h3><%= t('reader.subscribe.broadcasts') %></h3>
+<div><%= link_to t('reader.subscribe.delete_all'), reader_delete_broadcast_path, method: :delete, confirm: t('confirm') %></div>
 <div>
   <% if @subscribed_broadcasts.nil? %>
-      <%= t("reader.subscribe.no_broadcasts") %>
+      <%= t('reader.subscribe.no_broadcasts') %>
   <% else %>
       <ul>
         <% @subscribed_broadcasts.each do |broadcast| %>
             <li><%= broadcast.broadcast %>
-              - <%= link_to "X", reader_delete_broadcast_path(broadcast), method: :delete, confirm: t("confirm") %></li>
+              - <%= link_to 'X', reader_delete_broadcast_path(broadcast), method: :delete, confirm: t('confirm') %></li>
         <% end %>
       </ul>
   <% end %>

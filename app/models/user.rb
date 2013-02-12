@@ -44,10 +44,11 @@ class User < ActiveRecord::Base
   validates :username, uniqueness: true
 
   before_destroy do |user|
+    user
     last_admin
   end
 
-  def tokens= tokens
+  def tokens=(tokens)
     write_attribute :access_token, tokens[:access_token] unless tokens[:access_token].nil?
     write_attribute :refresh_token, tokens[:refresh_token] unless tokens[:refresh_token].nil?
     write_attribute :expires_in, tokens[:expires_in] unless tokens[:expires_in].nil?
@@ -56,31 +57,31 @@ class User < ActiveRecord::Base
   def youtube_account
     begin
       client = youtube_connect raise_error: true, current_user: self, access_token: access_token,
-                               refresh_token: refresh_token, expires_in: expires_in, state: "conf"
+                               refresh_token: refresh_token, expires_in: expires_in, state: 'conf'
       account = client.current_user
     rescue
       account = nil
     end
-    return account
+    account
   end
 
   def admin
-    role == "admin" ? true : false
+    role == 'admin' ? true : false
   end
 
-  def admin= boolean
+  def admin=(boolean)
     if boolean
-      write_attribute :role, "admin"
-      return true
+      write_attribute :role, 'admin'
+      true
     else
       last_admin
-      write_attribute :role, ""
-      return false
+      write_attribute :role, ''
+      false
     end
   end
 
   def self.admins
-    where role: "admin"
+    where role: 'admin'
   end
 
   def role=
@@ -90,7 +91,7 @@ class User < ActiveRecord::Base
 
   def last_admin
     admins = self.class.admins
-    raise "You can't remove the last admin" if admins.count == 1 && admins.first == self
+    raise 'You can\'t remove the last admin' if admins.count == 1 && admins.first == self
   end
 
 end

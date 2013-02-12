@@ -23,7 +23,7 @@ class Log::LogController < ApplicationController
     if current_user.admin
       @video = current_user.videos.find params[:id]
       @video.destroy
-      flash[:notice] = "Log entry deleted."
+      flash[:notice] = 'Log entry deleted.'
       redirect_to log_path
     else
       bad_request

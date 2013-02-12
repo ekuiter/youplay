@@ -15,22 +15,22 @@ class Conf::PeopleController < ApplicationController
   def create
     @person = current_user.people.new params[:person]
     if @person.save
-      redirect_to conf_people_path, notice: t("conf.people.create.success", person: @person.name)
+      redirect_to conf_people_path, notice: t('conf.people.create.success', person: @person.name)
     else
-      render "new"
+      render 'new'
     end
   end
 
   def update
     @person = current_user.people.find params[:id]
     @person.update_attributes params[:person]
-    flash.now.notice = t "conf.people.update.success", person: @person.name
-    render "edit"
+    flash.now.notice = t 'conf.people.update.success', person: @person.name
+    render 'edit'
   end
 
   def destroy
     @person = current_user.people.find params[:id]
     @person.destroy
-    redirect_to conf_people_url, notice: t("conf.people.destroy", person: @person.name)
+    redirect_to conf_people_url, notice: t('conf.people.destroy', person: @person.name)
   end
 end

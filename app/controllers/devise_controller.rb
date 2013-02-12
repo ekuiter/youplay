@@ -31,8 +31,8 @@ class DeviseController < ApplicationController
 
   def resource_params
     parameters = params[resource_name]
-    parameters.delete "role" unless parameters.nil?
-    return parameters
+    parameters.delete 'role' unless parameters.nil?
+    parameters
   end
 
   # Returns a signed in resource from session (if one exists)
@@ -42,7 +42,7 @@ class DeviseController < ApplicationController
 
   # Attempt to find the mapped route for devise based on request path
   def devise_mapping
-    @devise_mapping ||= request.env["devise.mapping"]
+    @devise_mapping ||= request.env['devise.mapping']
   end
 
   # Override prefixes to consider the scoped view.
@@ -118,8 +118,9 @@ end
                       warden.authenticated?(resource_name)
                     end
 
-    if authenticated && resource = warden.user(resource_name)
-      flash[:alert] = I18n.t("devise.failure.already_authenticated")
+    resource = warden.user(resource_name)
+    if authenticated && resource
+      flash[:alert] = I18n.t('devise.failure.already_authenticated')
       redirect_to after_sign_in_path_for(resource)
     end
   end

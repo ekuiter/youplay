@@ -1,13 +1,13 @@
 module HttpRequest
 
   def http_request (data) # data {:url[[, post: {"name" => "value"}[, :user, :pass]]}
-    ca_file = "lib/cacert.pem" # ssl certificate data from: http://curl.haxx.se/ca/cacert.pem
-    require "net/http"
-    require "uri"
+    ca_file = 'lib/cacert.pem' # ssl certificate data from: http://curl.haxx.se/ca/cacert.pem
+    require 'net/http'
+    require 'uri'
     uri = URI.parse data[:url]
-    if data[:post].blank? then # get requests
+    if data[:post].blank? # get requests
       http = Net::HTTP.new uri.host, uri.port
-      if uri.class.to_s == "URI::HTTPS"
+      if uri.class.to_s == 'URI::HTTPS'
         http.use_ssl = true
         http.ca_file = ca_file
       end
@@ -18,7 +18,7 @@ module HttpRequest
       response = http.request request
     else # post requests
       http = Net::HTTP.new uri.host, uri.port
-      if uri.class.to_s == "URI::HTTPS"
+      if uri.class.to_s == 'URI::HTTPS'
         http.use_ssl = true
         http.ca_file = ca_file
       end
@@ -29,7 +29,7 @@ module HttpRequest
       request.set_form_data data[:post] # add post data
       response = http.request request
     end
-    return response
+    response
   end
 
 end

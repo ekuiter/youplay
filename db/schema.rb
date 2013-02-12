@@ -13,6 +13,16 @@
 
 ActiveRecord::Schema.define(:version => 20120610191613) do
 
+  create_table "cached_broadcasts", :force => true do |t|
+    t.string   "station"
+    t.string   "topic"
+    t.string   "title"
+    t.string   "url"
+    t.string   "topic_url"
+    t.string   "md5"
+    t.datetime "published_at"
+  end
+
   create_table "cached_broadcasts_infos", :force => true do |t|
     t.string   "key"
     t.string   "value"
@@ -40,7 +50,7 @@ ActiveRecord::Schema.define(:version => 20120610191613) do
 
   create_table "hide_broadcasts", :force => true do |t|
     t.integer  "user_id"
-    t.integer  "md5"
+    t.integer  "cached_broadcast_id"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
   end
@@ -76,9 +86,10 @@ ActiveRecord::Schema.define(:version => 20120610191613) do
 
   create_table "users", :force => true do |t|
     t.string   "full_name"
-    t.string   "role"
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "role",                   :default => "user", :null => false
+    t.string   "username",               :default => "",     :null => false
+    t.string   "email",                  :default => "",     :null => false
+    t.string   "encrypted_password",     :default => "",     :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -87,9 +98,8 @@ ActiveRecord::Schema.define(:version => 20120610191613) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
-    t.string   "username"
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
     t.string   "access_token"
     t.string   "refresh_token"
     t.integer  "expires_in"
@@ -97,6 +107,7 @@ ActiveRecord::Schema.define(:version => 20120610191613) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+  add_index "users", ["username"], :name => "index_users_on_username", :unique => true
 
   create_table "videos", :force => true do |t|
     t.string   "title"

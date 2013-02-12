@@ -1,6 +1,6 @@
-<% @action_name = t "conf.people.edit", person: @person.name %>
+<% @action_name = t 'conf.people.edit', person: @person.name %>
 
-<%= render "conf/conf/conf_head" %>
+<%= render 'conf/conf/conf_head' %>
 
 <%= form_for @person, url: conf_person_path do |f| %>
     <%= error_messages! @person %>
@@ -10,7 +10,7 @@
         <td><%= f.label :name %></td>
         <td><%= f.text_field :name %></td>
       </tr>
-      <%= set_focus_to "person_name" %>
+      <%= set_focus_to 'person_name' %>
 
       <tr>
         <td><%= f.label :email %></td>
@@ -19,10 +19,10 @@
 
       <tr>
         <td></td>
-        <td><%= f.submit t("devise.save") %></td>
+        <td><%= f.submit t('devise.save') %></td>
       </tr>
 
     </table>
 <% end %>
 
-<p><%= link_to t("conf.people.delete"), conf_person_path(@person), method: :delete, confirm: t("confirm") %></p>
+<p><%= link_to t('conf.people.delete'), conf_person_path(@person), method: :delete, confirm: t('confirm') %></p>

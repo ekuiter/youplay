@@ -1,5 +1,1 @@
-<%= title t("modules.#{@module}") %>
-
-<div id="module_description">
-  <%= t "modules.#{@module}_description", application_name: t("application.name") %>
-</div>
+<%= title t("modules.#@module"), link: send(@module + "_path") %>

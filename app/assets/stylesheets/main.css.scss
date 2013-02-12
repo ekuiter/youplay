@@ -1,0 +1,140 @@
+$site_width: 1160px;
+$inner_width: 1040px;
+$inner_padding: 10px;
+$sidebar_padding: 10px;
+$sidebar_width: $site_width - $inner_width - 2 * $inner_padding - 2 * $sidebar_padding - 1;
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, serif;
+  background-color: #161616;
+}
+
+#wrapper {
+  width: $site_width;
+  margin: 20px auto 20px auto;
+}
+
+#inner_wrapper {
+  width: $inner_width;
+  float: right;
+  background-color: #fff;
+  padding: $inner_padding;
+}
+
+#sidebar {
+  position: fixed;
+  width: $sidebar_width;
+  height: 300px;
+  background-color: #fff;
+  padding: $sidebar_padding;
+  font-size: 12px;
+  border-right: 1px dotted #555;
+}
+
+#sidebar.signed_out {
+  height: 80px;
+}
+
+#sidebar.signed_out h1 {
+  margin-bottom: 20px;
+}
+
+div.clear {
+  clear: both;
+}
+
+div#flash div {
+  padding: 8px;
+  margin-bottom: 20px;
+  border: 1px solid #555;
+}
+
+div#flash div.notice {
+  background-color: #a6ff00;
+}
+
+div#flash div.alert {
+  background-color: #ff9e99;
+}
+
+a {
+  color: #009;
+  text-decoration: none;
+}
+
+a:hover {
+  border-bottom: 1px dotted #009;
+  color: #009;
+}
+
+a img {
+  border: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 10px 0 10px 0;
+}
+
+#sidebar h1 {
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+}
+
+#sidebar h1 span.sub {
+  display: block;
+  margin: 3px 0 10px 0;
+  font-size: 13px;
+}
+
+#sidebar #user_nav {
+  margin-top: 20px;
+}
+
+#sidebar #user_nav .username {
+  font-weight: bold;
+}
+
+#sidebar #modules_nav #modules {
+  margin: 20px 0 20px 0;
+  padding: 10px 0 10px 0;
+  border-top: 1px dotted #555;
+  border-bottom: 1px dotted #555;
+  list-style-type: none;
+  font-size: 14px;
+}
+
+#sidebar #modules_nav #modules li {
+  margin: 5px 0 0 0;
+}
+
+#page_title {
+  margin: 20px 0 20px 0;
+  margin-left: $sidebar_width + 2 * $sidebar_padding + $inner_padding + 1;
+  color: #fff;
+}
+
+#page_title h2 .module_description {
+  font-size: 14px;
+  font-weight: normal;
+  margin-left: 40px;
+}
+
+#page_title a {
+  color: #fff;
+}
+
+#page_title a:hover {
+  border-bottom-color: #fff;
+}
+
+#loading {
+  display: none;
+  float: left;
+  margin-left: ($sidebar_width + 2 * $sidebar_padding) / 2 - 16;
+  background-image: url(/assets/loading.gif);
+  width: 32px;
+  height: 32px;
+}

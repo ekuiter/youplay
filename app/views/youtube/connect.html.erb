@@ -1,19 +1,19 @@
-<%= title t("youtube.grant_access_title") %>
+<%= title t('youtube.grant_access_title') %>
 
 <%= js_redirect_to url: @grant_access_url, delay: 5000 %>
 
 <p>
-  <%= t "youtube.grant_access", application_name: t("application.name") %>
+  <%= t 'youtube.grant_access', application_name: t('application.name') %>
 </p>
 
 <p>
-  <%= t "youtube.redirect" %>
+  <%= t 'youtube.redirect' %>
 </p>
 
 <p>
-  <%= t "youtube.or" %>
+  <%= t 'youtube.or' %>
 </p>
 
 <p>
-  <%= t("youtube.manually", link: grant_access_link).html_safe %>
+  <%= t('youtube.manually', link: grant_access_link).html_safe %>
 </p>

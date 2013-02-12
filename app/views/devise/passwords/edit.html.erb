@@ -1,27 +1,27 @@
-<%= title t("devise.change_password") %>
+<%= title t('devise.change_password') %>
 
-<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f| %>
+<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => {method: :put}) do |f| %>
     <%= devise_error_messages! %>
     <%= f.hidden_field :reset_password_token %>
     <table>
 
       <tr>
-        <td><%= f.label :password, t("devise.new_password") %></td>
+        <td><%= f.label :password, t('devise.new_password') %></td>
         <td><%= f.password_field :password %></td>
       </tr>
-      <%= set_focus_to "user_password" %>
+      <%= set_focus_to 'user_password' %>
 
       <tr>
-        <td><%= f.label :password_confirmation, t("devise.confirm_new_password") %></td>
+        <td><%= f.label :password_confirmation, t('devise.confirm_new_password') %></td>
         <td><%= f.password_field :password_confirmation %></td>
       </tr>
 
       <tr>
         <td></td>
-        <td><%= f.submit t("devise.change_password") %></td>
+        <td><%= f.submit t('devise.change_password') %></td>
       </tr>
 
     </table>
 <% end %>
 
-<%= render :partial => "devise/shared/links" %>
+<%= render :partial => 'devise/shared/links' %>

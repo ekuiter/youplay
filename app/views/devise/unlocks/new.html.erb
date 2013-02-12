@@ -1,21 +1,21 @@
-<%= title t("devise.resend_unlock_instructions") %>
+<%= title t('devise.resend_unlock_instructions') %>
 
 <%= form_for(resource, :as => resource_name, :url => unlock_path(resource_name), :html => { :method => :post }) do |f| %>
     <%= devise_error_messages! %>
     <table>
 
       <tr>
-        <td><%= f.label :email, t("devise.email") %></td>
+        <td><%= f.label :email, t('devise.email') %></td>
         <td><%= f.email_field :email %></td>
       </tr>
-      <%= set_focus_to "user_email" %>
+      <%= set_focus_to 'user_email' %>
 
       <tr>
         <td></td>
-        <td><%= f.submit t("devise.resend_unlock_instructions") %></td>
+        <td><%= f.submit t('devise.resend_unlock_instructions') %></td>
       </tr>
 
     </table>
 <% end %>
 
-<%= render :partial => "devise/shared/links" %>
+<%= render :partial => 'devise/shared/links' %>

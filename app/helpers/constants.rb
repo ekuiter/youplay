@@ -1,24 +1,24 @@
 module Constants
 
   def self.url_protocol
-    "ypl://"
+    'youplay://'
   end
 
   def self.broadcast_update
-    "http://zdfmediathk.sourceforge.net/update.xml"
+    'http://zdfmediathk.sourceforge.net/update.xml'
   end
 
   def self.movie_database_path
-    "lib/movie_database/"
+    'lib/movie_database/'
   end
 
   # player section
   def self.player_width
-    "800"
+    '800'
   end
 
   def self.player_height
-    "475"
+    '475'
   end
 
 
@@ -26,32 +26,32 @@ module Constants
 
   # see: http://code.google.com/apis/youtube/dashboard  --  youplay
   def self.developer_key
-    "***REMOVED***"
+    '***REMOVED***'
   end
 
   # see: http://code.google.com/apis/console  --  youplay: API Access
   def self.client_id
-    "***REMOVED***"
+    '***REMOVED***'
   end
 
   def self.client_secret
-    "***REMOVED***"
+    '***REMOVED***'
   end
 
   def self.redirect_uri
-    "http://localhost/youtube/auth"
+    'http://localhost/youtube/auth'
   end
 
   def self.scope # space-delimited list of scopes that identify the resources to access
-    "https://gdata.youtube.com"
+    'https://gdata.youtube.com'
   end
 
 
   # you don't want to edit this typically
 
   def self.jw_folder hash = {} # jw player folder
-                               # ***edit***
-    folder = "jwplayer"
+    # ***edit***
+    folder = 'jwplayer'
     # ***edit***
 
     return "/#{folder}" if hash[:client]
@@ -63,7 +63,7 @@ module Constants
 
     # ***edit***
     "#{jw}/skins"
-                                 # ***edit***
+    # ***edit***
   end
 
 end

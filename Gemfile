@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.3'
+gem 'rails', '3.2.11'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -13,6 +13,10 @@ gem 'rinku' # auto link video descriptions
 #gem 'bzip2-ruby' # extract MediathekView bzip2 files
 gem 'rubyzip' # extract MediathekView zip files
 gem 'xml-simple' # parse MediathekView xml
+gem 'jquery-rails'
+gem 'json', '1.7.7'
+gem 'turbolinks'
+gem 'mysql2'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -26,7 +30,11 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-gem 'jquery-rails'
+group :development do
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'meta_request'
+end
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

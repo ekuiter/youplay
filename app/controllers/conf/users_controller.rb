@@ -21,15 +21,16 @@ class Conf::UsersController < AdminController
     @user = User.new user_params
     @user.admin = admin
     if @user.save
-      redirect_to conf_users_path, notice: t("conf.users.create.success", user: @user.username)
+      redirect_to conf_users_path, notice: t('conf.users.create.success', user: @user.username)
     else
-      render "new"
+      render 'new'
     end
   end
 
 
   def update
     begin
+      notice = nil
       user_params = params[:user]
       admin = user_params[:admin].to_i == 1 ? true : false
       @user = User.find params[:id]
@@ -37,20 +38,20 @@ class Conf::UsersController < AdminController
                                  email: user_params[:email]
         @user.admin = admin unless @user == current_user
         if @user.save
-          unless user_params[:password].empty?
+          if user_params[:password].empty?
+            notice = t 'conf.users.update.success', user: @user.username
+          else
             if @user.update_attributes password: user_params[:password],
                                        password_confirmation: user_params[:password_confirmation]
-              notice = t "conf.users.update.success", user: @user.username
+              notice = t 'conf.users.update.success', user: @user.username
             end
-          else
-            notice = t "conf.users.update.success", user: @user.username
           end
         end
       end
       if notice
-        flash.now.notice = t "conf.users.update.success", user: @user.username
+        flash.now.notice = t 'conf.users.update.success', user: @user.username
       end
-      render "edit"
+      render 'edit'
     rescue RuntimeError
       redirect_to conf_users_path, alert: $!.message
     end
@@ -60,7 +61,7 @@ class Conf::UsersController < AdminController
     begin
       @user = User.find(params[:id])
       @user.destroy
-      redirect_to conf_users_path, notice: t("conf.users.destroy", user: @user.username)
+      redirect_to conf_users_path, notice: t('conf.users.destroy', user: @user.username)
     rescue RuntimeError
       redirect_to conf_users_path, alert: $!.message
     end

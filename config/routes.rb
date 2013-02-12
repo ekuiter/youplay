@@ -37,7 +37,7 @@ Youplay::Application.routes.draw do
     get "" => "stats#index"
   end
   get "imprint" => "meta#imprint", as: "imprint"
-  match ":anything" => "application#bad_request"
+  #match ":anything" => "application#bad_request"
 
 
   # The priority is based upon order of creation:

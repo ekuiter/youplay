@@ -1,60 +1,79 @@
-<%= title @video.title, link: @video.player_url %>
+<%= title @video.title, link: @video.player_url, target: '_blank' %>
 
-<% if @video.access_control["embed"] == "allowed" then %>
+<div id="video_sidebar" class="<%= 'sidebar_noembed' unless @video.access_control['embed'] == 'allowed' %>">
+  <table>
+    <tbody>
+    <tr>
+      <td class="desc"><%= t 'player.meta.channel' %></td>
+      <td><%= link_to @video.author.name, channel_url(@video.author.name), target: '_blank' %></td>
+    </tr>
+    <tr>
+      <td class="desc"><%= t 'player.meta.date' %></td>
+      <td><%= l @video.uploaded_at, format: :short %></td>
+    </tr>
+    <tr>
+      <td class="desc"><%= t 'player.meta.duration' %></td>
+      <td><%= duration = @video.duration / 60; "#{duration} #{t 'player.meta.minutes', count: duration}" %></td>
+    </tr>
+    <% i = 0; @video.categories.each do |category| %>
+        <tr>
+          <td class="desc"><%= i += 1; t 'player.meta.category' if i == 1 %></td>
+          <td><%= category.label %></td>
+        </tr>
+    <% end %>
+    <tr>
+      <td class="desc"><%= t 'player.meta.views' %></td>
+      <td><%= number_with_delimiter @video.view_count %></td>
+    </tr>
+    <% if @video.access_control['rate'] == 'allowed' %>
+        <tr>
+          <td class="desc"><%= t 'player.meta.likes' %></td>
+          <td><%= number_with_delimiter @video.rating.likes %></td>
+        </tr>
+        <tr>
+          <td class="desc"><%= t 'player.meta.dislikes' %></td>
+          <td><%= number_with_delimiter @video.rating.dislikes %></td>
+        </tr>
+    <% end %>
+    <% if @video.access_control['comment'] == 'allowed' %>
+        <tr>
+          <td class="desc"><%= t 'player.meta.comments' %></td>
+          <td><%= number_with_delimiter @video.comment_count %></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <%= link_to t('player.download.download'), video_download_url(@video.unique_id) %>
+</div>
+
+<% if @video.access_control['embed'] == 'allowed' then %>
     <%= player %>
 <% else %>
-    *embedding is not allowed
-<% end %>
+    <div class="noembed">
+      <%= thumb = @video.thumbnails[1]; link_to image_tag(thumb.url, width: thumb.width, height: thumb.height), @video.player_url, target: '_blank' %>
+      <div>
+        <strong>
+          <%= t 'player.noembed' %>
+        </strong>
 
-<div id="meta">
-  <%= @video.author.name %>
-  | <%= l @video.uploaded_at, format: :short %>
-  | <%= @video.duration %> *seconds
-  | <%= @video.view_count %> *views
-  | <%= @video.favorite_count %> *favorites
-  <% if @video.access_control["comment"] == "allowed" then %>| <%= @video.comment_count %> *comments<% end %>
-  | <% @video.categories.each do |category| %><%= category.label %> <% end %>
-</div>
-
-<% if @video.access_control["rate"] == "allowed" then %>
-    <div id="rating">
-      <%= @video.rating.rater_count %> *raters
-      | <%= @video.rating.average %> *stars
-      | <%= @video.rating.likes %> *likes
-      | <%= @video.rating.dislikes %> *dislikes
+        <p>
+          <%= t('player.noembed2', link: link_to(t('player.noembed_link'), @video.player_url, target: '_blank')).html_safe %>
+        </p>
+      </div>
     </div>
 <% end %>
-
-<div id="keywords" style="display: none">
-  <% @video.keywords.each do |keyword| %><%= keyword %> <% end %>
-</div>
-
-<div id="thumbnails" style="display: none">
-  <% @video.thumbnails.each do |thumbnail| %>
-      <%= image_tag thumbnail.url, width: thumbnail.width, height: thumbnail.height %>
-  <% end %>
-</div>
-
-<div>
-  <%= link_to t("player.download.download"), video_download_url(@video.unique_id) %>
-</div>
 
 <div id="description">
   <%= description %>
 </div>
 
-<% if @video.access_control["comment"] == "allowed" then %>
+<% if @video.access_control['comment'] == 'allowed' then %>
     <div id="write_comment">
 
     </div>
 
     <div id="comments">
-      <% if @video.access_control["commentVote"] == "allowed" then %><!-- commentVote placeholder --><% end %>
+      <% if @video.access_control['commentVote'] == 'allowed' then %><!-- commentVote placeholder -->
+      <% end %>
     </div>
 <% end %>
-
-<div>
-  <% @downloads.each do |download| %>
-      <%= link_to download[:link], download[:link] %><br />
-  <% end %>
-</div>

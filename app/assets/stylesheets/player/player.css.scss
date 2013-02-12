@@ -1,3 +1,54 @@
 // Place all the styles related to the player/player controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+div.noembed {
+  margin: 50px 0 100px 0;
+  height: 180px;
+}
+
+div.noembed img {
+  float: left;
+}
+
+div.noembed div {
+  padding: 50px 0 0 360px;
+}
+
+div.noembed strong {
+  font-size: 19px;
+  margin-bottom: 10px;
+}
+
+div#video_sidebar {
+  float: right;
+  width: 208px;
+  height: 443px;
+  border: 1px solid #999;
+  background-color: #efefef;
+  padding: 15px;
+}
+
+div.sidebar_noembed {
+  height: 280px !important;
+}
+
+div#video_sidebar table {
+  margin-bottom: 10px;
+}
+
+div#video_sidebar table tbody td {
+  padding: 5px;
+}
+
+div#video_sidebar table tbody td.desc {
+  font-size: 10px;
+  text-align: right;
+  text-transform: uppercase;
+  padding-right: 10px;
+}
+
+div#player {
+  width: 800px;
+  height: 475px;
+}

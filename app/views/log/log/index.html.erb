@@ -23,30 +23,31 @@
 
 <% if @video_count > @results_range.min %>
     <div id="results">
-      <%= t "video_list.results_per_page" %>
+      <%= t 'video_list.results_per_page' %>
       <% results.each_with_index do |result, index| %>
-          <%= "|" unless index == 0 %>
+          <%= '|' unless index == 0 %>
           <%= result.html_safe %>
       <% end %>
     </div>
 <% end %>
 
 <% if @videos.empty? %>
-    <%= t "video_list.no_videos_found" %>
+    <%= t 'video_list.no_videos_found' %>
 <% else %>
     <div class="videos">
       <table>
         <tr>
-          <th><%= t "video_list.date" %></th>
-          <th><%= t "video_list.title" %></th>
-          <th><%= t "video_list.channel_topic" %></th>
+          <th><%= t 'video_list.date' %></th>
+          <th><%= t 'video_list.title' %></th>
+          <th><%= t 'video_list.channel_topic' %></th>
         </tr>
         <% @videos.each do |video| %>
             <tr>
               <td><%= l video.created_at, format: :short %></td>
               <td><%= link_to video.title, video.play_url %></td>
               <td><%= video.channel_topic %></td>
-              <% if @is_admin %><td><%= link_to image_tag("delete.png"), log_delete_video_path(video), method: :delete, confirm: t("confirm") %></td>
+
+              <% if @is_admin %><td><%= link_to image_tag('delete.png', width: 20, height: 20), log_delete_video_path(video), method: :delete, confirm: t('confirm') %></td>
               <% end %></tr>
         <% end %>
       </table>
