@@ -5,7 +5,6 @@ gem 'rails', '3.2.11'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3' # database
 gem 'devise' # user authentication
 gem 'oauth2' # link user to youtube account
 gem 'youtube_it' # access youtube data api
