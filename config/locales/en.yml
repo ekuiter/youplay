@@ -59,6 +59,7 @@ en:
       welcome: "Welcome, %{username}!"
       logout: "Logout"
   player:
+    play_youtube: "Play YouTube videos"
     play_video: "Play video with YouTube url"
     play: "Play"
     noembed: "Unfortunately, embedding this video is not possible."
@@ -102,6 +103,7 @@ en:
     previous: "< Newer"
     next: "Older >"
     last: "Oldest >"
+    duration: "Duration"
   conf:
     edit_settings: "Edit settings"
     manage_people: "Manage people"

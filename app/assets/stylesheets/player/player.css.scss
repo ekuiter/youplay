@@ -52,3 +52,19 @@ div#player {
   width: 800px;
   height: 475px;
 }
+
+div.recently_watched_videos table {
+  width: 100%;
+}
+
+div.recently_watched_videos th {
+  text-align: left;
+}
+
+div.recently_watched_videos td {
+  padding: 3px;
+}
+
+div#description {
+  margin: 20px 0 10px 0;
+}

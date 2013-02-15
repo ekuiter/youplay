@@ -37,8 +37,8 @@
   </div>
 
   <div id="sidebar" class="<%= user_signed_in? ? '' : 'signed_out' %>">
-    <h1><%= link_to t('application.name'), root_path %>
-      <span class="sub"><%= t 'application.status' %></span></h1>
+    <h2><%= link_to t('application.name'), root_path %>
+      <span class="sub"><%= t 'application.status' %></span></h2>
 
     <% if user_signed_in? %>
         <div id="user_nav">

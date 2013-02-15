@@ -7,16 +7,17 @@ class Player::PlayerController < ApplicationController
   end
 
   def video
-    begin
+    #begin
       fetched = fetch_video params
       @video = fetched[:video]
       #sourcecode = fetched[:sourcecode]
-      @downloads = fetched[:downloads]
-      logger.debug @downloads.to_yaml
-      current_user.videos.create browser: user_browser, channel_topic: @video.author.name, title: @video.title, url: @video.unique_id
-    rescue
-      bad_request
-    end
+      #@downloads = fetched[:downloads]
+      #logger.debug @downloads.to_yaml
+      current_user.videos.create browser: user_browser, channel_topic: @video.author.name,
+                                 title: @video.title, url: @video.unique_id, duration: @video.duration
+    #rescue
+    #  bad_request
+    #end
   end
 
   def broadcast

@@ -21,6 +21,7 @@ body {
   float: right;
   background-color: #fff;
   padding: $inner_padding;
+  margin-bottom: 20px;
 }
 
 #sidebar {
@@ -37,7 +38,7 @@ body {
   height: 80px;
 }
 
-#sidebar.signed_out h1 {
+#sidebar.signed_out h2 {
   margin-bottom: 20px;
 }
 
@@ -77,13 +78,13 @@ h1, h2, h3, h4, h5, h6 {
   margin: 10px 0 10px 0;
 }
 
-#sidebar h1 {
+#sidebar h2 {
   margin: 0;
   padding: 0;
   font-size: 20px;
 }
 
-#sidebar h1 span.sub {
+#sidebar h2 span.sub {
   display: block;
   margin: 3px 0 10px 0;
   font-size: 13px;
@@ -116,7 +117,11 @@ h1, h2, h3, h4, h5, h6 {
   color: #fff;
 }
 
-#page_title h2 .module_description {
+#page_title h1 {
+  font-size: 24px;
+}
+
+#page_title h1 .module_description {
   font-size: 14px;
   font-weight: normal;
   margin-left: 40px;
@@ -137,4 +142,12 @@ h1, h2, h3, h4, h5, h6 {
   background-image: url(/assets/loading.gif);
   width: 32px;
   height: 32px;
+}
+
+h3 {
+  margin: 10px 0 20px 0;
+}
+
+div.recently_watched_videos h3 {
+  margin: 30px 0 20px 0;
 }

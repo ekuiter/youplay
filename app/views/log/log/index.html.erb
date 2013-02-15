@@ -40,14 +40,16 @@
           <th><%= t 'video_list.date' %></th>
           <th><%= t 'video_list.title' %></th>
           <th><%= t 'video_list.channel_topic' %></th>
+          <th><%= t('video_list.duration') %></th>
         </tr>
         <% @videos.each do |video| %>
             <tr>
               <td><%= l video.created_at, format: :short %></td>
               <td><%= link_to video.title, video.play_url %></td>
-              <td><%= video.channel_topic %></td>
+              <td><%= link_to_channel video.channel_topic %></td>
+              <td><%= video_duration video %></td>
 
-              <% if @is_admin %><td><%= link_to image_tag('delete.png', width: 20, height: 20), log_delete_video_path(video), method: :delete, confirm: t('confirm') %></td>
+              <% if @is_admin %><td class="delete"><%= link_to image_tag('delete.png', width: 20, height: 20), log_delete_video_path(video), method: :delete, confirm: t('confirm') %></td>
               <% end %></tr>
         <% end %>
       </table>

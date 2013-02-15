@@ -27,7 +27,7 @@ HTML
 
   def description
     require 'rails_rinku'
-    auto_link @video.description.gsub("\n", '<br />').html_safe
+    auto_link @video.description.gsub("\n", '<br />').html_safe, :all, target: '_blank'
   end
 
   def video_download_url(id)
@@ -36,10 +36,6 @@ HTML
 
   def broadcast_download_url(md5)
     "#{Constants.url_protocol}broadcast/#{md5}"
-  end
-
-  def channel_url(author)
-    "http://youtube.com/user/#{author}"
   end
 
 end

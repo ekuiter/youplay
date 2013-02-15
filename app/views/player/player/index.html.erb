@@ -2,6 +2,7 @@
     ; render '/head' %>
 
 <%= form_tag player_video_path, method: :get do %>
+    <h3><%= t 'player.play_youtube' %></h3>
     <%= label_tag :url, t('player.play_video') %>
     <%= text_field_tag :url, '', size: 50 %>
     <%= submit_tag t('player.play') %>
@@ -21,7 +22,7 @@
             <tr>
               <td><%= l video.created_at, format: :short %></td>
               <td><%= link_to video.title, video.play_url %></td>
-              <td><%= video.channel_topic %></td>
+              <td><%= link_to_channel video.channel_topic %></td>
             </tr>
         <% end %>
       </table>

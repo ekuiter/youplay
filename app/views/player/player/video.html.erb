@@ -5,7 +5,7 @@
     <tbody>
     <tr>
       <td class="desc"><%= t 'player.meta.channel' %></td>
-      <td><%= link_to @video.author.name, channel_url(@video.author.name), target: '_blank' %></td>
+      <td><%= link_to_channel @video.author.name %></td>
     </tr>
     <tr>
       <td class="desc"><%= t 'player.meta.date' %></td>
@@ -13,7 +13,7 @@
     </tr>
     <tr>
       <td class="desc"><%= t 'player.meta.duration' %></td>
-      <td><%= duration = @video.duration / 60; "#{duration} #{t 'player.meta.minutes', count: duration}" %></td>
+      <td><%= video_duration @video %></td>
     </tr>
     <% i = 0; @video.categories.each do |category| %>
         <tr>
@@ -25,7 +25,7 @@
       <td class="desc"><%= t 'player.meta.views' %></td>
       <td><%= number_with_delimiter @video.view_count %></td>
     </tr>
-    <% if @video.access_control['rate'] == 'allowed' %>
+    <% if @video.access_control['rate'] == 'allowed' && @video.rating %>
         <tr>
           <td class="desc"><%= t 'player.meta.likes' %></td>
           <td><%= number_with_delimiter @video.rating.likes %></td>

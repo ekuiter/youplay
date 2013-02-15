@@ -6,24 +6,23 @@ module Player::VideoPlayer
                              refresh_token: current_user.refresh_token, expires_in: current_user.expires_in
     video = client.video_by id
     sourcecode = http_request(url: video.player_url).body.encode
-    downloads = extract_downloads id, sourcecode
-    {video: video, sourcecode: sourcecode, downloads: downloads}
+    #downloads = extract_downloads id, sourcecode
+    {video: video, sourcecode: sourcecode,
+     #downloads: downloads
+    }
   end
 
   def extract_id(params)
     id = nil
     params.each do |key, value|
-      if key.include? 'youtube.com/watch?v'
-        id = value
-        break
-      elsif key == 'v'
-        id = value
-        break
-      elsif key == 'url'
+      if key.include? 'youtube.com/watch?v' || key == 'v' || key == 'url'
         id = value
         break
       elsif value.nil?
         id = key
+        break
+      elsif value.include? 'youtube.com/watch?v='
+        id = value
         break
       end
     end

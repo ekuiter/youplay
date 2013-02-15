@@ -1,8 +1,9 @@
 class Log::LogController < ApplicationController
 
   def index
-    @results_range = 50..200
-    results = params[:results].nil? ? 50 : Integer(params[:results])
+    default_number = 15 #50
+    @results_range = default_number..200
+    results = params[:results].nil? ? default_number : Integer(params[:results])
     results = @results_range.min unless @results_range.include? results
     page = params[:page].nil? ? 0 : Integer(params[:page]) - 1
     page = 0 if page < 0

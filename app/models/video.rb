@@ -1,5 +1,5 @@
 class Video < ActiveRecord::Base
-  attr_accessible :browser, :channel_topic, :gronkh_url, :station, :title, :url, :user
+  attr_accessible :browser, :channel_topic, :gronkh_url, :station, :title, :url, :user, :duration
   belongs_to :user
   validates :channel_topic, :title, :url, :user_id, :browser, presence: true
   validates :url, uniqueness: {scope: :user_id}

@@ -5,12 +5,12 @@ module ApplicationHelper
     if options[:link]
       content = link_to title, options[:link], target: options[:target]
     end
-    str = "<h2 onmouseover=\"#{options[:onmouseover]}\" onmouseout=\"#{options[:onmouseout]}\">
+    str = "<h1 onmouseover=\"#{options[:onmouseover]}\" onmouseout=\"#{options[:onmouseout]}\">
     #{content}#{options[:additional_content]}
       <span class=\"module_description\">
         #{t "modules.#{@module+''}_description", application_name: t('application.name') if @module}
       </span>
-    </h2>"
+    </h1>"
     @page_title = str.html_safe
     nil
   end
@@ -54,6 +54,23 @@ module ApplicationHelper
     HTML
 
     html.html_safe
+  end
+
+  include HttpRequest
+
+  def link_to_channel(channel)
+    url = channel
+    if channel.include? ' '
+      req = http_request url: 'https://gdata.youtube.com/feeds/api/channels?v=2&q=' + channel.gsub(' ', '+')
+      url = req.body.split("<author><name>#{channel}</name><uri>https://gdata.youtube.com/feeds/api/users/")[1].split('</uri>')[0]
+    end
+    link_to channel, "http://youtube.com/user/#{url}", target: '_blank'
+  end
+
+  def video_duration(video)
+    return nil unless video.duration
+    duration = video.duration / 60
+    "#{duration} #{t 'player.meta.minutes', count: duration}"
   end
 
 end
