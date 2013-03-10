@@ -62,6 +62,7 @@ module ApplicationHelper
     url = channel
     if channel.include? ' '
       req = http_request url: 'https://gdata.youtube.com/feeds/api/channels?v=2&q=' + channel.gsub(' ', '+')
+      logger.debug 'https://gdata.youtube.com/feeds/api/channels?v=2&q=' + channel.gsub(' ', '+')
       url = req.body.split("<author><name>#{channel}</name><uri>https://gdata.youtube.com/feeds/api/users/")[1].split('</uri>')[0]
     end
     link_to channel, "http://youtube.com/user/#{url}", target: '_blank'
