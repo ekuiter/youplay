@@ -1,6 +1,7 @@
 $site_width: 1160px;
 $inner_width: 1040px;
 $inner_padding: 10px;
+$sidebar_pos: static;
 $sidebar_padding: 10px;
 $sidebar_width: $site_width - $inner_width - 2 * $inner_padding - 2 * $sidebar_padding - 1;
 
@@ -25,7 +26,7 @@ body {
 }
 
 #sidebar {
-  position: fixed;
+  position: $sidebar_pos;
   width: $sidebar_width;
   height: 300px;
   background-color: #fff;
