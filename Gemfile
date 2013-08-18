@@ -35,6 +35,10 @@ group :development do
   gem 'meta_request'
 end
 
+group :production do
+  gem 'thin'
+end
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
