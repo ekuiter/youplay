@@ -83,6 +83,7 @@ GEM
     multi_xml (0.5.5)
     multipart-post (1.2.0)
     mysql2 (0.3.13)
+    newrelic_rpm (3.6.6.147)
     nokogiri (1.5.10)
     nokogiri (1.5.10-x86-mingw32)
     oauth (0.4.7)
@@ -174,6 +175,7 @@ DEPENDENCIES
   json (= 1.7.7)
   meta_request
   mysql2
+  newrelic_rpm
   oauth2
   rails (= 3.2.11)
   rinku
