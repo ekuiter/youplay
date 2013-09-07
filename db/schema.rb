@@ -11,24 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130215221341) do
-
-  create_table "cached_broadcasts", :force => true do |t|
-    t.string   "station"
-    t.string   "topic"
-    t.string   "title"
-    t.string   "url"
-    t.string   "topic_url"
-    t.string   "md5"
-    t.datetime "published_at"
-  end
-
-  create_table "cached_broadcasts_infos", :force => true do |t|
-    t.string   "key"
-    t.string   "value"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
+ActiveRecord::Schema.define(:version => 20130907161513) do
 
   create_table "cached_videos", :force => true do |t|
     t.string   "title"
@@ -48,13 +31,6 @@ ActiveRecord::Schema.define(:version => 20130215221341) do
     t.integer  "user_id"
   end
 
-  create_table "hide_broadcasts", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "cached_broadcast_id"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
-  end
-
   create_table "hide_videos", :force => true do |t|
     t.integer  "user_id"
     t.integer  "cached_video_id"
@@ -65,13 +41,6 @@ ActiveRecord::Schema.define(:version => 20130215221341) do
   create_table "people", :force => true do |t|
     t.string   "name"
     t.string   "email"
-    t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "subscribed_broadcasts", :force => true do |t|
-    t.text     "broadcast"
     t.integer  "user_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
