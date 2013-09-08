@@ -26,8 +26,18 @@ ul#channels li span.checked {
   width: 80%;
 }
 
-#reader table img {
+#reader table img, #subscribe table img, #hidden_videos table img {
   float: right;
+}
+
+#subscribe table {
+  margin-top: 10px;
+  width: 30%;
+}
+
+#hidden_videos table {
+  margin-top: 10px;
+  width: 100%;
 }
 
 #reader table a {
@@ -40,4 +50,12 @@ ul#channels li span.checked {
 
 #reader table tr:nth-child(odd) {
   background-color: #eee;
+}
+
+#reader table td {
+  padding: 5px;
+}
+
+#reader h3 {
+  margin: 11px 0 7px 7px;
 }

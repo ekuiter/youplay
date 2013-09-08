@@ -77,7 +77,7 @@ module Reader
     
     def update_videos_by_channel(channel)
       videos = CachedVideo.all.map {|v| v.url}
-      url = "http://gdata.youtube.com/feeds/api/users/#{channel.channel}/uploads?v=2"
+      url = "http://gdata.youtube.com/feeds/api/users/#{channel.is_a?(SubscribedChannel) ? channel.channel : channel}/uploads?v=2"
       raw_xml = http_request(url: url).body # ... go to youtube and fetch channel's latest videos
       xml = YouTubeIt::Parser::VideosFeedParser.new(raw_xml).parse # parse youtube's response
       xml.videos.each do |video|

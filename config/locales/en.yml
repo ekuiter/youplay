@@ -2,6 +2,7 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  bad_request: "Bad request."
   application:
     name: "youplay"
     status: "closed beta"
@@ -82,14 +83,18 @@ en:
       download: "Download this video"
     favorite: "Mark as favorite"
     no_favorite: "Remove favorite"
+    description: "Description"
+    comments: "Comments"
+    description_empty: "No description available"
+    post_comment: "Post"
   video_list:
     recently_watched_videos: "Recently watched videos"
     title: "Title"
     channel_topic: "Channel"
     date: "Date"
     no_videos_found: "No videos found."
-    page: "Page:"
-    results_per_page: "Results per page:"
+    page: "Page"
+    results_per_page: "Results"
     first: "< Newest"
     previous: "< Newer"
     next: "Older >"
@@ -140,6 +145,7 @@ en:
       delete: "Delete person"
       name: "Name"
   reader:
+    read: "Show reader"
     update: "Update videos"
     updating: "Updating ..."
     manage_hidden: "Manage hidden videos"
@@ -152,6 +158,8 @@ en:
       channel_success: "You subscribed \"%{channel}\"."
       failure: "An error occured while subscribing. Check your input."
     show: "Show hidden videos"
+    no_hidden_videos: "There are no hidden videos."
+    no_videos: "There are no new videos."
   youtube:
     grant_access_title: "Link your YouTube account"
     grant_access: "You have to grant %{application_name} access to your YouTube account to do this."

@@ -1,18 +1,22 @@
 module Log::LogHelper
 
-  def first_page
+  def first_page favorites = false
+    return link_to t('video_list.first'), log_favorites_path(1, @results) if favorites
     link_to t('video_list.first'), log_path(1, @results)
   end
 
-  def previous_page
+  def previous_page favorites = false
+    return link_to t('video_list.previous'), log_favorites_path(@current_page - 1, @results) if favorites
     link_to t('video_list.previous'), log_path(@current_page - 1, @results)
   end
 
-  def next_page
+  def next_page favorites = false
+    return link_to t('video_list.next'), log_favorites_path(@current_page + 1, @results) if favorites
     link_to t('video_list.next'), log_path(@current_page + 1, @results)
   end
 
-  def last_page
+  def last_page favorites = false
+    return link_to t('video_list.last'), log_favorites_path(@page_count, @results) if favorites
     link_to t('video_list.last'), log_path(@page_count, @results)
   end
 

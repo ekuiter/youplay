@@ -1,58 +1,7 @@
 <%= @module = "log"; render "/head" %>
 
-<% if @page_count > 1 %>
-    <div id="pages">
-      <%= t "video_list.page" %>
-      <% if @current_page > 2 %>
-          <%= first_page %> |
-      <% end %>
-      <% if @current_page > 1 %>
-          <%= previous_page %> |
-      <% end %>
-      <% pages.each do |page| %>
-          <%= page.html_safe %>
-      <% end %>
-      <% if @current_page < @page_count %>
-          | <%= next_page %>
-      <% end %>
-      <% if @current_page < @page_count - 1 %>
-          | <%= last_page %>
-      <% end %>
-    </div>
-<% end %>
+<%= @favorites = false; render "pagination" %>
 
-<% if @video_count > @results_range.min %>
-    <div id="results">
-      <%= t 'video_list.results_per_page' %>
-      <% results.each_with_index do |result, index| %>
-          <%= '|' unless index == 0 %>
-          <%= result.html_safe %>
-      <% end %>
-    </div>
-<% end %>
+<h3 id="log_heading"><%= t("video_list.all_videos") %> <span><%= link_to t("video_list.only_favorites"), log_favorites_path %></span></h3>
 
-<div><%= link_to t("log.only_favorites"), log_favorites_path %></div>
-
-<% if @videos.empty? %>
-    <%= t 'video_list.no_videos_found' %>
-<% else %>
-    <div class="videos">
-      <table>
-        <tr>
-          <th><%= t 'video_list.date' %></th>
-          <th><%= t 'video_list.title' %></th>
-          <th><%= t 'video_list.channel_topic' %></th>
-          <th><%= t 'video_list.duration' %></th>
-        </tr>
-        <% @videos.each do |video| %>
-            <tr>
-              <td><%= l video.created_at, format: :short %></td>
-              <td><%= link_to video.title[0..current_user.max_title_length]+(video.title.length > current_user.max_title_length ? "..." : ""), video.play_url %></td>
-              <td><%= link_to_channel video.channel_topic %></td>
-              <td><%= video_duration video %></td>
-              <td class="delete"><%= link_to "", log_set_favorite_path(video.url), class: (video.favorite.nil? ? :no_favorite : :favorite), method: (video.favorite.nil? ? :get : :delete) %> <%= link_to image_tag('delete.png', width: 20, height: 20), log_delete_video_path(video.url), method: :delete, confirm: t('confirm') %></td>
-            </tr>
-        <% end %>
-      </table>
-    </div>
-<% end %>
+<%= render "video_list" %>

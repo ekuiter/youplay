@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   end
 
   def bad_request
-    flash[:alert] = 'Bad request.'
+    flash[:alert] = t("bad_request")
     redirect_to player_path
   end
 

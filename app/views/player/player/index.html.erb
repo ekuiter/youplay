@@ -1,8 +1,9 @@
 <%= @module = 'player'
     ; render '/head' %>
 
-<%= form_tag play_path, method: :get do %>
-    <h3><%= t 'player.play_youtube' %></h3>
+<h3><%= t 'player.play_youtube' %></h3>
+
+<%= form_tag play_path, method: :get, class: :play_form do %>
     <%= label_tag :url, t('player.play_video') %>
     <%= text_field_tag :url, '', size: 50 %>
     <%= submit_tag t('player.play') %>
@@ -10,9 +11,9 @@
 <% end %>
 
 <% unless @recently_watched_videos.empty? %>
-    <div class="recently_watched_videos">
+    <div class="recently_watched videos">
       <h3><%= t 'video_list.recently_watched_videos' %></h3>
-      <table>
+      <table class="wide striped">
         <tr>
           <th><%= t 'video_list.date' %></th>
           <th><%= t 'video_list.title' %></th>
@@ -23,6 +24,8 @@
               <td><%= l video.created_at, format: :short %></td>
               <td><%= link_to video.title, video.play_url %></td>
               <td><%= link_to_channel video.channel_topic %></td>
+              <td class="delete"><%= link_to "", void, class: (video.favorite.nil? ? :no_favorite : :favorite), method: (video.favorite.nil? ? :get : :delete), "data-url" => log_set_favorite_path(video) %>
+                <%= link_to image_tag('delete.png', width: 20, height: 20), log_delete_video_path(video), method: :delete, confirm: t('confirm') %></td>
             </tr>
         <% end %>
       </table>

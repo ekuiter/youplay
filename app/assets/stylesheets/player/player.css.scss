@@ -2,6 +2,29 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+div.recently_watched table {
+  font-size: 16px !important;
+}
+
+div.recently_watched table td {
+  padding: 3px;
+}
+
+form.play_form {
+  margin-bottom: 20px;
+  background-color: #eee;
+  padding: 12px;
+}
+
+form.play_form input[type=text] {
+  width: 40%;
+  margin: 0 5px 0 20px;
+}
+
+form.play_form input[type=submit] {
+  width: 100px;
+}
+
 div.noembed {
   margin: 50px 0 100px 0;
   height: 180px;
@@ -53,24 +76,8 @@ div#player {
   height: 475px;
 }
 
-div.recently_watched_videos table {
-  width: 100%;
-}
-
-div.recently_watched_videos th {
-  text-align: left;
-}
-
-div.recently_watched_videos td {
-  padding: 3px;
-}
-
-div#description {
-  margin: 20px 0 10px 0;
-}
-
 p#download {
-  margin-top: 5px;
+  margin-top: 20px;
 }
 
 p#download a img {
@@ -93,4 +100,72 @@ p#favorite a:hover {
 
 p#favorite a.favorite, p#favorite a.no_favorite {
   margin-top: -3px;
+}
+
+#description {
+  float: left;
+  width: 519px;
+  border-right: 1px solid #999;
+  border-bottom: 1px solid #999;
+  font-size: 14px;
+  margin: 8px 10px 0 0;
+  min-height: 100px;
+}
+
+#description p {
+  padding-right: 10px;
+}
+
+#comments {
+  display: inline;
+  width: 520px;
+  font-size: 14px;
+}
+
+#description h4, #comments h4 {
+  padding: 5px;
+  margin: 0;
+  border-top: 1px solid #999;
+  border-bottom: 1px solid #999;
+}
+
+#description h4 {
+  float: right;
+  border-left: 1px solid #999;
+  padding-right: 7px;
+}
+
+#comments h4 {
+  float: left;
+  border-right: 1px solid #999;
+  padding-left: 7px;
+  margin: 8px 0 0 -10px;
+}
+
+#comments #write_comment {
+  margin-top: 50px;
+  margin-bottom: 10px;
+}
+
+#comments #write_comment textarea {
+  width: 415px;
+  height: 50px;
+}
+
+#comments #write_comment button {
+  float: right;
+  margin-top: 15px;
+  width: 80px;
+  height: 25px;
+}
+
+#comments .comment {
+  margin-bottom: 8px;
+}
+
+#comments .comment em {
+  display: block;
+  float: right;
+  font-size: 12px;
+  margin-top: 2px;
 }

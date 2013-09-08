@@ -31,7 +31,12 @@ HTML
   end
 
   def video_download_url(id)
-    "#{Constants.url_protocol}å#{id}"
+    "#{Constants.url_protocol}#{id}"
+  end
+  
+  def user_url comment
+    user = comment.author.uri.gsub("http://gdata.youtube.com/feeds/api/users/", "")
+    "http://www.youtube.com/channel/#{user}"
   end
 
 end

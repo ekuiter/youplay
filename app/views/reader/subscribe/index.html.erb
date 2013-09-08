@@ -1,20 +1,30 @@
 <%= render 'reader/reader/reader_head' %>
 
 <h3><%= t('reader.subscribe.channels') %></h3>
+
+<p id="options"><%= link_to t('reader.subscribe.delete_all'), reader_delete_channel_path, method: :delete, confirm: t('confirm')  %></p>
+
 <%= form_tag(reader_add_channel_path, method: :post) do %>
-    <%= text_field_tag :channel %>
+    <%= text_field_tag :channel, "", style: "width:200px" %>
     <%= submit_tag t('reader.subscribe.subscribe') %>
 <% end %>
-   <div><%= link_to t('reader.subscribe.delete_all'), reader_delete_channel_path, method: :delete, confirm: t('confirm')  %></div>
-<div>
-  <% if @subscribed_channels.nil? %>
-      <%= t('reader.subscribe.no_channels') %>
+   
+<div id="subscribe">
+  <% if @subscribed_channels.blank? %>
+      <p><%= t('reader.subscribe.no_channels') %></p>
   <% else %>
-      <ul>
+      <table class="striped">
+        <tr>
+          <th><%= t("video_list.channel_topic") %></th>
+        </tr>
         <% @subscribed_channels.each do |channel| %>
-            <li><%= link_to channel.channel, "http://www.youtube.com/user/#{channel.channel}", target: :blank %>
-              - <%= link_to 'X', reader_delete_channel_path(channel), method: :delete, confirm: t('confirm') %></li>
+        <tr>
+          <td>
+            <%= channel.channel %>
+            <%= link_to image_tag("delete.png", width: 16, height: 16), reader_delete_channel_path(channel), method: :delete, confirm: t('confirm') %>
+          </td>
+        </tr>
         <% end %>
-      </ul>
+      </table>
   <% end %>
 </div>

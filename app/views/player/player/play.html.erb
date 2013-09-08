@@ -47,11 +47,11 @@
     <%= link_to t('player.download.download'), video_download_url(@video.unique_id) %></p>
   <div class="clear"></div>
   <p id="favorite"><% if @saved_video.favorite.nil? %>
-    <%= link_to "", "javascript:$.ajax('#{log_set_favorite_path(@saved_video.url)}');$('p#favorite :first-child').removeClass('no_favorite').addClass('favorite');$('p#favorite :last-child').text('#{t("player.no_favorite")}')", class: :no_favorite %>
-    <%= link_to t("player.favorite"), "javascript:$.ajax({url:'#{log_set_favorite_path(@saved_video.url)}'});$('p#favorite :first-child').removeClass('no_favorite').addClass('favorite');$('p#favorite :last-child').text('#{t("player.no_favorite")}')" %>
+    <%= link_to "", void, class: :no_favorite, 'data-url' => log_set_favorite_path(@saved_video) %>
+    <%= link_to t("player.favorite"), void, 'data-text' => t("player.no_favorite") %>
     <% else %>
-    <%= link_to "", "javascript:$.ajax({url:'#{log_set_favorite_path(@saved_video.url)}',type:'delete'});$('p#favorite :first-child').removeClass('favorite').addClass('no_favorite');$('p#favorite :last-child').text('#{t("player.favorite")}')", class: :favorite, method: :delete %>
-    <%= link_to t("player.no_favorite"), "javascript:$.ajax({url:'#{log_set_favorite_path(@saved_video.url)}',type:'delete'});$('p#favorite :first-child').removeClass('favorite').addClass('no_favorite');$('p#favorite :last-child').text('#{t("player.favorite")}')" %>
+    <%= link_to "", void, class: :favorite, method: :delete, 'data-url' => log_set_favorite_path(@saved_video) %>
+    <%= link_to t("player.no_favorite"), void, 'data-text' => t("player.favorite") %>
     <% end %></p>
 </div>
 
@@ -73,16 +73,22 @@
 <% end %>
 
 <div id="description">
-  <%= description %>
+  <h4><%= t("player.description") %></h4>
+  <p><%= description.blank? ? "<em>#{t("player.description_empty")}</em>".html_safe : description %></p>
 </div>
 
 <% if @video.access_control['comment'] == 'allowed' then %>
-    <div id="write_comment">
-
-    </div>
-
-    <div id="comments">
-      <% if @video.access_control['commentVote'] == 'allowed' then %><!-- commentVote placeholder -->
-      <% end %>
-    </div>
+<div id="comments">
+  <h4><%= t("player.comments") %></h4>
+  <div id="write_comment">
+    <textarea></textarea>
+    <button><%= t("player.post_comment") %></button>
+  </div>
+  <% @comments.each do |comment| %>
+  <div class="comment">
+    <em><%= comment.author.name %></em>
+    <span><%= comment.content %></span>
+  </div>
+  <% end %>
+</div>
 <% end %>

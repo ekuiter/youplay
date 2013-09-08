@@ -2,12 +2,12 @@
 
 <%= render 'conf/conf/conf_head' %>
 
-<%= link_to t('conf.users.new'), new_conf_user_path %>
+<p id="options"><%= link_to t('conf.users.new'), new_conf_user_path %></p>
 
 <% if @users.empty? %>
     <p><%= t 'conf.users.no_users_found' %></p>
 <% else %>
-    <table>
+    <table class="wide striped">
   <tr>
     <th><%= t 'devise.username' %></th>
     <th><%= t 'devise.full_name' %></th>
@@ -18,11 +18,11 @@
       <tr>
         <td><%= link_to user.username, edit_conf_user_path(user) %></td>
         <td><%= user.full_name %></td>
-        <td><%= user.email %></td>
+        <td><%= link_to user.email, "mailto:#{user.email}" %></td>
         <td><%= user.youtube_account %></td>
         <td><%= humanize_role user.admin %></td>
-        <td><%= link_to image_tag('edit.png'), edit_conf_user_path(user) %></td>
-        <td><%= link_to image_tag('delete.png'), conf_user_path(user), method: :delete, confirm: t('confirm') %></td>
+        <td><%= link_to image_tag('edit.png'), edit_conf_user_path(user) %>
+        <%= link_to image_tag('delete.png'), conf_user_path(user), method: :delete, confirm: t('confirm') %></td>
       </tr>
   <% end %>
 </table>

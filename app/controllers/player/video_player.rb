@@ -7,7 +7,8 @@ module Player::VideoPlayer
                                refresh_token: current_user.refresh_token, expires_in: current_user.expires_in
       video = client.video_by id
       sourcecode = http_request(url: video.player_url).body.encode
-      { video: video, sourcecode: sourcecode }
+      comments = client.comments id
+      { video: video, sourcecode: sourcecode, comments: comments, client: client }
     rescue
       flash[:alert] = t('player.wrong_url');
       redirect_to player_path

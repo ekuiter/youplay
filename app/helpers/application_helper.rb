@@ -76,5 +76,9 @@ module ApplicationHelper
     duration = video.duration / 60
     "#{duration} #{t 'player.meta.minutes', count: duration}"
   end
+  
+  def void
+    "javascript:void(0)"
+  end
 
 end
