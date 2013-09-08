@@ -13,7 +13,7 @@ class YoutubeController < ApplicationController
         success = t 'youtube.success', application_name: t('application.name')
         if params[:state]
           if params[:state].include? 'player_video_'
-            redirect_to "#{player_video_path}?#{params[:state].gsub('player_video_', '')}", notice: success
+            redirect_to "#{play_path}?#{params[:state].gsub('player_video_', '')}", notice: success
           elsif params[:state].include? 'conf'
             redirect_to conf_edit_settings_path, notice: success
           else
