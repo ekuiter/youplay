@@ -23,7 +23,7 @@ ready = ->
           if k == data.length - 1
             $("#loading").hide()
             if $("#reader").children().length == 1
-              $("#reader").append("<h3><%= I18n.t "reader.no_videos" %></h3>")
+              $("#reader").append("<h3>There are no new videos.</h3>")
     setTimeout(->
       Turbolinks.visit("/reader/update")
     15*60*1000)
