@@ -13,7 +13,7 @@
         </tr>
         <% @hidden_videos.each do |hidden_video| %>
         <tr>
-          <td><%= link_to hidden_video.cached_video.title, "#{play_url}?#{hidden_video.cached_video.url}" %></td>
+          <td><%= link_to hidden_video.cached_video.title, hidden_video.cached_video.play_url %></td>
           <td>
             <%= hidden_video.cached_video.channel %>
             <%= link_to image_tag("delete.png", width: 16, height: 16), reader_show_path(hidden_video.cached_video.url), method: :delete %>
