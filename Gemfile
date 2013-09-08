@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby '2.0.0'
 
 gem 'rails', '3.2.11'
 
@@ -17,6 +18,7 @@ gem 'json', '1.7.7'
 gem 'turbolinks'
 gem 'mysql2'
 gem 'newrelic_rpm'
+gem 'rails_12factor'
 
 # Gems used only for assets and not required
 # in production environments by default.
