@@ -1,3 +1,43 @@
-// Place all the styles related to the reader/reader controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+#reader ul#channels {
+  float: right;
+  margin-right: 10px;
+  text-align: right;
+}
+
+ul#channels {
+  font-size: 19px;
+}
+
+ul#channels li {
+  margin-bottom: 5px;
+}
+
+ul#channels li span {
+  margin-right: 24px;
+}
+
+ul#channels li span.checked {
+  margin-right: 0;
+  text-decoration: line-through;
+  color: #555;
+}
+
+#reader table {
+  width: 80%;
+}
+
+#reader table img {
+  float: right;
+}
+
+#reader table a {
+  border: 0;
+}
+
+#reader table tr:nth-child(even) {
+  background-color: white;
+}
+
+#reader table tr:nth-child(odd) {
+  background-color: #eee;
+}

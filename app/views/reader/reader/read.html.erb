@@ -1,0 +1,12 @@
+<div id="<%= @channel.channel %>">
+  <h3><%= @channel.channel %></h3>
+    <table>
+      <tbody>
+      <% @videos.each do |video| %>
+          <tr>
+            <td><%= link_to video.title, video.play_url %>
+            <%= link_to image_tag("delete.png", width: 16, height: 16), reader_hide_path(video.url), method: :delete %></td>
+      <% end %>
+      </tbody>
+    </table>
+</div>

@@ -1,0 +1,55 @@
+div.videos table {
+  width: 100%;
+}
+
+div.videos th {
+  text-align: left;
+}
+
+div.videos td.delete a {
+  border: 0;
+}
+
+div.videos table {
+  font-size: 15px;
+}
+
+div.videos table tr:nth-child(even) {
+  background-color: #eee;
+}
+
+div.videos table td {
+  padding: 4px;
+}
+
+div.videos table tr th {
+  padding: 18px 0 6px 6px;
+}
+
+a.no_favorite {
+  display: block;
+  float: left;
+  margin: 0 10px 0 5px;
+  width: 20px;
+  height: 20px;
+  background: url(<%= asset_path("favorite.png") %>) no-repeat bottom;
+}
+
+a.no_favorite:hover {
+  background-position: top;
+  border: none;
+}
+
+a.favorite {
+  display: block;
+  float: left;
+  margin: 0 10px 0 5px;
+  width: 20px;
+  height: 20px;
+  background: url(<%= asset_path("favorite.png") %>) no-repeat top;
+}
+
+a.favorite:hover {
+  background-position: bottom;
+  border: none;
+}

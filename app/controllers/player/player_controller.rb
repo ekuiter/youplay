@@ -6,22 +6,21 @@ class Player::PlayerController < ApplicationController
     @recently_watched_videos = current_user.recently_watched_videos
   end
 
-  def video
-    #begin
+  def play
+    begin
       fetched = fetch_video params
-      @video = fetched[:video]
-      #sourcecode = fetched[:sourcecode]
-      #@downloads = fetched[:downloads]
-      #logger.debug @downloads.to_yaml
-      current_user.videos.create browser: user_browser, channel_topic: @video.author.name,
-                                 title: @video.title, url: @video.unique_id, duration: @video.duration
-    #rescue
-    #  bad_request
-    #end
-  end
-
-  def broadcast
-
+      if fetched
+        @video = fetched[:video]
+        @saved_video = current_user.videos.where(url: @video.unique_id).first
+        if @saved_video.nil?
+          @saved_video = current_user.videos.new browser: user_browser, channel_topic: @video.author.name,
+                          title: @video.title, url: @video.unique_id, duration: @video.duration
+          @saved_video.save
+        end
+      end
+    rescue
+      bad_request
+    end
   end
 
 end

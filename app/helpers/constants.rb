@@ -4,14 +4,6 @@ module Constants
     'youplay://'
   end
 
-  def self.broadcast_update
-    'http://zdfmediathk.sourceforge.net/update.xml'
-  end
-
-  def self.movie_database_path
-    'lib/movie_database/'
-  end
-
   # player section
   def self.player_width
     '800'
@@ -20,7 +12,6 @@ module Constants
   def self.player_height
     '475'
   end
-
 
   # gdata and oauth2 section
 

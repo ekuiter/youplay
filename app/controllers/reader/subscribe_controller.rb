@@ -2,7 +2,6 @@ class Reader::SubscribeController < ApplicationController
 
   def index
     @subscribed_channels = current_user.subscribed_channels
-    @subscribed_broadcasts = current_user.subscribed_broadcasts
   end
 
   def channel_add
@@ -31,15 +30,6 @@ class Reader::SubscribeController < ApplicationController
       current_user.subscribed_channels.all.each { |channel| channel.destroy }
     else
       current_user.subscribed_channels.find(params[:channel]).destroy
-    end
-    redirect_to reader_subscribe_path
-  end
-
-  def broadcast_delete
-    if params[:broadcast].nil?
-      current_user.subscribed_broadcasts.all.each { |broadcast| broadcast.destroy }
-    else
-      current_user.subscribed_broadcasts.find(params[:broadcast]).destroy
     end
     redirect_to reader_subscribe_path
   end

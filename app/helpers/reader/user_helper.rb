@@ -1,8 +1,7 @@
 module Reader
   module UserHelper
 
-    include Reader::BroadcastReader
-
+=begin
     def cached_videos # get all videos from subscribed channels as a plain array
       cached_videos = []
       subscribed_channels.all.each do |sc|
@@ -41,72 +40,51 @@ module Reader
           if videos.where(url: lv.url).all.count > 0 then
             next
           end
-          if videos.where(gronkh_url: lv.url).all.count > 0 then
-            next
-          end
           new_videos[channel_index] << lv
         end
         new_videos[channel_index] = new_videos[channel_index].sort_by { |video| video.uploaded_at }.reverse
       end
       new_videos
     end
-
-    def latest_broadcasts # get all broadcasts from subscribed broadcasts (array of next_broadcast's)
-      latest_broadcasts = {}
-      subscribed_broadcasts.all.each do |sb|
-        latest_broadcasts[sb.broadcast] = []
-        if !sb.broadcast[:all].is_a?(NilClass) && !sb.broadcast[:all].empty?
-          reset_broadcast
-          cb = next_broadcast
-          while cb do
-            if cb[:published_at].to_s.include?(sb.broadcast[:all]) ||
-                cb[:station].include?(sb.broadcast[:all])||
-                cb[:topic].include?(sb.broadcast[:all]) ||
-                cb[:title].include?(sb.broadcast[:all])
-              latest_broadcasts[sb.broadcast] << cb
-            end
-            cb = next_broadcast
-          end
-        else
-          reset_broadcast
-          cb = next_broadcast
-          while cb do
-            if  cb.station.include?(sb.broadcast[:station])||
-                cb.topic.include?(sb.broadcast[:topic]) ||
-                cb.title.include?(sb.broadcast[:title])
-              latest_broadcasts[sb.broadcast] << cb
-            end
-            cb = next_broadcast
-          end
+    
+    def update_videos # fetch latest videos from youtube
+      subscribed_channels = SubscribedChannel.all.map {|subscribed_channel| subscribed_channel.channel}.uniq # read all subscribed channels
+      subscribed_channels.each do |subscribed_channel| # for each channel ...
+        url = "http://gdata.youtube.com/feeds/api/users/#{subscribed_channel}/uploads?v=2"
+        raw_xml = http_request(url: url).body # ... go to youtube and fetch channel's latest videos
+        xml = YouTubeIt::Parser::VideosFeedParser.new(raw_xml).parse # parse youtube's response
+        xml.videos.each do |video|
+          CachedVideo.create channel: video.author.name, description: video.description, # and create new database entry for each video
+                             title: video.title, url: video.unique_id, uploaded_at: video.uploaded_at
         end
       end
-      latest_broadcasts
     end
-
-    def hidden_broadcasts # get user hidden broadcasts (array of md5s)
-      hidden_broadcasts = []
-      show_broadcasts.where(show: false).all.each do |sb|
-        hidden_broadcasts << sb.md5
+=end
+    
+    
+    def new_videos_by_channel(channel)
+      channel_videos = CachedVideo.where(channel: channel.channel).all   
+      hidden_videos = HideVideo.where(channel: channel.channel).all.map {|v|v.cached_video }
+      watched_videos = videos.all
+      new_videos = []
+      channel_videos.each do |video|
+        next if hidden_videos.include? video
+        next if watched_videos.map {|v|v.url}.include? video.url
+        new_videos << video
       end
-      hidden_broadcasts
+      new_videos.sort_by { |video| video.uploaded_at }.reverse
     end
-
-    def new_broadcasts # get latest broadcasts and keep out hidden and watched broadcasts (hash of arrays of next_bc's)
-      new_broadcasts = {}
-      latest_broadcasts.each do |broadcast_index, broadcasts|
-        new_broadcasts[broadcast_index] = []
-        broadcasts.each do |bc|
-          if hidden_broadcasts.include? bc[:md5] then
-            next
-          end
-          if videos.where(url: bc[:url]).all.count > 0 then
-            next
-          end
-          new_broadcasts[broadcast_index] << bc
-        end
+    
+    def update_videos_by_channel(channel)
+      videos = CachedVideo.all.map {|v| v.url}
+      url = "http://gdata.youtube.com/feeds/api/users/#{channel.channel}/uploads?v=2"
+      raw_xml = http_request(url: url).body # ... go to youtube and fetch channel's latest videos
+      xml = YouTubeIt::Parser::VideosFeedParser.new(raw_xml).parse # parse youtube's response
+      xml.videos.each do |video|
+        CachedVideo.create channel: video.author.name, description: video.description, # and create new database entry for each video
+                           title: video.title, url: video.unique_id, uploaded_at: video.uploaded_at unless videos.include? video.unique_id
       end
-      new_broadcasts
     end
-
+    
   end
 end

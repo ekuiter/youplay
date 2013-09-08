@@ -1,7 +1,6 @@
 class User < ActiveRecord::Base
 
-  # reader: latest_videos, hidden_videos, new_videos,
-  #         latest_broadcasts, hidden_broadcasts, new_broadcasts
+  # reader: latest_videos, hidden_videos, new_videos
   include Reader::UserHelper
 
   # log: watched_videos
@@ -18,7 +17,6 @@ class User < ActiveRecord::Base
   # stats: /
   include Stats::UserHelper
 
-
   include YoutubeConnector
   include HttpRequest
 
@@ -32,14 +30,13 @@ class User < ActiveRecord::Base
   attr_accessible :username, :full_name, :email, :password, :password_confirmation, :remember_me
   # attr_accessible :title, :body
 
-  has_many :videos
-  has_many :subscribed_channels
-  has_many :subscribed_broadcasts
-  has_many :people
-  has_many :hide_videos
+  has_many :videos, dependent: :destroy
+  has_many :subscribed_channels, dependent: :destroy
+  has_many :people, dependent: :destroy
+  has_many :hide_videos, dependent: :destroy
   has_many :cached_videos, through: :hide_videos
-  has_many :hide_broadcasts
-  has_many :configurations
+  has_many :configurations, dependent: :destroy
+  has_many :favorites, dependent: :destroy
   validates :username, :full_name, presence: true
   validates :username, uniqueness: true
 

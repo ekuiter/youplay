@@ -31,7 +31,7 @@
     </div>
 <% end %>
 
-<div><%= link_to t("log.only_favorites"), log_favorites_path %></div>
+<div><%= link_to t("log.all_videos"), log_path %></div>
 
 <% if @videos.empty? %>
     <%= t 'video_list.no_videos_found' %>

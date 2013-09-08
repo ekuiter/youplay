@@ -43,7 +43,16 @@
     <% end %>
     </tbody>
   </table>
-  <%= link_to t('player.download.download'), video_download_url(@video.unique_id) %>
+  <p id="download"><%= link_to image_tag("download.gif"), video_download_url(@video.unique_id) %>
+    <%= link_to t('player.download.download'), video_download_url(@video.unique_id) %></p>
+  <div class="clear"></div>
+  <p id="favorite"><% if @saved_video.favorite.nil? %>
+    <%= link_to "", "javascript:$.ajax('#{log_set_favorite_path(@saved_video.url)}');$('p#favorite :first-child').removeClass('no_favorite').addClass('favorite');$('p#favorite :last-child').text('#{t("player.no_favorite")}')", class: :no_favorite %>
+    <%= link_to t("player.favorite"), "javascript:$.ajax({url:'#{log_set_favorite_path(@saved_video.url)}'});$('p#favorite :first-child').removeClass('no_favorite').addClass('favorite');$('p#favorite :last-child').text('#{t("player.no_favorite")}')" %>
+    <% else %>
+    <%= link_to "", "javascript:$.ajax({url:'#{log_set_favorite_path(@saved_video.url)}',type:'delete'});$('p#favorite :first-child').removeClass('favorite').addClass('no_favorite');$('p#favorite :last-child').text('#{t("player.favorite")}')", class: :favorite, method: :delete %>
+    <%= link_to t("player.no_favorite"), "javascript:$.ajax({url:'#{log_set_favorite_path(@saved_video.url)}',type:'delete'});$('p#favorite :first-child').removeClass('favorite').addClass('no_favorite');$('p#favorite :last-child').text('#{t("player.favorite")}')" %>
+    <% end %></p>
 </div>
 
 <% if @video.access_control['embed'] == 'allowed' then %>

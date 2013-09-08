@@ -1,37 +1,47 @@
 class Reader::ReaderController < ApplicationController
 
   include Reader::MediaReader
-  include Reader::VideoReader
-  include Reader::BroadcastReader
-
+  
+  def channels
+    render json: current_user.subscribed_channels.map {|c|c.channel}
+  end
+  
+  def read_channel
+    begin
+      @channel = current_user.subscribed_channels.where(channel: params[:channel]).first
+      @videos = current_user.new_videos_by_channel(@channel)
+      render "read", layout: false
+    rescue
+      render nothing: true
+    end
+  end
+  
+  def update_channel
+    begin
+      @channel = current_user.subscribed_channels.where(channel: params[:channel]).first
+      @videos = current_user.update_videos_by_channel(@channel)
+    rescue
+    end
+    render nothing: true
+  end
+  
   def index
-    @new_videos = current_user.new_videos
-    @broadcast_number = CachedBroadcastsInfo.find_by_key('broadcast_number')
-    @database_datetime = CachedBroadcastsInfo.find_by_key('database_datetime')
-    @broadcast_number = @broadcast_number.value if @broadcast_number
-    @database_datetime = @database_datetime.value.to_datetime if @database_datetime
+  end
+  
+  def update
   end
 
   def hide
-    hide_video_or_broadcast params[:id]
+    hide_video params[:id]
     redirect_to reader_path
   end
 
   def show
-    show_video_or_broadcast params[:id]
+    show_video params[:id]
     redirect_to reader_hidden_path
   end
 
-  def update
-    logger.debug 'updating videos now'
-    update_videos
-    logger.debug 'updating broadcasts now'
-    update_broadcasts
-    redirect_to reader_path
-  end
-
   def hidden
-
   end
 
 end

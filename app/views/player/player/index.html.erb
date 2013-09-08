@@ -1,7 +1,7 @@
 <%= @module = 'player'
     ; render '/head' %>
 
-<%= form_tag player_video_path, method: :get do %>
+<%= form_tag play_path, method: :get do %>
     <h3><%= t 'player.play_youtube' %></h3>
     <%= label_tag :url, t('player.play_video') %>
     <%= text_field_tag :url, '', size: 50 %>

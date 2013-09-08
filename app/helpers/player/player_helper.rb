@@ -31,11 +31,7 @@ HTML
   end
 
   def video_download_url(id)
-    "#{Constants.url_protocol}youtube/#{id}"
-  end
-
-  def broadcast_download_url(md5)
-    "#{Constants.url_protocol}broadcast/#{md5}"
+    "#{Constants.url_protocol}å#{id}"
   end
 
 end

@@ -1,21 +1,4 @@
 <%= render 'reader/reader/reader_head' %>
 
-<% if @broadcast_number.nil? || @database_datetime.nil? %>
-    <div>*The movie database has not yet been downloaded.</div>
-<% else %>
-    <div>*The last broadcast update was on <%= l @database_datetime, format: :short %>. *There
-      are <%= @broadcast_number %> broadcasts in the database.
-    </div>
-<% end %>
-
-<div>
-  <% @new_videos.each do |channel, new_videos| %>
-      <h4><%= channel %></h4>
-      <ul>
-        <% new_videos.each do |video| %>
-            <li><%= link_to video.title, video.play_url %>
-              - <%= link_to 'X', reader_hide_path(video.url), method: :delete %></li>
-        <% end %>
-      </ul>
-  <% end %>
+<div id="reader">
 </div>

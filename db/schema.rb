@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130907161513) do
+ActiveRecord::Schema.define(:version => 20130907203321) do
 
   create_table "cached_videos", :force => true do |t|
     t.string   "title"
@@ -31,11 +31,19 @@ ActiveRecord::Schema.define(:version => 20130907161513) do
     t.integer  "user_id"
   end
 
+  create_table "favorites", :force => true do |t|
+    t.integer  "video_id"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "hide_videos", :force => true do |t|
     t.integer  "user_id"
     t.integer  "cached_video_id"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+    t.string   "channel"
   end
 
   create_table "people", :force => true do |t|
@@ -81,7 +89,6 @@ ActiveRecord::Schema.define(:version => 20130907161513) do
   create_table "videos", :force => true do |t|
     t.string   "title"
     t.string   "url"
-    t.string   "gronkh_url"
     t.string   "channel_topic"
     t.string   "station"
     t.string   "browser"

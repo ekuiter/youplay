@@ -18,18 +18,3 @@
       </ul>
   <% end %>
 </div>
-
-<h3><%= t('reader.subscribe.broadcasts') %></h3>
-<div><%= link_to t('reader.subscribe.delete_all'), reader_delete_broadcast_path, method: :delete, confirm: t('confirm') %></div>
-<div>
-  <% if @subscribed_broadcasts.nil? %>
-      <%= t('reader.subscribe.no_broadcasts') %>
-  <% else %>
-      <ul>
-        <% @subscribed_broadcasts.each do |broadcast| %>
-            <li><%= broadcast.broadcast %>
-              - <%= link_to 'X', reader_delete_broadcast_path(broadcast), method: :delete, confirm: t('confirm') %></li>
-        <% end %>
-      </ul>
-  <% end %>
-</div>

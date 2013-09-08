@@ -68,3 +68,29 @@ div.recently_watched_videos td {
 div#description {
   margin: 20px 0 10px 0;
 }
+
+p#download {
+  margin-top: 5px;
+}
+
+p#download a img {
+  display: block;
+  float: left;
+  margin: -2px 10px 0 5px;
+}
+
+p#download a:hover {
+  border: none;
+}
+
+p#favorite {
+  margin-top: 5px;
+}
+
+p#favorite a:hover {
+  border: none;
+}
+
+p#favorite a.favorite, p#favorite a.no_favorite {
+  margin-top: -3px;
+}
