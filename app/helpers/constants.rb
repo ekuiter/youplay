@@ -30,7 +30,7 @@ module Constants
   end
 
   def self.redirect_uri
-    'http://localhost/youtube/auth'
+    'http://***REMOVED***/youtube/auth'
   end
 
   def self.scope # space-delimited list of scopes that identify the resources to access
