@@ -10,8 +10,8 @@ module Player::VideoPlayer
       comments = client.comments id
       { video: video, sourcecode: sourcecode, comments: comments, client: client }
     rescue
-      flash[:alert] = t('player.wrong_url');
-      redirect_to player_path
+      flash[:alert] = t('player.wrong_url') unless @redirecting
+      redirect_to player_path unless @redirecting
       false
     end
   end

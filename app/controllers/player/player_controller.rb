@@ -7,20 +7,16 @@ class Player::PlayerController < ApplicationController
   end
 
   def play
-    begin
-      fetched = fetch_video params
-      if fetched
-        @video = fetched[:video]
-        @comments = fetched[:comments]
-        @saved_video = current_user.videos.where(url: @video.unique_id).first
-        if @saved_video.nil?
-          @saved_video = current_user.videos.new browser: user_browser, channel_topic: @video.author.name,
-                          title: @video.title, url: @video.unique_id, duration: @video.duration
-          @saved_video.save
-        end
+    fetched = fetch_video params
+    if fetched
+      @video = fetched[:video]
+      @comments = fetched[:comments]
+      @saved_video = current_user.videos.where(url: @video.unique_id).first
+      if @saved_video.nil?
+        @saved_video = current_user.videos.new browser: user_browser, channel_topic: @video.author.name,
+                        title: @video.title, url: @video.unique_id, duration: @video.duration
+        @saved_video.save
       end
-    rescue
-      bad_request
     end
   end
   

@@ -3,11 +3,11 @@ module YoutubeConnector # provides a youtube client authenticated through OAuth2
   require 'youtube_it'
 
   def youtube_connect(options = {}) # returns an OAuth2 authenticated youtube client
-    client = YouTubeIt::OAuth2Client.new(# create a youtube client
-        client_access_token: options[:access_token], client_refresh_token: options[:refresh_token],
-        client_token_expires_at: options[:expires_in], client_id: Constants::client_id,
-        client_secret: Constants::client_secret, dev_key: Constants::developer_key)
     begin
+      client = YouTubeIt::OAuth2Client.new(# create a youtube client
+          client_access_token: options[:access_token], client_refresh_token: options[:refresh_token],
+          client_token_expires_at: options[:expires_in], client_id: Constants::client_id,
+          client_secret: Constants::client_secret, dev_key: Constants::developer_key)
       client.current_user # try a feature which needs authentication
     rescue OAuth2::Error, RuntimeError # if authentication failed
       begin
@@ -32,6 +32,7 @@ module YoutubeConnector # provides a youtube client authenticated through OAuth2
           else
             redirect_to youtube_connect_path # let the user grant access
           end
+          @redirecting = true
         end
       end
     end
