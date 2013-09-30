@@ -5,7 +5,7 @@
     <tbody>
     <tr>
       <td class="desc"><%= t 'player.meta.channel' %></td>
-      <td><%= link_to_channel @video.author.name %></td>
+      <td><%= channel_link @profile %></td>
     </tr>
     <tr>
       <td class="desc"><%= t 'player.meta.date' %></td>
@@ -86,7 +86,7 @@
   </div>
   <% @comments.each do |comment| %>
   <div class="comment">
-    <em><%= comment.author.name %></em>
+    <em><%= channel_link comment.author.uri %></em>
     <span><%= comment.content %></span>
   </div>
   <% end %>

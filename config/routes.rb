@@ -1,5 +1,7 @@
 Youplay::Application.routes.draw do
 
+  get "test" => "player/player#test"
+
   devise_for :users, path_names: {sign_in: "login", sign_out: "logout", sign_up: "register"}
 
   root to: "player/player#index"

@@ -12,8 +12,8 @@
         <% @videos.each do |video| %>
             <tr>
               <td><%= l video.created_at, format: :short %></td>
-              <td><%= link_to video.title[0..@title_length]+(video.title.length > @title_length ? "..." : ""), video.play_url %></td>
-              <td><%= link_to_channel video.channel_topic %></td>
+              <td><%= link_to video.title[0..@title_length].html_safe+(video.title.length > @title_length ? "..." : ""), video.play_url %></td>
+              <td><%= channel_link video.channel_topic %></td>
               <td><%= video_duration video %></td>
               <td class="delete"><%= favorited = @favorited_video_ids.include?(video.id); link_to "", void, class: (favorited ? :favorite : :no_favorite), method: (favorited ? :delete : :get), "data-url" => log_set_favorite_path(video) %>
                 <%= link_to image_tag('delete.png', width: 20, height: 20), log_delete_video_path(video), method: :delete, confirm: t('confirm') %></td>

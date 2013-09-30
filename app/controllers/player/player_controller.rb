@@ -4,6 +4,7 @@ class Player::PlayerController < ApplicationController
 
   def index
     @recently_watched_videos = current_user.recently_watched_videos
+    @client = youtube_client
   end
 
   def play
@@ -11,9 +12,10 @@ class Player::PlayerController < ApplicationController
     if fetched
       @video = fetched[:video]
       @comments = fetched[:comments]
+      @profile = fetched[:profile]
       @saved_video = current_user.videos.where(url: @video.unique_id).first
       if @saved_video.nil?
-        @saved_video = current_user.videos.new browser: user_browser, channel_topic: @video.author.name,
+        @saved_video = current_user.videos.new browser: user_browser, channel_topic: @profile.user_id,
                         title: @video.title, url: @video.unique_id, duration: @video.duration
         @saved_video.save
       end

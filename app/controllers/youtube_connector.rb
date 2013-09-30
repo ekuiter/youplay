@@ -1,6 +1,11 @@
 module YoutubeConnector # provides a youtube client authenticated through OAuth2 with access and refresh tokens
 
   require 'youtube_it'
+  
+  def youtube_client(state = nil)
+    @client = youtube_connect current_user: current_user, state: state, access_token: current_user.access_token,
+                              refresh_token: current_user.refresh_token, expires_in: current_user.expires_in
+  end
 
   def youtube_connect(options = {}) # returns an OAuth2 authenticated youtube client
     begin
@@ -64,6 +69,6 @@ module YoutubeConnector # provides a youtube client authenticated through OAuth2
     google_auth_url = 'https://accounts.google.com/o/oauth2/auth'
     "#{google_auth_url}?client_id=#{Constants::client_id}&redirect_uri=#{Constants::redirect_uri}" +
         "&response_type=code&access_type=offline&approval_prompt=force&scope=#{Constants::scope}&state=#{state}"
-  end
+  end  
 
 end

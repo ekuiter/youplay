@@ -58,16 +58,12 @@ module ApplicationHelper
 
   include HttpRequest
 
-  def link_to_channel(channel)
-    url = channel
+  def channel_link profile
     begin
-      if channel.include? ' '
-        req = http_request url: 'https://gdata.youtube.com/feeds/api/channels?v=2&q=' + channel.gsub(' ', '+')
-        url = req.body.split("<author><name>#{channel}</name><uri>https://gdata.youtube.com/feeds/api/users/")[1].split('</uri>')[0]
-      end
-      link_to channel, "http://youtube.com/user/#{url}", target: '_blank'
+      profile = @client.profile profile.gsub('http://gdata.youtube.com/feeds/api/users/', '') if profile.is_a? String
+      link_to profile.username_display, profile.url, target: :_blank
     rescue
-      channel
+      profile
     end
   end
 

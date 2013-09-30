@@ -3,12 +3,12 @@ module Player::VideoPlayer
   def fetch_video(params)
     begin
       id = extract_id params
-      client = youtube_connect current_user: current_user, state: "player_video_#{id}", access_token: current_user.access_token,
-                               refresh_token: current_user.refresh_token, expires_in: current_user.expires_in
+      client = youtube_client "player_video_#{id}"
       video = client.video_by id
       sourcecode = http_request(url: video.player_url).body.encode
       comments = client.comments id
-      { video: video, sourcecode: sourcecode, comments: comments, client: client }
+      profile = client.profile video.author.uri.gsub('http://gdata.youtube.com/feeds/api/users/', '')
+      { video: video, sourcecode: sourcecode, comments: comments, profile: profile, client: client }
     rescue
       flash[:alert] = t('player.wrong_url') unless @redirecting
       redirect_to player_path unless @redirecting
@@ -39,4 +39,12 @@ module Player::VideoPlayer
     id
   end
 
+end
+
+class YouTubeIt::Model::User
+  
+  def url
+    "http://www.youtube.com/channel/UC#{user_id}"
+  end
+  
 end
