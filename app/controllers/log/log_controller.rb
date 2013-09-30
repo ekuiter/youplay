@@ -34,8 +34,8 @@ class Log::LogController < ApplicationController
   
   def log hash={}
     @client = youtube_client
-    default_number = 25
-    @results_range = default_number..200
+    default_number = 50
+    @results_range = default_number..400
     results = params[:results].nil? ? default_number : Integer(params[:results])
     results = @results_range.min unless @results_range.include? results
     page = params[:page].nil? ? 0 : Integer(params[:page]) - 1

@@ -86,7 +86,7 @@
   </div>
   <% @comments.each do |comment| %>
   <div class="comment">
-    <em><%= channel_link comment.author.uri %></em>
+    <em class="ajax-user" data-user="<%= comment.author.uri.gsub("http://gdata.youtube.com/feeds/api/users/", "") %>"></em>
     <span><%= comment.content %></span>
   </div>
   <% end %>

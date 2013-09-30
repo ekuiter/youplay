@@ -31,5 +31,19 @@ class YoutubeController < ApplicationController
     current_user.save
     redirect_to conf_edit_settings_path, notice: t('youtube.reset_success', application_name: t('application.name'))
   end
+  
+  def channel_info
+    if params[:channels].is_a? Array
+      @client = youtube_client
+      channels = [params[:i]]
+      params[:channels].each do |channel|
+        profile = @client.profile(channel)
+        channels.push username: profile.username_display, url: profile.url
+      end
+      render json: channels
+    else
+      render nothing: true
+    end
+  end
 
 end

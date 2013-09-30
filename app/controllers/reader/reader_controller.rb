@@ -2,9 +2,9 @@ class Reader::ReaderController < ApplicationController
 
   include Reader::MediaReader
   
-  skip_before_filter :authenticate_user!, only: :update_all
+  skip_before_filter :authenticate_user!, only: :update
   
-  def update_all
+  def update
     unless params[:pass].nil? || params[:pass] != "VtfTNRv1Fv9mrTTa6E6KCFNs1VlPdCyTczZH247ZL9gQCThL69SOjDjJh89yVBfO"
       subscribed_channels = SubscribedChannel.all.map {|subscribed_channel| subscribed_channel.channel}.uniq
       subscribed_channels.each do |channel|
@@ -28,19 +28,7 @@ class Reader::ReaderController < ApplicationController
     end
   end
   
-  def update_channel
-    begin
-      @channel = current_user.subscribed_channels.where(channel: params[:channel]).first
-      @videos = current_user.update_videos_by_channel(@channel)
-    rescue
-    end
-    render nothing: true
-  end
-  
   def index
-  end
-  
-  def update
   end
 
   def hide

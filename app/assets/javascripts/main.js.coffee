@@ -1,8 +1,11 @@
 ready = ->
+  
   $(document).on "page:fetch", ->
     $("#loading").show()
+    
   $(document).on "page:load", ->
     $("#loading").hide()
+    
   $("#reader").each ->
     $.ajax("/reader/read").done (data) ->
       $("#loading").show()
@@ -27,19 +30,7 @@ ready = ->
     setTimeout(->
       Turbolinks.visit("/reader/update")
     15*60*1000)
-  $("#update").each ->
-    $.ajax("/reader/read").done (data) ->
-      $("#loading").show()
-      str = "<ul id=\"channels\">"
-      $.each data, (k,v) ->
-        str += "<li id=\"load_"+v+"\"><span>"+v+"</span></li>"
-      $("#update").append str+"</ul>"
-      $.each data, (k,v) ->
-        $.ajax("/reader/update/"+v).done ->
-          $("#update #load_"+v).append("&nbsp;&nbsp;✓").children("span").addClass("checked")
-          if k == data.length - 1
-            $("#loading").hide()
-            Turbolinks.visit("/reader/")
+    
   $("#video_sidebar #favorite").click ->
     img = $("#video_sidebar #favorite :first-child")
     $.ajax(img.data("url"), type: img.data("method")).done ->
@@ -53,6 +44,7 @@ ready = ->
       text = label.data("text")
       label.data("text", label.text())
       label.text(text)
+      
   $(".videos").each ->
     $(".favorite, .no_favorite").each ->
       img = $(this)
@@ -64,12 +56,31 @@ ready = ->
           else
             img.removeClass("favorite").addClass("no_favorite")
             img.data("method", "get")
+            
   $("#comments #write_comment button").each ->
     btn = $(this)
     btn.click ->
       btn.text(btn.text().replace(" ✓",""))
       $("#comments #write_comment textarea").each ->
         $.post(document.url, "comment="+$(this).val()).done ->
-          btn.text(btn.text()+" ✓")        
+          btn.text(btn.text()+" ✓")
+          
+  user_number = 15 
+  if $(".ajax-user").length > 0
+    times = Math.floor($(".ajax-user").length / user_number)
+    for i in [0..times]
+      users = []
+      $(".ajax-user").slice(i*user_number, (i+1)*user_number).each ->
+        users.push($(this).data("user"))
+      url = "/channel_info?i=" + i + "&"
+      for user in users
+        url += "channels[]=" + user + "&"
+      $.ajax(url).done (data) ->
+        i = data[0]
+        j = 1
+        $(".ajax-user").slice(i*user_number, (i+1)*user_number).each ->
+          $(this).html('<a href="' + data[j]["url"] + '" target="_blank">' + data[j]["username"] + "</a>")
+          j++
+          
 $(document).ready ready
 $(document).on "page:load", ready

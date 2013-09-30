@@ -7,6 +7,7 @@ Youplay::Application.routes.draw do
   root to: "player/player#index"
   get "youtube/auth/(:state)" => "youtube#connect", as: "youtube_connect"
   get "youtube/reset" => "youtube#reset", as: "youtube_reset"
+  get "channel_info" => "youtube#channel_info", as: "channel_info"
   get "play" => "player/player#play", as: "play"
   post "play" => "player/player#comment"
   
@@ -18,8 +19,6 @@ Youplay::Application.routes.draw do
     get "" => "reader#index"
     get "read" => "reader#channels"
     get "read/:channel" => "reader#read_channel"
-    get "update/:channel" => "reader#update_channel"
-    get "update_all" => "reader#update_all"
     get "update" => "reader#update"
     delete "show(/:id)" => "reader#show", as: "show"
     delete "channel/:channel" => "reader#hide_channel", as: "hide_channel"

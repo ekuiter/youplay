@@ -40,11 +40,3 @@ module Player::VideoPlayer
   end
 
 end
-
-class YouTubeIt::Model::User
-  
-  def url
-    "http://www.youtube.com/channel/UC#{user_id}"
-  end
-  
-end

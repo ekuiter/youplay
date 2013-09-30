@@ -6,18 +6,15 @@ class Reader::SubscribeController < ApplicationController
 
   def channel_add
     begin
-      youtube_check = http_request(url: "http://gdata.youtube.com/feeds/api/users/#{params[:channel]}/uploads?v=2").body
-      if youtube_check.include? '<error><domain>GData</domain><code>'
-        flash[:alert] = t 'reader.subscribe.failure'
+      @client = youtube_client
+      profile = @client.profile params[:channel]
+      flash[:alert] = t 'reader.subscribe.failure' unless profile
+      sc = current_user.subscribed_channels.new
+      sc.channel = profile.user_id
+      if sc.save
+        flash[:notice] = t 'reader.subscribe.channel_success', channel: profile.username_display
       else
-        channel = youtube_check.split('<author><name>')[1].split('</name>')[0]
-        sc = current_user.subscribed_channels.new
-        sc.channel = channel
-        if sc.save
-          flash[:notice] = t 'reader.subscribe.channel_success', channel: channel
-        else
-          flash[:alert] = t 'reader.subscribe.failure'
-        end
+        flash[:alert] = t 'reader.subscribe.failure'
       end
     rescue
       flash[:alert] = t 'reader.subscribe.failure'

@@ -26,7 +26,7 @@ ul#channels li span.checked {
   width: 80%;
 }
 
-#reader table img, #subscribe table img, #hidden_videos table img {
+#reader table img, #subscribe table img.delete, #hidden_videos table img {
   float: right;
   margin: 1px 3px 0 0;
 }

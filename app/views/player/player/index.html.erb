@@ -23,7 +23,7 @@
             <tr>
               <td><%= l video.created_at, format: :short %></td>
               <td><%= link_to video.title.html_safe, video.play_url %></td>
-              <td><%= channel_link video.channel_topic %></td>
+              <td class="ajax-user" data-user="<%= video.channel_topic %>"><%= image_tag "loading-small.gif" %></td>
               <td class="delete"><%= link_to "", void, class: (video.favorite.nil? ? :no_favorite : :favorite), method: (video.favorite.nil? ? :get : :delete), "data-url" => log_set_favorite_path(video) %>
                 <%= link_to image_tag('delete.png', width: 20, height: 20), log_delete_video_path(video), method: :delete, confirm: t('confirm') %></td>
             </tr>

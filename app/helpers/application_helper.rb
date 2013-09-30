@@ -57,9 +57,11 @@ module ApplicationHelper
   end
 
   include HttpRequest
+  include YoutubeConnector
 
   def channel_link profile
     begin
+      @client = youtube_client if @client.nil?
       profile = @client.profile profile.gsub('http://gdata.youtube.com/feeds/api/users/', '') if profile.is_a? String
       link_to profile.username_display, profile.url, target: :_blank
     rescue
@@ -75,6 +77,14 @@ module ApplicationHelper
   
   def void
     "javascript:void(0)"
+  end
+  
+  class YouTubeIt::Model::User
+  
+    def url
+      "http://www.youtube.com/channel/UC#{user_id}"
+    end
+  
   end
 
 end
