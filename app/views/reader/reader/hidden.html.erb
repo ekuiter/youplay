@@ -3,20 +3,17 @@
 <p id="options"><%= link_to t('reader.show'), reader_show_path, method: :delete, confirm: t('confirm') %></p>
 
 <div id="hidden_videos">
-  <% if @hidden_videos.blank? %>
+  <% if @videos.blank? %>
       <p><%= t('reader.no_hidden_videos') %></p>
   <% else %>
       <table class="striped">
         <tr>
           <th><%= t("video_list.title") %></th>
-          <th><%= t("video_list.channel_topic") %></th>
         </tr>
-        <% @hidden_videos.each do |hidden_video| %>
+        <% @videos.each do |video| %>
         <tr>
-          <td><%= link_to hidden_video.cached_video.title, hidden_video.cached_video.play_url %></td>
-          <td>
-            <%= hidden_video.cached_video.channel %>
-            <%= link_to image_tag("delete.png", width: 16, height: 16), reader_show_path(hidden_video.cached_video.url), method: :delete %>
+          <td><%= link_to video.title, video.play_url %>
+            <%= link_to image_tag("delete.png", width: 16, height: 16), reader_show_path(video.url), method: :delete %>
           </td>
         </tr>
         <% end %>

@@ -61,12 +61,17 @@ module ApplicationHelper
 
   def channel_link profile
     begin
-      @client = youtube_client if @client.nil?
-      profile = @client.profile profile.gsub('http://gdata.youtube.com/feeds/api/users/', '') if profile.is_a? String
+      profile = fetch_profile profile
       link_to profile.username_display, profile.url, target: :_blank
     rescue
       profile
     end
+  end
+  
+  def fetch_profile profile
+    @client = youtube_client if @client.nil? && profile.is_a?(String)
+    return @client.profile(profile.gsub('http://gdata.youtube.com/feeds/api/users/', '')) if profile.is_a? String
+    profile
   end
 
   def video_duration(video)

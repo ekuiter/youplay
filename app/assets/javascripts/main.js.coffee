@@ -7,28 +7,23 @@ ready = ->
     $("#loading").hide()
     
   $("#reader").each ->
-    $.ajax("/reader/read").done (data) ->
-      $("#loading").show()
-      str = "<ul id=\"channels\">"
-      $.each data, (k,v) ->
-        str += "<li id=\"load_"+v+"\"><span>"+v+"</span></li>"
-      $("#reader").append str+"</ul>"
-      $.each data, (k,v) ->
-        $.ajax("/reader/read/"+v).done (data2) ->
-          $("#reader").append data2
-          $("#reader #load_"+v).append("&nbsp;&nbsp;✓").children("span").addClass("checked")
-          $(".hide").each ->
-            hide = $(this)
-            row = $(this).parent().parent()
-            hide.click ->
-              $.ajax(hide.data("url"), type: "delete").done ->
-                row.remove()
-          if k == data.length - 1
-            $("#loading").hide()
-            if $("#reader").children().length == 1
-              $("#reader").append("<h3>There are no new videos.</h3>")
+    $("td .hide").each ->
+      hide = $(this)
+      row = $(this).parent().parent()
+      hide.click ->
+        $.ajax(hide.data("url"), type: "delete").done ->
+          if row.parent().children().length == 1
+            row.parent().parent().parent().remove()
+          else
+            row.remove()
+    $("h3 .hide").each ->
+      hide = $(this)
+      channel = $(this).parent().parent()
+      hide.click ->
+        $.ajax(hide.data("url"), type: "delete").done ->
+          channel.remove()
     setTimeout(->
-      Turbolinks.visit("/reader/update")
+      Turbolinks.visit("/reader")
     15*60*1000)
     
   $("#video_sidebar #favorite").click ->

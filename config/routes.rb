@@ -17,12 +17,10 @@ Youplay::Application.routes.draw do
   
   namespace :reader do
     get "" => "reader#index"
-    get "read" => "reader#channels"
-    get "read/:channel" => "reader#read_channel"
+    delete "" => "reader#hide", as: "hide"
     get "update" => "reader#update"
     delete "show(/:id)" => "reader#show", as: "show"
     delete "channel/:channel" => "reader#hide_channel", as: "hide_channel"
-    delete ":id" => "reader#hide", as: "hide"
     get "hidden" => "reader#hidden"
     get "subscribe" => "subscribe#index"
     delete "subscribe/channel(/:channel)" => "subscribe#channel_delete", as: "delete_channel"
