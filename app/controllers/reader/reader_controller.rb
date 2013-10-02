@@ -4,8 +4,6 @@ class Reader::ReaderController < ApplicationController
   
   skip_before_filter :authenticate_user!, only: :update
   
-  http_basic_authenticate_with name: '***REMOVED***', password: 'elia593', realm: 'youplay', except: :update
-  
   def update
     unless params[:pass].nil? || params[:pass] != "VtfTNRv1Fv9mrTTa6E6KCFNs1VlPdCyTczZH247ZL9gQCThL69SOjDjJh89yVBfO"
       User.first.update_videos
