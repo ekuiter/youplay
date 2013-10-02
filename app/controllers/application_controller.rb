@@ -5,8 +5,6 @@ class ApplicationController < ActionController::Base
   include YoutubeConnector
   include HttpRequest
 
-  http_basic_authenticate_with name: '***REMOVED***', password: 'elia593', realm: 'youplay'
-
   def remove_role
     params[:user].delete :role if params[user:[:role]].present?
   end
