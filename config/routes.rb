@@ -17,6 +17,7 @@ Youplay::Application.routes.draw do
   
   namespace :reader do
     get "" => "reader#index"
+    get "json" => "reader#json"
     delete "" => "reader#hide", as: "hide"
     get "update" => "reader#update"
     delete "show(/:id)" => "reader#show", as: "show"

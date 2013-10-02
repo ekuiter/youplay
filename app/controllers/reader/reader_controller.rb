@@ -4,6 +4,8 @@ class Reader::ReaderController < ApplicationController
   
   skip_before_filter :authenticate_user!, only: :update
   
+  before_filter :authenticate, only: :json
+  
   def update
     unless params[:pass].nil? || params[:pass] != "VtfTNRv1Fv9mrTTa6E6KCFNs1VlPdCyTczZH247ZL9gQCThL69SOjDjJh89yVBfO"
       User.first.update_videos
@@ -13,10 +15,10 @@ class Reader::ReaderController < ApplicationController
 
   def index
     @videos = current_user.new_videos
-    respond_to do |format|
-      format.html
-      format.json {render json: @videos}
-    end
+  end
+  
+  def json
+    render json: current_user.new_videos
   end
 
   def hide
@@ -33,6 +35,14 @@ class Reader::ReaderController < ApplicationController
 
   def hidden
     @videos = CachedVideo.joins(:hide_videos).where("hide_videos.user_id" => current_user.id).all
+  end
+
+  private
+  
+  def authenticate
+    authenticate_or_request_with_http_basic do |username, password|
+      username == current_user.username && current_user.valid_password?(password)
+    end
   end
 
 end
