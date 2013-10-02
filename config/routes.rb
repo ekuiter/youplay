@@ -1,8 +1,8 @@
 Youplay::Application.routes.draw do
 
-  get "test" => "player/player#test"
-
-  devise_for :users, path_names: {sign_in: "login", sign_out: "logout", sign_up: "register"}
+  post "users" => "application#nothing"
+  get "users/sign_up" => "application#nothing"
+  devise_for :users, path_names: {sign_in: "login", sign_out: "logout"}
 
   root to: "player/player#index"
   get "youtube/auth/(:state)" => "youtube#connect", as: "youtube_connect"

@@ -4,6 +4,10 @@ class ApplicationController < ActionController::Base
   before_filter :remove_role
   include YoutubeConnector
   include HttpRequest
+  
+  def nothing
+    render nothing: true
+  end
 
   def remove_role
     params[:user].delete :role if params[user:[:role]].present?

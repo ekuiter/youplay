@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   include HttpRequest
 
   # Include devise modules
-  devise :database_authenticatable, :trackable, :validatable
+  devise :database_authenticatable, :trackable, :validatable, :registerable
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :username, :full_name, :email, :password, :password_confirmation, :remember_me
