@@ -17,7 +17,6 @@ gem 'jquery-rails'
 gem 'json', '1.7.7'
 gem 'turbolinks'
 gem 'mysql2'
-gem 'newrelic_rpm'
 gem 'rails_12factor'
 
 # Gems used only for assets and not required
