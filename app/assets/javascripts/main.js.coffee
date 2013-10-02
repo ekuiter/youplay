@@ -22,9 +22,11 @@ ready = ->
       hide.click ->
         $.ajax(hide.data("url"), type: "delete").done ->
           channel.remove()
-    setTimeout(->
+    timeout = setTimeout(->
       Turbolinks.visit("/reader")
     15*60*1000)
+    $(document).on "page:before_change", ->
+      clearTimeout(timeout)
     
   $("#video_sidebar #favorite").click ->
     img = $("#video_sidebar #favorite :first-child")
