@@ -25,7 +25,7 @@ ready = ->
     timeout = setTimeout(->
       Turbolinks.visit("/reader")
     15*60*1000)
-    $(document).on "page:before_change", ->
+    $(document).on "page:before-change", ->
       clearTimeout(timeout)
     
   $("#video_sidebar #favorite").click ->
