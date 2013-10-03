@@ -20,7 +20,7 @@
         <% @subscribed_channels.each do |channel| %>
         <tr>
           <td>
-            <span class="ajax-user" data-user="<%= channel.channel %>"><%= image_tag "loading-small.gif "%></span>
+            <span class="ajax-user" data-user="<%= channel.channel %>"><%= image_tag "loading-small.gif" %></span>
           </td>
           <td>
             <%= link_to image_tag("delete.png", width: 16, height: 16), reader_delete_channel_path(channel), method: :delete, confirm: t('confirm') %>
