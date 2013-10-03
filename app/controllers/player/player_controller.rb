@@ -5,6 +5,8 @@ class Player::PlayerController < ApplicationController
   def index
     @recently_watched_videos = current_user.recently_watched_videos
     @client = youtube_client
+    @title_length = current_user.max_title_length
+    @favorited_video_ids = current_user.favorites.map {|f| f.video_id}
   end
 
   def play

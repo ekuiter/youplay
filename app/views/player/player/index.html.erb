@@ -22,11 +22,12 @@
         <% @recently_watched_videos.each do |video| %>
             <tr>
               <td><%= l video.created_at, format: :short %></td>
-              <td><%= link_to video.title.html_safe, video.play_url %></td>
+              <td><%= link_to video.title[0..@title_length].html_safe+(video.title.length > @title_length ? "..." : ""), video.play_url %></td>
               <td class="ajax-user" data-user="<%= video.channel_topic %>"><%= image_tag "loading-small.gif" %></td>
-              <td class="delete"><%= link_to "", void, class: (video.favorite.nil? ? :no_favorite : :favorite), method: (video.favorite.nil? ? :get : :delete), "data-url" => log_set_favorite_path(video) %>
+              <td class="delete"><%= favorited = @favorited_video_ids.include?(video.id); link_to "", void, class: (favorited ? :favorite : :no_favorite), method: (favorited ? :delete : :get), "data-url" => log_set_favorite_path(video) %>
                 <%= link_to image_tag('delete.png', width: 20, height: 20), log_delete_video_path(video), method: :delete, confirm: t('confirm') %></td>
             </tr>
+              
         <% end %>
       </table>
     </div>
