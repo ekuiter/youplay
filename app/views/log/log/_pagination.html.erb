@@ -1,32 +1,30 @@
-<div id="pagination">
-    <% if @page_count > 1 %>
-      <div id="pages">
-        <strong><%= t "video_list.page" %></strong>
-        <% if @current_page > 2 %>
-            <%= first_page @favorites %> |
-        <% end %>
-        <% if @current_page > 1 %>
-            <%= previous_page @favorites %> |
-        <% end %>
-        <% pages.each do |page| %>
-            <%= page.html_safe %>
-        <% end %>
-        <% if @current_page < @page_count %>
-            | <%= next_page @favorites %>
-        <% end %>
-        <% if @current_page < @page_count - 1 %>
-            | <%= last_page @favorites %>
-        <% end %>
-      </div>
-  <% end %>
+<% if @page_count > 1 %>
+  <div id="pages">
+    <strong><%= t "video_list.page" %></strong>
+    <% if @current_page > 2 %>
+        <%= first_page @favorites %> |
+    <% end %>
+    <% if @current_page > 1 %>
+        <%= previous_page @favorites %> |
+    <% end %>
+    <% pages.each do |page| %>
+        <%= page.html_safe %>
+    <% end %>
+    <% if @current_page < @page_count %>
+        | <%= next_page @favorites %>
+    <% end %>
+    <% if @current_page < @page_count - 1 %>
+        | <%= last_page @favorites %>
+    <% end %>
+  </div>
+<% end %>
 
-  <% if @video_count > @results_range.min %>
-      <div id="results">
-        <strong><%= t 'video_list.results_per_page' %></strong>
-        <% results.each_with_index do |result, index| %>
-            <%= '|' unless index == 0 %>
-            <%= result.html_safe %>
-        <% end %>
-      </div>
-  <% end %>
-</div>
+<% if @video_count > @results_range.min %>
+  <div id="results">
+    <strong><%= t 'video_list.results_per_page' %></strong>
+    <% results.each_with_index do |result, index| %>
+        <%= '|' unless index == 0 %>
+        <%= result.html_safe %>
+    <% end %>
+  </div>
+<% end %>

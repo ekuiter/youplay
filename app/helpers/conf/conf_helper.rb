@@ -1,12 +1,12 @@
 module Conf::ConfHelper
 
   def conf_actions
-    actions = {
-        t('conf.edit_settings') => conf_edit_settings_path,
-        t('devise.edit_account') => edit_user_registration_path,
-        t('conf.manage_people') => conf_people_path
-    }
-    actions[t('conf.manage_users')] = conf_users_path if current_user.admin
+    actions = [
+      { name: t('conf.edit_settings'), path: conf_edit_settings_path },
+      { name: t('devise.edit_account'), path: edit_user_registration_path },
+      { name: t('conf.manage_people'), path: conf_people_path }
+    ]
+    actions.push({ name: t('conf.manage_users'), path: conf_users_path }) if current_user.admin
     actions
   end
 

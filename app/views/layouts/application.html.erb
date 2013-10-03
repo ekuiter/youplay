@@ -11,10 +11,18 @@
 <div id="wrapper">
   <div id="loading">
   </div>
+  
+  <ul id="subnav">
+    <% begin send("#{@module}_actions").reverse.each do |action| %>
+      <li><%= link_to action[:name], action[:path], class: (@current_path == action[:path] ? "active" : "") %></li>
+      <% end; rescue; end %>
+  </ul>
 
   <div id="page_title">
     <%= @page_title if @page_title %>
   </div>
+  
+  <div class="clear"></div>
 
   <div id="inner_wrapper">
     <div id="flash">
@@ -37,8 +45,7 @@
   </div>
 
   <div id="sidebar" class="<%= user_signed_in? ? '' : 'signed_out' %>">
-    <h2><%= link_to t('application.name'), root_path %>
-      <span class="sub"><%= t 'application.status' %></span></h2>
+    <%= link_to image_tag("beta.png",  width: 80, height: 80), root_path, class: :noborder %>
 
     <% if user_signed_in? %>
         <div id="user_nav">

@@ -1,5 +1,12 @@
 module Log::LogHelper
 
+  def log_actions
+    [
+      { name: t('video_list.all_videos'), path: log_path },
+      { name: t('video_list.only_favorites'), path: log_favorites_path }
+    ]
+  end
+
   def first_page favorites = false
     return link_to t('video_list.first'), log_favorites_path(1, @results) if favorites
     link_to t('video_list.first'), log_path(1, @results)

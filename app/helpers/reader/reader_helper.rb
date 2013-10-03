@@ -1,11 +1,11 @@
 module Reader::ReaderHelper
 
   def reader_actions
-    {
-        t('reader.read') => reader_path,
-        t('reader.subscribe.button') => reader_subscribe_path,
-        t('reader.manage_hidden') => reader_hidden_path
-    }
+    [
+      { name: t('reader.read'), path: reader_path },
+      { name: t('reader.subscribe.button'), path: reader_subscribe_path },
+      { name: t('reader.manage_hidden'), path: reader_hidden_path }
+    ]
   end
 
 end

@@ -5,7 +5,6 @@ en:
   bad_request: "Bad request."
   application:
     name: "youplay"
-    status: "closed beta"
   imprint: "Imprint"
   modules:
     player: "Player"

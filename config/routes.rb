@@ -38,7 +38,7 @@ Youplay::Application.routes.draw do
   
   namespace :conf do
     get "" => "conf#settings"
-    get "settings" => "conf#settings", as: "edit_settings"
+    get "" => "conf#settings", as: "edit_settings"
     put "settings" => "conf#update_settings", as: "update_settings"
     resources :users, except: :show
     resources :people, except: :show
