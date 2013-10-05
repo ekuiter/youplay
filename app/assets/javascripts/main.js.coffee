@@ -13,7 +13,10 @@ ready = ->
       hide.click ->
         $.ajax(hide.data("url"), type: "delete").done ->
           if row.parent().children().length == 1
-            row.parent().parent().parent().remove()
+            if row.parent().parent().parent().parent().children().length == 1
+              row.parent().parent().parent().parent().html("<h3>There are no new videos.</h3>")
+            else
+              row.parent().parent().parent().remove()
           else
             row.remove()
     $("td .play").each ->
@@ -21,7 +24,10 @@ ready = ->
       row = $(this).parent().parent()
       play.click ->
         if row.parent().children().length == 1
-          row.parent().parent().parent().remove()
+          if row.parent().parent().parent().parent().children().length == 1
+            row.parent().parent().parent().parent().html("<h3>There are no new videos.</h3>")
+          else
+            row.parent().parent().parent().remove()
         else
           row.remove()
     $("h3 .hide").each ->
