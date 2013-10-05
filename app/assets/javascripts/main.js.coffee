@@ -16,6 +16,14 @@ ready = ->
             row.parent().parent().parent().remove()
           else
             row.remove()
+    $("td .play").each ->
+      play = $(this)
+      row = $(this).parent().parent()
+      play.click ->
+        if row.parent().children().length == 1
+          row.parent().parent().parent().remove()
+        else
+          row.remove()
     $("h3 .hide").each ->
       hide = $(this)
       channel = $(this).parent().parent()
