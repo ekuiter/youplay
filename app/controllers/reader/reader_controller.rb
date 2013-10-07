@@ -16,13 +16,18 @@ class Reader::ReaderController < ApplicationController
   end
   
   def json
-    if params[:username].nil? || params[:username] != current_user.username ||
-       params[:password].nil? || !current_user.valid_password?(params[:password])
-      render nothing: true
+    if !params[:username].nil? && !params[:password].nil?
+      user = User.where(username: params[:username]).first
+      if user.valid_password? params[:password]
+        render json: user.new_videos
+      else
+        render nothing: true
+      end
     else
-      render json: current_user.new_videos
+      render nothing: true
     end
   end
+  
 
   def hide
     params[:videos].each do |video|
