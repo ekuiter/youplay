@@ -4,8 +4,6 @@ class Reader::ReaderController < ApplicationController
   
   skip_before_filter :authenticate_user!, only: [:update, :json]
   
-  before_filter :authenticate, only: :json
-  
   def update
     unless params[:pass].nil? || params[:pass] != "VtfTNRv1Fv9mrTTa6E6KCFNs1VlPdCyTczZH247ZL9gQCThL69SOjDjJh89yVBfO"
       User.first.update_videos
@@ -18,7 +16,12 @@ class Reader::ReaderController < ApplicationController
   end
   
   def json
-    render json: current_user.new_videos
+    if params[:username].nil? || params[:username] != current_user.username ||
+       params[:password].nil? || !current_user.valid_password?(params[:password])
+      render nothing: true
+    else
+      render json: current_user.new_videos
+    end
   end
 
   def hide
