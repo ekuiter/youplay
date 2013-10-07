@@ -18,8 +18,17 @@ class Reader::ReaderController < ApplicationController
   def json
     if !params[:username].nil? && !params[:password].nil?
       user = User.where(username: params[:username]).first
+      current_user
+      @client = youtube_connect current_user: user, access_token: user.access_token,
+                                refresh_token: user.refresh_token, expires_in: user.expires_in
+      new_videos = user.new_videos
+      new_videos.each do |channel, videos|
+        videos.each do |video|
+          video.channel = @client.profile(channel).username_display
+        end
+      end
       if user.valid_password? params[:password]
-        render json: user.new_videos
+        render json: new_videos
       else
         render nothing: true
       end
