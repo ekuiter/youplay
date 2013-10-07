@@ -2,7 +2,7 @@ class Reader::ReaderController < ApplicationController
 
   include Reader::MediaReader
   
-  skip_before_filter :authenticate_user!, only: :update
+  skip_before_filter :authenticate_user!, only: [:update, :json]
   
   before_filter :authenticate, only: :json
   
