@@ -91,5 +91,17 @@ module ApplicationHelper
     end
   
   end
+  
+  class YouTubeIt::Client
+    
+    def profile(user = nil)
+      profile = Channel.where(channel_id: user).first
+      return ::YouTubeIt::Model::User.new(user_id: user, username_display: profile.channel_name) if profile
+      profile = client.profile(user)
+      Channel.create channel_id: profile.user_id, channel_name: profile.username_display
+      profile
+    end
+    
+  end
 
 end
