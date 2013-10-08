@@ -7,6 +7,14 @@ class Log::LogController < ApplicationController
   def favorites
     log favorited: true
   end
+  
+  def log_json
+    json
+  end
+  
+  def favorites_json
+    json favorited: true
+  end
 
   def destroy
     @video = current_user.videos.find params[:id]
@@ -58,6 +66,23 @@ class Log::LogController < ApplicationController
     @is_admin = current_user.admin
     @title_length = current_user.max_title_length
     @favorited_video_ids = current_user.favorites.map {|f| f.video_id}
+  end
+  
+  def json hash={}
+    user = user_from_params
+    if user && user.valid_password?(params[:password])
+      if hash[:favorited]
+        videos = user.favorited_videos 25, 0
+      else
+        videos = user.watched_videos 25, 0
+      end
+      videos.each do |video|
+        video.channel_topic = @client.profile(video.channel_topic).username_display
+      end
+      render json: videos
+    else
+      render nothing: true
+    end
   end
 
 end

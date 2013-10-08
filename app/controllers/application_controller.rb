@@ -65,5 +65,15 @@ class ApplicationController < ActionController::Base
       end
     end
   end
+  
+  def user_from_params
+    if !params[:username].nil? && !params[:password].nil?
+      user = User.where(username: params[:username]).first
+      return nil unless user
+      @client = youtube_connect current_user: user, access_token: user.access_token,
+                                refresh_token: user.refresh_token, expires_in: user.expires_in
+      user
+    end
+  end
 
 end

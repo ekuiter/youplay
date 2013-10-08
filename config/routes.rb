@@ -29,6 +29,8 @@ Youplay::Application.routes.draw do
   end
   
   namespace :log do
+    get "json" => "log#log_json"
+    get "favorites/json" => "log#favorites_json"
     get "favorites(/:page/(:results))" => "log#favorites", as: "favorites"
     get "favorite/:id" => "log#set_favorite", as: "set_favorite"
     delete "favorite/:id" => "log#unset_favorite", as: "unset_favorite"
