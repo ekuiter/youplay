@@ -1,4 +1,6 @@
 class Log::LogController < ApplicationController
+  
+  skip_before_filter :authenticate_user!, only: [:log_json, :favorites_json]
 
   def index
     log
