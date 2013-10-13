@@ -1,0 +1,19 @@
+def upgrade; defect = []; include YoutubeConnector; include HttpRequest; @client = youtube_connect current_user: User.first, access_token: User.first.access_token, refresh_token: User.first.refresh_token, expires_in: User.first.expires_in; Video.all.each do |v| begin; v.url = v.url.gsub('&amp;feature=player_embedded', ''); v.channel_topic = @client.profile(@client.video_by(v.url).author.uri.gsub('http://gdata.youtube.com/feeds/api/users/', '')).user_id; v.save; rescue; defect.push v; end; end; defect; end
+
+def defect; @videos = []; include YoutubeConnector; include HttpRequest; @client = youtube_connect current_user: User.first, access_token: User.first.access_token, refresh_token: User.first.refresh_token, expires_in: User.first.expires_in; Video.all.each do |v| begin; @client.video_by(v.url); rescue; @videos.push v; end; end; @videos; end
+
+def upgrade; include YoutubeConnector; include HttpRequest; @client = youtube_connect current_user: User.first, access_token: User.first.access_token, refresh_token: User.first.refresh_token, expires_in: User.first.expires_in; SubscribedChannel.all.each do |sc| begin; sc.channel = @client.profile(sc.channel).user_id; sc.save; rescue; end; end; end
+
+def update channel
+        url = "http://gdata.youtube.com/feeds/api/users/UC#{channel}/uploads?v=2"
+        raw_xml = http_request(url: url).body
+        xml = YouTubeIt::Parser::VideosFeedParser.new(raw_xml).parse
+        xml.videos.each do |video|
+          CachedVideo.create channel: channel, description: video.description,
+                             title: video.title, url: video.unique_id, uploaded_at: video.uploaded_at unless @videos.include? video.unique_id
+        end
+end
+
+CachedVideo.find_by_sql("SELECT `cached_videos`.* FROM `cached_videos` INNER JOIN `videos` ON `videos`.`url` = `cached_videos`.`url` WHERE `videos`.`user_id` = #{User.first.id}")
+
+def duration; include YoutubeConnector; include HttpRequest; @client = youtube_connect current_user: User.first, access_token: User.first.access_token, refresh_token: User.first.refresh_token, expires_in: User.first.expires_in; Video.all.each {|v| unless v.duration; begin; vi = @client.video_by(v.url); v.duration = vi.duration; v.save; rescue; end; end; }; nil; end
