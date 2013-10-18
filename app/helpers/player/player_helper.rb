@@ -48,7 +48,7 @@ HTML
   end
 
   def video_download_url
-    "#{Constants.url_protocol}#{@video.provider}/#{@video.id}"
+    "#{Constants.video_download}#{@video.provider}/#{@video.id}"
   end
 
 end

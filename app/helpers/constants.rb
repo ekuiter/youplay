@@ -1,7 +1,8 @@
 module Constants
 
-  def self.url_protocol
-    'youplay://'
+  # localhost or other device with same ip running youplay-feed php software
+  def self.video_download
+    'http://localhost:8888/'
   end
 
   # player section
