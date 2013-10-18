@@ -1,22 +1,19 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :authenticate_user!
-  before_filter :remove_role
-  before_filter :current_path
+  before_filter :tasks
   include YoutubeConnector
   include HttpRequest
   include Player::VideoPlayer
-  
-  def current_path
-    @current_path = request.fullpath
-  end
   
   def nothing
     render nothing: true
   end
 
-  def remove_role
+  def tasks
     params[:user].delete :role if params[user:[:role]].present?
+    @current_path = request.fullpath
+    $current_user = current_user
   end
 
   def bad_request
