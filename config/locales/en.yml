@@ -59,13 +59,13 @@ en:
       welcome: "Welcome, %{username}!"
       logout: "Logout"
   player:
-    play_youtube: "Play YouTube videos"
-    play_video: "Play video with YouTube url"
-    wrong_url: 'That is not a YouTube video.'
+    play_youtube: "Play YouTube or Twitch videos"
+    play_video: "Play video with YouTube or Twitch url"
+    wrong_url: 'That is not a valid video.'
     play: "Play"
     noembed: "Unfortunately, embedding this video is not possible."
     noembed2: "Maybe you want to play it %{link}?"
-    noembed_link: "directly on Youtube"
+    noembed_link: "directly on the video site"
     meta:
       channel: "Channel"
       date: "Date"
@@ -75,7 +75,7 @@ en:
         other: "minutes"
       views: "Views"
       comments: "Comments"
-      category: "Category"
+      topic: "Topic"
       likes: "Likes"
       dislikes: "Dislikes"
     download:

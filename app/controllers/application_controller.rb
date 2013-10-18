@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   before_filter :current_path
   include YoutubeConnector
   include HttpRequest
+  include Player::VideoPlayer
   
   def current_path
     @current_path = request.fullpath

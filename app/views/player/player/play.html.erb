@@ -1,11 +1,12 @@
-<%= title @video.title, link: @video.player_url, target: '_blank' %>
+<%= title @video.title, link: @video.url, target: '_blank' %>
 
-<div id="video_sidebar" class="<%= 'sidebar_noembed' unless @video.access_control['embed'] == 'allowed' %>">
+<div id="video_sidebar" class="<%= noembed = @video.provider == :youtube && @video.access_control['embed'] != 'allowed';
+ 'sidebar_noembed' if noembed %>">
   <table>
     <tbody>
     <tr>
       <td class="desc"><%= t 'player.meta.channel' %></td>
-      <td><%= channel_link @profile %></td>
+      <td><%= @video.channel.link %></td>
     </tr>
     <tr>
       <td class="desc"><%= t 'player.meta.date' %></td>
@@ -15,15 +16,13 @@
       <td class="desc"><%= t 'player.meta.duration' %></td>
       <td><%= video_duration @video %></td>
     </tr>
-    <% i = 0; @video.categories.each do |category| %>
-        <tr>
-          <td class="desc"><%= i += 1; t 'player.meta.category' if i == 1 %></td>
-          <td><%= category.label %></td>
-        </tr>
-    <% end %>
+    <tr>
+       <td class="desc"><%= t 'player.meta.topic' %></td>
+       <td><%= @video.topic %></td>
+    </tr>
     <tr>
       <td class="desc"><%= t 'player.meta.views' %></td>
-      <td><%= number_with_delimiter @video.view_count %></td>
+      <td><%= number_with_delimiter @video.views %></td>
     </tr>
     <% if @video.access_control['rate'] == 'allowed' && @video.rating %>
         <tr>
@@ -35,16 +34,10 @@
           <td><%= number_with_delimiter @video.rating.dislikes %></td>
         </tr>
     <% end %>
-    <% if @video.access_control['comment'] == 'allowed' %>
-        <tr>
-          <td class="desc"><%= t 'player.meta.comments' %></td>
-          <td><%= number_with_delimiter @video.comment_count %></td>
-        </tr>
-    <% end %>
     </tbody>
   </table>
-  <p id="download"><%= link_to image_tag("download.gif"), video_download_url(@video.unique_id) %>
-    <%= link_to t('player.download.download'), video_download_url(@video.unique_id) %></p>
+  <p id="download"><%= link_to image_tag("download.gif"), video_download_url %>
+    <%= link_to t('player.download.download'), video_download_url %></p>
   <div class="clear"></div>
   <p id="favorite"><% if @saved_video.favorite.nil? %>
     <%= link_to "", void, class: :no_favorite, 'data-url' => log_set_favorite_path(@saved_video) %>
@@ -55,27 +48,28 @@
     <% end %></p>
 </div>
 
-<% if @video.access_control['embed'] == 'allowed' then %>
-    <%= player %>
-<% else %>
-    <div class="noembed">
-      <%= thumb = @video.thumbnails[1]; link_to image_tag(thumb.url, width: thumb.width, height: thumb.height), @video.player_url, target: '_blank' %>
-      <div>
-        <strong>
-          <%= t 'player.noembed' %>
-        </strong>
-
-        <p>
-          <%= t('player.noembed2', link: link_to(t('player.noembed_link'), @video.player_url, target: '_blank')).html_safe %>
-        </p>
-      </div>
+<% if noembed then %>
+  <div class="noembed">
+    <%= link_to image_tag(@video.thumbnail), @video.url, target: '_blank' %>
+    <div>
+      <strong>
+        <%= t 'player.noembed' %>
+      </strong>
+      <p>
+        <%= t('player.noembed2', link: link_to(t('player.noembed_link'), @video.url, target: '_blank')).html_safe %>
+      </p>
     </div>
+  </div>
+<% else %>
+  <%= player %>
 <% end %>
 
-<div id="description">
-  <h4><%= t("player.description") %></h4>
-  <p><%= description.blank? ? "<em>#{t("player.description_empty")}</em>".html_safe : description %></p>
-</div>
+<% if @video.access_control['comment'] == 'allowed' || !@video.description.blank? %>
+  <div id="description">
+    <h4><%= t("player.description") %></h4>
+    <p><%= @video.description.blank? ? "<em>#{t("player.description_empty")}</em>".html_safe : description %></p>
+  </div>
+<% end %>
 
 <% if @video.access_control['comment'] == 'allowed' then %>
 <div id="comments">
@@ -84,9 +78,9 @@
     <textarea></textarea>
     <button><%= t("player.post_comment") %></button>
   </div>
-  <% @comments.each do |comment| %>
+  <% @video.comments.each do |comment| %>
   <div class="comment">
-    <em class="ajax-user" data-user="<%= comment.author.uri.gsub("http://gdata.youtube.com/feeds/api/users/", "") %>"></em>
+    <em class="ajax-user" data-user="<%= @video.provider %>:<%= comment.author.uri.gsub("http://gdata.youtube.com/feeds/api/users/", "") %>"></em>
     <span><%= comment.content %></span>
   </div>
   <% end %>

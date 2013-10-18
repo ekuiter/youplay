@@ -79,7 +79,7 @@ class Log::LogController < ApplicationController
         videos = user.watched_videos 25, 0
       end
       videos.each do |video|
-        video.channel_topic = @client.profile(video.channel_topic).username_display
+        video.channel_topic = YouplayChannel.new(id: video.channel_topic, provider: video.provider.to_sym).fetch.name
       end
       render json: videos
     else

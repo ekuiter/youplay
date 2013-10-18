@@ -3,8 +3,15 @@ module YoutubeConnector # provides a youtube client authenticated through OAuth2
   require 'youtube_it'
   
   def youtube_client(state = nil)
-    @client = youtube_connect current_user: current_user, state: state, access_token: current_user.access_token,
+    return $youtube_client if $youtube_client
+    $youtube_client = youtube_connect current_user: current_user, state: state, access_token: current_user.access_token,
                               refresh_token: current_user.refresh_token, expires_in: current_user.expires_in
+  end
+  
+  def twitch_client
+    return $twitch_client if $twitch_client
+    require 'twitch'
+    $twitch_client = Twitch.new
   end
 
   def youtube_connect(options = {}) # returns an OAuth2 authenticated youtube client

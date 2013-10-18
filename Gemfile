@@ -19,6 +19,8 @@ gem 'turbolinks'
 gem 'mysql2'
 gem 'rails_12factor'
 gem 'unicorn'
+gem 'twitch', '= 0.0.2'
+gem 'swfobject-rails'
 
 # Gems used only for assets and not required
 # in production environments by default.

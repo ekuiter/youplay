@@ -34,11 +34,11 @@ class YoutubeController < ApplicationController
   
   def channel_info
     if params[:channels].is_a? Array
-      @client = youtube_client
       channels = [params[:i]]
-      params[:channels].each do |channel|
-        profile = @client.profile(channel)
-        channels.push username: profile.username_display, url: profile.url
+      params[:channels].each do |data|
+        split = data.split(':')
+        channel = YouplayChannel.new(id: split[1], provider: split[0].to_sym).fetch
+        channels.push username: channel.name, url: channel.url
       end
       render json: channels
     else

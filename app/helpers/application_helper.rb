@@ -48,30 +48,12 @@ module ApplicationHelper
 
     html = <<-HTML
     <div id="error_explanation">
-      <h4>#{sentence}</ h4>
+      <h4>#{sentence}</h4>
     <ul> #{messages}</ul>
     </div>
     HTML
 
     html.html_safe
-  end
-
-  include HttpRequest
-  include YoutubeConnector
-
-  def channel_link profile
-    begin
-      profile = fetch_profile profile
-      link_to profile.username_display, profile.url, target: :_blank
-    rescue
-      profile
-    end
-  end
-  
-  def fetch_profile profile
-    @client = youtube_client if @client.nil? && profile.is_a?(String)
-    return @client.profile(profile.gsub('http://gdata.youtube.com/feeds/api/users/', '')) if profile.is_a? String
-    profile
   end
 
   def video_duration(video)
@@ -82,26 +64,6 @@ module ApplicationHelper
   
   def void
     "javascript:void(0)"
-  end
-  
-  class YouTubeIt::Model::User
-  
-    def url
-      "http://www.youtube.com/channel/UC#{user_id}"
-    end
-  
-  end
-  
-  class YouTubeIt::Client
-    
-    def profile(user = nil)
-      profile = Channel.where(channel_id: user).first
-      return ::YouTubeIt::Model::User.new(user_id: user, username_display: profile.channel_name) if profile
-      profile = client.profile(user)
-      Channel.create channel_id: profile.user_id, channel_name: profile.username_display
-      profile
-    end
-    
   end
 
 end
