@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131018152232) do
+ActiveRecord::Schema.define(:version => 20131018185321) do
 
   create_table "cached_videos", :force => true do |t|
     t.string   "title"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(:version => 20131018152232) do
     t.string   "channel_name"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.string   "provider"
   end
 
   create_table "configurations", :force => true do |t|

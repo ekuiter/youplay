@@ -74,7 +74,6 @@ module Player::VideoPlayer
     id
   end
   
-  
   class YouplayVideo    
     attr_accessor :id, :url, :title, :duration, :access_control, :uploaded_at, :topic, :views, :rating, :description, :thumbnail, :channel, :comments, :provider
     
@@ -104,24 +103,24 @@ module Player::VideoPlayer
     
     def fetch
       return self if @id && @name
-      profile = Channel.where(channel_id: @id).first
+      profile = Channel.where(channel_id: @id, provider: @provider).first
       if profile
         @id = profile.channel_id
         @name = profile.channel_name
         return self
       end
-      if provider == :youtube
+      if @provider == :youtube
         profile = youtube_client.profile(@id)
         @id = profile.user_id
         @name = profile.username_display
-      elsif provider == :twitch
+      elsif @provider == :twitch
         profile = twitch_client.getChannel(@id)[:body]
         @id = profile['name']
         @name = profile['display_name']
       else
         raise 'no provider given'
       end
-      Channel.create channel_id: @id, channel_name: @name
+      Channel.create channel_id: @id, channel_name: @name, provider: @provider
       self
     end
     
