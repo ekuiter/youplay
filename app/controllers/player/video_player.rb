@@ -23,7 +23,6 @@ module Player::VideoPlayer
   def fetch_twitch_video(hash)
     id = extract_twitch_id hash
     raw_video = twitch_client.getVideo(id)[:body]
-    profile = 
     YouplayVideo.new id: id,
                      title: raw_video['title'],
                      url: raw_video['url'],
