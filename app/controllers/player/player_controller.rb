@@ -9,14 +9,14 @@ class Player::PlayerController < ApplicationController
   def play
     begin
       @video = fetch_youtube_video params
-      #rescue
-      #begin
-      #  @video = fetch_twitch_video params
-      #rescue
-      #  flash[:alert] = t('player.wrong_url') unless @redirecting
-      #  redirect_to player_path unless @redirecting
-      #  @video = false
-      #end
+    rescue
+      begin
+        @video = fetch_twitch_video params
+      rescue
+        flash[:alert] = t('player.wrong_url') unless @redirecting
+        redirect_to player_path unless @redirecting
+        @video = false
+      end
     end
     if @video
       @saved_video = current_user.videos.where(url: @video.id).first
