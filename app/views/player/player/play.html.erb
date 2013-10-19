@@ -80,7 +80,7 @@
   </div>
   <% @video.comments.each do |comment| %>
   <div class="comment">
-    <em class="ajax-user" data-user="<%= @video.provider %>:<%= comment.author.uri.gsub("http://gdata.youtube.com/feeds/api/users/", "") %>"></em>
+    <em><%= comment.author.uri.gsub("http://gdata.youtube.com/feeds/api/users/", "") %></em>
     <span><%= comment.content %></span>
   </div>
   <% end %>
