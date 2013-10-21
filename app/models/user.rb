@@ -17,7 +17,6 @@ class User < ActiveRecord::Base
   # stats: /
   include Stats::UserHelper
 
-  include YoutubeConnector
   include HttpRequest
 
   # Include devise modules
@@ -40,23 +39,6 @@ class User < ActiveRecord::Base
   before_destroy do |user|
     user
     last_admin
-  end
-
-  def tokens=(tokens)
-    write_attribute :access_token, tokens[:access_token] unless tokens[:access_token].nil?
-    write_attribute :refresh_token, tokens[:refresh_token] unless tokens[:refresh_token].nil?
-    write_attribute :expires_in, tokens[:expires_in] unless tokens[:expires_in].nil?
-  end
-
-  def youtube_account
-    begin
-      client = youtube_connect raise_error: true, current_user: self, access_token: access_token,
-                               refresh_token: refresh_token, expires_in: expires_in, state: 'conf'
-      account = client.current_user
-    rescue
-      account = nil
-    end
-    account
   end
 
   def admin

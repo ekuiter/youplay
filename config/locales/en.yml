@@ -159,17 +159,3 @@ en:
     show: "Show hidden videos"
     no_hidden_videos: "There are no hidden videos."
     no_videos: "There are no new videos."
-  youtube:
-    grant_access_title: "Link your YouTube account"
-    grant_access: "You have to grant %{application_name} access to your YouTube account to do this."
-    redirect: "Wait 5 seconds until you are redirected"
-    or: "or"
-    click_here: "Click here"
-    manually: "%{link} to go to YouTube manually"
-    success: "Your Youtube account was successfully linked to %{application_name}."
-    failure: "You are already linked to %{application_name}."
-    reset_success: "Your Youtube account is no more linked to %{application_name}."
-    access_denied:
-      sad: ":'("
-      grant_access: "You can't use youplay without granting access."
-      try_again: "%{link} if you want to try again."

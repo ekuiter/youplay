@@ -43,7 +43,7 @@ class Log::LogController < ApplicationController
   private
   
   def log hash={}
-    @client = youtube_client
+    @client = Providers::youtube_client
     default_number = 50
     @results_range = default_number..400
     results = params[:results].nil? ? default_number : Integer(params[:results])

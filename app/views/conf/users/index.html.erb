@@ -12,14 +12,12 @@
     <th><%= t 'devise.username' %></th>
     <th><%= t 'devise.full_name' %></th>
     <th><%= t 'devise.email' %></th>
-    <th><%= t 'conf.youtube_account' %></th>
   </tr>
   <% @users.each do |user| %>
       <tr>
         <td><%= link_to user.username, edit_conf_user_path(user) %></td>
         <td><%= user.full_name %></td>
         <td><%= link_to user.email, "mailto:#{user.email}" %></td>
-        <td><%= user.youtube_account %></td>
         <td><%= humanize_role user.admin %></td>
         <td><%= link_to image_tag('edit.png'), edit_conf_user_path(user) %>
         <%= link_to image_tag('delete.png'), conf_user_path(user), method: :delete, confirm: t('confirm') %></td>

@@ -74,9 +74,7 @@
 <% if @video.access_control['comment'] == 'allowed' then %>
 <div id="comments">
   <h4><%= t("player.comments") %></h4>
-  <div id="write_comment">
-    <textarea></textarea>
-    <button><%= t("player.post_comment") %></button>
+  <div class="separator">
   </div>
   <% @video.comments.each do |comment| %>
   <div class="comment">

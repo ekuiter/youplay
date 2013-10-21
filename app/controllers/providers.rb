@@ -1,8 +1,21 @@
-module Player::VideoPlayer
+module Providers
+  
+  require 'youtube_it'
+  
+  def self.youtube_client(state = nil)
+    return @youtube_client if @youtube_client
+    @youtube_client = YouTubeIt::Client.new client_id: Constants::client_id, client_secret: Constants::client_secret, dev_key: Constants::developer_key
+  end
+  
+  def self.twitch_client
+    return @twitch_client if @twitch_client
+    require 'twitch'
+    @twitch_client = Twitch.new
+  end
 
   def fetch_youtube_video(hash)
     id = extract_youtube_id hash
-    client = youtube_client "player_video_#{id}"
+    client = Providers::youtube_client "player_video_#{id}"
     raw_video = client.video_by id
     YouplayVideo.new id: id,
                      title: raw_video.title,
@@ -22,7 +35,7 @@ module Player::VideoPlayer
   
   def fetch_twitch_video(hash)
     id = extract_twitch_id hash
-    raw_video = twitch_client.getVideo(id)[:body]
+    raw_video = Providers::twitch_client.getVideo(id)[:body]
     YouplayVideo.new id: id,
                      title: raw_video['title'],
                      url: raw_video['url'],
@@ -98,8 +111,6 @@ module Player::VideoPlayer
       end
     end
     
-    include YoutubeConnector
-    
     def fetch
       puts "====== CHANNEL FETCHING ====="
       puts "fetching from provider: " + @provider.to_s
@@ -114,11 +125,11 @@ module Player::VideoPlayer
       end
       puts "channel not found in database. now fetching ..."
       if @provider == :youtube
-        profile = youtube_client.profile(@id)
+        profile = Providers::youtube_client.profile(@id)
         @id = profile.user_id
         @name = profile.username_display
       elsif @provider == :twitch
-        profile = twitch_client.getChannel(@id)[:body]
+        profile = Providers::twitch_client.getChannel(@id)[:body]
         @id = profile['name']
         @name = profile['display_name']
       else

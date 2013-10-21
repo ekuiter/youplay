@@ -2,14 +2,6 @@
 
 <%= render 'conf/conf/conf_head' %>
 
-<p>
-  <% if current_user.youtube_account %>
-      <%= t('conf.youtube', account: content_tag(:strong, current_user.youtube_account)).html_safe %> <%= link_to t('conf.youtube_reset'), youtube_reset_path %>
-  <% else %>
-      <%= t 'conf.youtube_null' %> <%= link_to t('conf.youtube_link'), youtube_connect_path('conf') %>
-  <% end %>
-</p>
-
 <%= form_tag conf_update_settings_path, method: :put do %>
     <table>
 

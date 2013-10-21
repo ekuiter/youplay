@@ -5,12 +5,9 @@ Youplay::Application.routes.draw do
   devise_for :users, path_names: {sign_in: "login", sign_out: "logout"}
 
   root to: "player/player#index"
-  get "youtube/auth/(:state)" => "youtube#connect", as: "youtube_connect"
-  get "youtube/reset" => "youtube#reset", as: "youtube_reset"
-  get "channel_info" => "youtube#channel_info", as: "channel_info"
+  get "channel" => "channel#info", as: "channel_info"
   get "play" => "player/player#play", as: "play"
-  post "play" => "player/player#comment"
-  
+
   namespace :player do
     get "" => "player#index"
   end

@@ -142,21 +142,9 @@ p#favorite a.favorite, p#favorite a.no_favorite {
   margin: 8px 0 0 -10px;
 }
 
-#comments #write_comment {
+#comments .separator {
   margin-top: 50px;
   margin-bottom: 10px;
-}
-
-#comments #write_comment textarea {
-  width: 415px;
-  height: 50px;
-}
-
-#comments #write_comment button {
-  float: right;
-  margin-top: 15px;
-  width: 80px;
-  height: 25px;
 }
 
 #comments .comment {

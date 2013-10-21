@@ -2,9 +2,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :authenticate_user!
   before_filter :tasks
-  include YoutubeConnector
   include HttpRequest
-  include Player::VideoPlayer
+  include Providers
   
   def nothing
     render nothing: true

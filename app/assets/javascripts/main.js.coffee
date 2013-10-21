@@ -83,7 +83,7 @@ ready = ->
       users = []
       $(".ajax-user").slice(i*user_number, (i+1)*user_number).each ->
         users.push($(this).data("user"))
-      url = "/channel_info?i=" + i + "&"
+      url = "/channel?i=" + i + "&"
       for user in users
         url += "channels[]=" + user + "&"
       $.ajax(url).done (data) ->
