@@ -11,14 +11,14 @@ ready = ->
       hide = $(this)
       row = $(this).parent().parent()
       hide.click ->
-        $.ajax(hide.data("url"), type: "delete").done ->
-          if row.parent().children().length == 1
-            if row.parent().parent().parent().parent().children().length == 1
-              row.parent().parent().parent().parent().html("<h3>There are no new videos.</h3>")
-            else
-              row.parent().parent().parent().remove()
+        $.ajax(hide.data("url"), type: "delete")
+        if row.parent().children().length == 1
+          if row.parent().parent().parent().parent().children().length == 1
+            row.parent().parent().parent().parent().html("<h3>There are no new videos.</h3>")
           else
-            row.remove()
+            row.parent().parent().parent().remove()
+        else
+          row.remove()
     $("td .play").each ->
       play = $(this)
       row = $(this).parent().parent()
@@ -34,8 +34,8 @@ ready = ->
       hide = $(this)
       channel = $(this).parent().parent()
       hide.click ->
-        $.ajax(hide.data("url"), type: "delete").done ->
-          channel.remove()
+        $.ajax(hide.data("url"), type: "delete")
+        channel.remove()
     timeout = setTimeout(->
       Turbolinks.visit("/reader")
     15*60*1000)

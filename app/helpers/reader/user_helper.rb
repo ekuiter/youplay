@@ -6,7 +6,7 @@ module Reader
         CachedVideo.joins(:hide_videos).where("hide_videos.user_id" => id).all -
         CachedVideo.find_by_sql("SELECT `cached_videos`.* FROM `cached_videos` 
                                  INNER JOIN `videos` ON `videos`.`url` = `cached_videos`.`url` 
-                                 WHERE `videos`.`user_id` = #{id}")
+                                 WHERE `videos`.`user_id` = #{id}")        
       videos = {}
       subscribed_channels.each do |channel|
         new_videos = cached_videos.select  { |video| video.channel == channel.channel }
@@ -23,7 +23,7 @@ module Reader
         url = "http://gdata.youtube.com/feeds/api/users/UC#{channel}/uploads?v=2"
         raw_xml = http_request(url: url).body
         xml = YouTubeIt::Parser::VideosFeedParser.new(raw_xml).parse
-        xml.videos.each do |video|
+        xml.videos[0..9].each do |video|
           CachedVideo.create channel: channel, title: video.title,
           url: video.unique_id, uploaded_at: video.uploaded_at unless videos.include? video.unique_id
         end
