@@ -112,18 +112,13 @@ module Providers
     end
     
     def fetch
-      puts "====== CHANNEL FETCHING ====="
-      puts "fetching from provider: " + @provider.to_s
-      puts "fetching id: " + @id
       return self if @id && @name
       profile = Channel.where(channel_id: @id, provider: @provider).first
       if profile
         @id = profile.channel_id
         @name = profile.channel_name
-        puts "found channel name in database: " + @name
         return self
       end
-      puts "channel not found in database. now fetching ..."
       if @provider == :youtube
         profile = Providers::youtube_client.profile(@id)
         @id = profile.user_id
@@ -135,9 +130,6 @@ module Providers
       else
         raise 'no provider given'
       end
-      puts "channel name fetched: " + @name
-      puts "now creating database entry"
-      puts "==== CHANNEL FETCHING END ==="
       Channel.create channel_id: @id, channel_name: @name, provider: @provider
       self
     end

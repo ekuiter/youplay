@@ -1,12 +1,16 @@
 module Reader
-  module UserHelper    
+  module UserHelper
+    
+    def videos_per_channel
+      10
+    end
     
     def new_videos
       cached_videos = CachedVideo.all - 
         CachedVideo.joins(:hide_videos).where("hide_videos.user_id" => id).all -
         CachedVideo.find_by_sql("SELECT `cached_videos`.* FROM `cached_videos` 
                                  INNER JOIN `videos` ON `videos`.`url` = `cached_videos`.`url` 
-                                 WHERE `videos`.`user_id` = #{id}")        
+                                 WHERE `videos`.`user_id` = #{id}")                                         
       videos = {}
       subscribed_channels.each do |channel|
         new_videos = cached_videos.select  { |video| video.channel == channel.channel }
@@ -23,7 +27,7 @@ module Reader
         url = "http://gdata.youtube.com/feeds/api/users/UC#{channel}/uploads?v=2"
         raw_xml = http_request(url: url).body
         xml = YouTubeIt::Parser::VideosFeedParser.new(raw_xml).parse
-        xml.videos[0..9].each do |video|
+        xml.videos[0..videos_per_channel - 1].each do |video|
           CachedVideo.create channel: channel, title: video.title,
           url: video.unique_id, uploaded_at: video.uploaded_at unless videos.include? video.unique_id
         end
@@ -34,13 +38,16 @@ module Reader
       users = User.all
       videos = Video.all
       hide_videos = HideVideo.all
-      CachedVideo.all.each do |cached_video|
+      cached_videos = CachedVideo.all
+      cached_videos.each do |cached_video|
         keep = false
         users.each do |user|
           watched = videos.select {|v| v.user_id == user.id}.map {|v| v.url}
           hidden = hide_videos.select {|v| v.user_id == user.id}.map {|v| v.cached_video_id}
-          keep = true if not watched.include? cached_video.url and
-                         not hidden.include? cached_video.id
+          channel_videos = cached_videos.select {|v| v.channel == cached_video.channel}
+          keep = true if channel_videos.count <= videos_per_channel or
+                         (not watched.include? cached_video.url and
+                          not hidden.include? cached_video.id)
         end
         cached_video.destroy if not keep
       end
