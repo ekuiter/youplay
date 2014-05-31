@@ -34,7 +34,7 @@ module Reader
       users = User.all
       videos = Video.all
       hide_videos = HideVideo.all
-      CachedVideo.all.reverse.each do |cached_video|
+      CachedVideo.all.each do |cached_video|
         keep = false
         users.each do |user|
           watched = videos.select {|v| v.user_id == user.id}.map {|v| v.url}
