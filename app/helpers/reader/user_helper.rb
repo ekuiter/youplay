@@ -30,5 +30,20 @@ module Reader
       end
     end
     
+    def tidy_videos
+      users = User.all
+      videos = Video.all
+      hide_videos = HideVideo.all
+      CachedVideo.all.reverse.each do |cached_video|
+        keep = false
+        users.each do |user|
+          watched = videos.select {|v| v.user_id == user.id}.map {|v| v.url}
+          hidden = hide_videos.select {|v| v.user_id == user.id}.map {|v| v.cached_video_id}
+          keep = true if not watched.include? cached_video.url and
+                         not hidden.include? cached_video.id
+        end
+        cached_video.destroy if not keep
+      end
+    end
   end
 end

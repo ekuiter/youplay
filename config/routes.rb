@@ -17,6 +17,7 @@ Youplay::Application.routes.draw do
     get "json" => "reader#json"
     delete "" => "reader#hide", as: "hide"
     get "update" => "reader#update"
+    get "tidy" => "reader#tidy"
     delete "show(/:id)" => "reader#show", as: "show"
     delete "channel/:channel" => "reader#hide_channel", as: "hide_channel"
     get "hidden" => "reader#hidden"

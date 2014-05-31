@@ -4,9 +4,20 @@ class Reader::ReaderController < ApplicationController
   
   skip_before_filter :authenticate_user!, only: [:update, :json]
   
+  def pass
+    "VtfTNRv1Fv9mrTTa6E6KCFNs1VlPdCyTczZH247ZL9gQCThL69SOjDjJh89yVBfO"
+  end
+  
   def update
-    unless params[:pass].nil? || params[:pass] != "VtfTNRv1Fv9mrTTa6E6KCFNs1VlPdCyTczZH247ZL9gQCThL69SOjDjJh89yVBfO"
+    unless params[:pass].nil? || params[:pass] != pass
       User.first.update_videos
+    end
+    render nothing: true
+  end
+  
+  def tidy
+    unless params[:pass].nil? || params[:pass] != pass
+      User.first.tidy_videos
     end
     render nothing: true
   end
