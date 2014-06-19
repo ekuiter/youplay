@@ -1,0 +1,37 @@
+<%= render 'reader/reader/reader_head' %>
+
+<%= form_tag(reader_add_hiding_rule_path, method: :post) do %>
+  <%= text_field_tag :pattern, "", style: "width:200px", placeholder: t("reader.hiding_rules.pattern") %>
+    <%= text_field_tag :channel, "", style: "width:200px", placeholder: t("reader.hiding_rules.channel") %>
+    <%= submit_tag t('devise.save') %>
+<% end %>
+
+<div id="subscribe">
+  <% if @hiding_rules.blank? %>
+      <p><%= t('reader.hiding_rules.no_hiding_rules') %></p>
+  <% else %>
+      <table class="striped" style="width:50%">
+        <tr>
+          <th><%= t("video_list.channel_topic") %></th>
+          <th><%= t("reader.hiding_rules.pattern") %></th>
+        </tr>
+        <% @hiding_rules.reverse.each do |hiding_rule| %>
+        <tr>
+          <td>
+            <% if hiding_rule.channel.blank? %>
+              -
+            <% else %>
+              <%= ajax_channel 'youtube', hiding_rule.channel, 'span' %>
+            <% end %>
+          </td>
+          <td>
+            <%= hiding_rule.pattern %>
+          </td>
+          <td style="width:20px">
+            <%= link_to image_tag("delete.png", width: 16, height: 16), reader_delete_hiding_rule_path(hiding_rule), method: :delete, confirm: t('confirm') %>
+          </td>
+        </tr>
+        <% end %>
+      </table>
+  <% end %>
+</div>

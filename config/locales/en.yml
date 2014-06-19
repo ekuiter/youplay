@@ -148,6 +148,13 @@ en:
     update: "Update videos"
     updating: "Updating ..."
     manage_hidden: "Manage hidden videos"
+    manage_hiding_rules: "Manage hiding rules"
+    hiding_rules:
+      success: "Hiding rule saved."
+      failure: "An error occured while saving. Check your input."
+      no_hiding_rules: "There are no hiding rules yet."
+      pattern: "Pattern"
+      channel: "Channel (optional)"
     subscribe:
       button: "Subscribe to channels"
       channels: "Your subscribed channels:"

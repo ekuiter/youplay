@@ -1,5 +1,5 @@
 class HideVideo < ActiveRecord::Base
-  attr_accessible :cached_video, :channel, :user
+  attr_accessible :cached_video, :channel, :user, :user_id
   belongs_to :cached_video
   belongs_to :user
   validates :cached_video_id, :user_id, presence: true

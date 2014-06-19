@@ -30,6 +30,7 @@ class User < ActiveRecord::Base
   has_many :subscribed_channels, dependent: :destroy
   has_many :people, dependent: :destroy
   has_many :hide_videos, dependent: :destroy
+  has_many :hiding_rules, dependent: :destroy
   has_many :cached_videos, through: :hide_videos
   has_many :configurations, dependent: :destroy
   has_many :favorites, dependent: :destroy
