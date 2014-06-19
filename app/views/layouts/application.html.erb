@@ -4,6 +4,9 @@
   <title><%= generate_title %></title>
   <%= favicon_link_tag "favicon.ico" %>
   <%= stylesheet_link_tag 'application', :media => 'all' %>
+  <script type="text/javascript">
+    var token = "<%= current_user.token %>";
+  </script>
   <%= javascript_include_tag 'application' %>
   <script type="text/javascript" src="<%= Constants::jw_folder client: true %>/jwplayer.js"></script>
   <%= csrf_meta_tags %>
@@ -14,6 +17,12 @@
   </div>
   
   <ul id="subnav">
+    <li style="background-color:white;padding:2px">
+      <form id="search-form">
+        <input style="margin:4px 4px 2px 4px;width:220px" type="text" id="search" placeholder="<%= t 'sidebar.search' %>" value="<%= @search %>" />
+        <input type="submit" style="visibility:hidden;position:fixed" />
+      </form>
+    </li>
     <% begin send("#{@module}_actions").reverse.each do |action| %>
       <li><%= link_to action[:name], action[:path], class: (@current_path == action[:path] ? "active" : "") %></li>
       <% end; rescue; end %>

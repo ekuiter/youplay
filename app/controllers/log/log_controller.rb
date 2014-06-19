@@ -3,11 +3,21 @@ class Log::LogController < ApplicationController
   skip_before_filter :authenticate_user!, only: [:log_json, :favorites_json]
 
   def index
-    log
-  end
-  
-  def favorites
-    log favorited: true
+    @search = params[:search] ? params[:search] : ""
+    @collection = if @search == "favorites"
+                    current_user.videos.joins(:favorite)
+                  elsif not params[:search].blank?
+                    current_user.videos.where "title like ?", "%#{params[:search]}%"
+                  else
+                    current_user.videos
+                  end
+    if @collection.count == 1
+      redirect_to @collection.first.play_url
+    elsif @collection.count == 0
+      redirect_to "#{play_url}?#{params[:search]}"
+    else
+      log @collection
+    end
   end
 
   def destroy
@@ -34,30 +44,21 @@ class Log::LogController < ApplicationController
   
   private
   
-  def log hash={}
-    @client = Providers::youtube_client
+  def log(collection)
     default_number = 50
     @results_range = default_number..400
-    results = params[:results].nil? ? default_number : Integer(params[:results])
-    results = @results_range.min unless @results_range.include? results
+    @results = params[:results].nil? ? default_number : Integer(params[:results])
+    @results = @results_range.min unless @results_range.include? @results
     page = params[:page].nil? ? 0 : Integer(params[:page]) - 1
     page = 0 if page < 0
-    if hash[:favorited]
-      @videos = current_user.favorited_videos results, page
-      video_count = current_user.favorites.count
-    else
-      @videos = current_user.watched_videos results, page
-      video_count = current_user.videos.count
-    end
-    @page_count = if video_count % results == 0
-                    video_count / results
+    @videos = current_user.pagination collection, @results, page
+    @video_count = collection.count
+    @page_count = if @video_count % @results == 0
+                    @video_count / @results
                   else
-                    video_count / results + 1
+                    @video_count / @results + 1
                   end
     @current_page = page + 1
-    @results = results
-    @video_count = video_count
-    @is_admin = current_user.admin
     @title_length = current_user.max_title_length
     @favorited_video_ids = current_user.favorites.map {|f| f.video_id}
   end

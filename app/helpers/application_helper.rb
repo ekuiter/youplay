@@ -5,7 +5,7 @@ module ApplicationHelper
     if options[:link]
       content = link_to title, options[:link], target: options[:target]
     end
-    str = "<h1 onmouseover=\"#{options[:onmouseover]}\" onmouseout=\"#{options[:onmouseout]}\">
+    str = "<h1 onmouseover=\"#{options[:onmouseover]}\" onmouseout=\"#{options[:onmouseout]}\" style=\"#{options[:style]}\">
     #{content}#{options[:additional_content]}
       <span class=\"module_description\">
         #{t "modules.#{@module+''}_description", application_name: t('application.name') if @module}

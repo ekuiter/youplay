@@ -204,6 +204,18 @@ table.striped tr:nth-child(even) {
   background-color: #eee;
 }
 
+.videos table {
+  table-layout: fixed;
+}
+
+.videos table td a {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-bottom: 1px solid rgba(0,0,0,0);
+}
+
 table td {
   padding: 3px;
 }
@@ -225,4 +237,31 @@ a.noborder:hover {
   top: 2px;
   left: 50%;
   margin-left: -8px;
+}
+
+.tt-suggestions {
+  width: 420px;
+  font-size: 12px;
+  border: 1px solid #888;
+  margin: 5px 0 0 -190px;
+}
+
+.tt-suggestion a {
+  color: black;
+}
+
+.tt-suggestion a:hover {
+  color: #009;
+}
+
+.tt-suggestion div {
+  width: 310px;
+}
+
+.tt-suggestion em {
+  display: block;
+  width: 100px;
+  float: right;
+  padding-left: 10px;
+  font-size: 0.8em;
 }

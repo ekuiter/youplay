@@ -1,4 +1,4 @@
-<%= title @video.title, link: @video.url, target: '_blank' %>
+<%= title @video.title, link: @video.url, target: '_blank', style: 'white-space: nowrap; overflow: hidden; text-overflow: ellipsis' %>
 
 <div id="video_sidebar" class="<%= noembed = @video.provider == :youtube && @video.access_control['embed'] != 'allowed';
  'sidebar_noembed' if noembed %>">

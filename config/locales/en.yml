@@ -14,9 +14,9 @@ en:
     stats: "Stats"
     stats_description: "Get to know your %{application_name} usage."
     conf: "Conf"
-    conf_description: "Configure your account and %{application_name}'s behaviour."
+    conf_description: "Configure %{application_name}."
     reader: "Reader"
-    reader_description: "Don't miss any new video."
+    reader_description: ""
   devise:
     login: "Login"
     username: "User name"
@@ -58,6 +58,7 @@ en:
       logged_in_as: "Logged in as:"
       welcome: "Welcome, %{username}!"
       logout: "Logout"
+    search: "Search"
   player:
     play_youtube: "Play YouTube or Twitch videos"
     play_video: "Play video with YouTube or Twitch url"

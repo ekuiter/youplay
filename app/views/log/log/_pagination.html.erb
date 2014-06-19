@@ -2,19 +2,19 @@
   <div id="pages">
     <strong><%= t "video_list.page" %></strong>
     <% if @current_page > 2 %>
-        <%= first_page @favorites %> |
+        <%= first_page %> |
     <% end %>
     <% if @current_page > 1 %>
-        <%= previous_page @favorites %> |
+        <%= previous_page %> |
     <% end %>
     <% pages.each do |page| %>
         <%= page.html_safe %>
     <% end %>
     <% if @current_page < @page_count %>
-        | <%= next_page @favorites %>
+        | <%= next_page %>
     <% end %>
     <% if @current_page < @page_count - 1 %>
-        | <%= last_page @favorites %>
+        | <%= last_page %>
     <% end %>
   </div>
 <% end %>

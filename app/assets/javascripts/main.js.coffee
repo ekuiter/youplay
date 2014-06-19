@@ -93,5 +93,30 @@ ready = ->
           $(this).html('<a href="' + data[j]["url"] + '" target="_blank">' + data[j]["username"] + "</a>")
           j++
           
+  $("#search-form").submit ->
+    window.location.href = "/log/?search=" + $('#search').val()
+    false
+    
+  engine = new Bloodhound
+    limit: 15
+    remote: "/api/log/%QUERY/0/15?token=" + token
+    prefetch: "/api/log/?token=" + token
+    datumTokenizer: (d) ->
+      Bloodhound.tokenizers.whitespace d.title
+    queryTokenizer: Bloodhound.tokenizers.whitespace
+    dupDetector: (remote, local) ->
+      remote.url == local.url
+  engine.initialize()
+  
+  $('#search').typeahead null,
+    displayKey: "title"
+    source: engine.ttAdapter()
+    templates:
+      suggestion: (video) ->
+        "<a href=\"/play?#{video.url}\">
+           <em>#{video.channel_topic}</em>
+           <div>#{video.title}</div>
+        </a>"
+          
 $(document).ready ready
 $(document).on "page:load", ready

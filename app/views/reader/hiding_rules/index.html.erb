@@ -12,20 +12,20 @@
   <% else %>
       <table class="striped" style="width:50%">
         <tr>
-          <th><%= t("video_list.channel_topic") %></th>
           <th><%= t("reader.hiding_rules.pattern") %></th>
+          <th><%= t("video_list.channel_topic") %></th>
         </tr>
-        <% @hiding_rules.reverse.each do |hiding_rule| %>
+        <% @hiding_rules.order(:channel).each do |hiding_rule| %>
         <tr>
+          <td>
+            <%= hiding_rule.pattern %>
+          </td>
           <td>
             <% if hiding_rule.channel.blank? %>
               -
             <% else %>
               <%= ajax_channel 'youtube', hiding_rule.channel, 'span' %>
             <% end %>
-          </td>
-          <td>
-            <%= hiding_rule.pattern %>
           </td>
           <td style="width:20px">
             <%= link_to image_tag("delete.png", width: 16, height: 16), reader_delete_hiding_rule_path(hiding_rule), method: :delete, confirm: t('confirm') %>

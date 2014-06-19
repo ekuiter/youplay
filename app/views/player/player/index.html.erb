@@ -15,9 +15,10 @@
       <h3><%= t 'video_list.recently_watched_videos' %></h3>
       <table class="wide striped">
         <tr>
-          <th><%= t 'video_list.date' %></th>
+          <th style="width:100px"><%= t 'video_list.date' %></th>
           <th><%= t 'video_list.title' %></th>
-          <th><%= t 'video_list.channel_topic' %></th>
+          <th style="width:200px"><%= t 'video_list.channel_topic' %></th>
+          <th style="width:60px"></th>
         </tr>
         <% @recently_watched_videos.each do |video| %>
             <tr>

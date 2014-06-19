@@ -29,10 +29,9 @@ Youplay::Application.routes.draw do
   end
   
   namespace :log do
-    get "favorites(/:page/(:results))" => "log#favorites", as: "favorites"
     get "favorite/:id" => "log#set_favorite", as: "set_favorite"
     delete "favorite/:id" => "log#unset_favorite", as: "unset_favorite"
-    get "(:page/(:results))" => "log#index"
+    get "(:page/:results)" => "log#index"
     delete ":id" => "log#destroy", as: "delete_video"
   end
   
@@ -52,8 +51,7 @@ Youplay::Application.routes.draw do
     get "login" => "auth#login"
     get "" => "player#index"
     get "play" => "player#play"
-    get "log" => "log#index"
-    get "log/favorites" => "log#favorites"
+    get "log(/:search(/:page/:results))" => "log#index"
     get "reader" => "reader#index"
   end
   

@@ -15,3 +15,4 @@
 //= require_tree .
 //= require turbolinks
 //= require swfobject
+//= require twitter/typeahead.min

@@ -4,11 +4,12 @@
     <div class="videos">
       <table class="wide striped">
         <tr>
-          <th></th>
-          <th><%= t 'video_list.date' %></th>
+          <th style="width:20px"></th>
+          <th style="width:100px"><%= t 'video_list.date' %></th>
           <th><%= t 'video_list.title' %></th>
-          <th><%= t 'video_list.channel_topic' %></th>
-          <th><%= t 'video_list.duration' %></th>
+          <th style="width:200px"><%= t 'video_list.channel_topic' %></th>
+          <th style="width:80px"><%= t 'video_list.duration' %></th>
+          <th style="width:60px"></th>
         </tr>
         <% @videos.each do |video| %>
             <tr>
