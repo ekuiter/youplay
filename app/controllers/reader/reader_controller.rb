@@ -26,21 +26,6 @@ class Reader::ReaderController < ApplicationController
     @videos = current_user.new_videos
   end
   
-  def json
-    user = user_from_params
-    if user && user.valid_password?(params[:password])
-      new_videos = user.new_videos
-      new_videos.each do |channel, videos|
-        videos.each do |video|
-          video.channel = @client.profile(channel).username_display
-        end
-      end
-      render json: new_videos
-    else
-      render nothing: true
-    end
-  end
-  
   def hide
     params[:videos].each do |video|
       hide_video video

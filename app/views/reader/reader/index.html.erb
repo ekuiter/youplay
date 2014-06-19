@@ -10,7 +10,7 @@
         url_params += "videos[]=" + video.url + "&"
       end %>
       <div>
-        <h3><span class="ajax-user" data-user="youtube:<%= channel %>"><%= image_tag "loading-small.gif" %></span> <%= link_to image_tag("delete.png", width: 16, height: 16, class: :delete), void, class: "hide noborder", "data-url" => reader_hide_path + url_params, style: "margin-left:10px" %></h3>
+        <h3><%= ajax_channel 'youtube', channel, 'span' %> <%= link_to image_tag("delete.png", width: 16, height: 16, class: :delete), void, class: "hide noborder", "data-url" => reader_hide_path + url_params, style: "margin-left:10px" %></h3>
         <table>
           <tbody>
           <% videos.each do |video| %>

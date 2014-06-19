@@ -65,5 +65,9 @@ module ApplicationHelper
   def void
     "javascript:void(0)"
   end
+  
+  def ajax_channel(provider, channel, tag)
+    "<#{tag} class=\"ajax-user\" data-user=\"#{provider}:#{channel}\">#{image_tag "loading-small.gif"}</#{tag}>".html_safe
+  end
 
 end

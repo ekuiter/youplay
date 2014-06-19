@@ -8,5 +8,9 @@ class Video < ActiveRecord::Base
   def play_url
     "#{Rails.application.routes.url_helpers.play_path}?#{url}"
   end
+  
+  def as_json(args)
+    super except: [:updated_at, :user_id]
+  end
 
 end

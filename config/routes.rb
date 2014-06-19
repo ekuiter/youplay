@@ -14,7 +14,6 @@ Youplay::Application.routes.draw do
   
   namespace :reader do
     get "" => "reader#index"
-    get "json" => "reader#json"
     delete "" => "reader#hide", as: "hide"
     get "update" => "reader#update"
     get "tidy" => "reader#tidy"
@@ -27,8 +26,6 @@ Youplay::Application.routes.draw do
   end
   
   namespace :log do
-    get "json" => "log#log_json"
-    get "favorites/json" => "log#favorites_json"
     get "favorites(/:page/(:results))" => "log#favorites", as: "favorites"
     get "favorite/:id" => "log#set_favorite", as: "set_favorite"
     delete "favorite/:id" => "log#unset_favorite", as: "unset_favorite"
@@ -46,6 +43,15 @@ Youplay::Application.routes.draw do
   
   namespace :stats do
     get "" => "stats#index"
+  end
+  
+  namespace :api do
+    get "login" => "auth#login"
+    get "" => "player#index"
+    get "play" => "player#play"
+    get "log" => "log#index"
+    get "log/favorites" => "log#favorites"
+    get "reader" => "reader#index"
   end
   
 end

@@ -17,12 +17,12 @@
         <tr>
           <th><%= t("video_list.channel_topic") %></th>
         </tr>
-        <% @subscribed_channels.each do |channel| %>
+        <% @subscribed_channels.reverse.each do |channel| %>
         <tr>
           <td>
-            <span class="ajax-user" data-user="<%= channel.channel %>"><%= image_tag "loading-small.gif" %></span>
+            <%= ajax_channel 'youtube', channel.channel, 'span' %>
           </td>
-          <td>
+          <td style="width:20px">
             <%= link_to image_tag("delete.png", width: 16, height: 16), reader_delete_channel_path(channel), method: :delete, confirm: t('confirm') %>
           </td>
         </tr>

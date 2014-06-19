@@ -1,30 +1,18 @@
-class ApplicationController < ActionController::Base
-  protect_from_forgery
-  before_filter :authenticate_user!
-  before_filter :tasks
+class Api::ApiController < ActionController::Base
   include HttpRequest
   include Providers
   
-  def nothing
-    render nothing: true
-  end
-
-  def tasks
-    params[:user].delete :role if params[user:[:role]].present?
-    @current_path = request.fullpath
-    $current_user = current_user
-  end
-
-  def bad_request
-    flash[:alert] = t("bad_request")
-    redirect_to player_path
-  end
-
-  helper_method :bad_request
-
-  def signed_in_root_path(resource_or_scope)
-    resource_or_scope
-    conf_path
+  respond_to :json
+  around_filter :error_handler
+  
+  private
+  
+  def error_handler
+    begin
+      yield
+    rescue Exception => e
+      render json: { error: e.message }
+    end
   end
   
   def user_browser
@@ -62,5 +50,4 @@ class ApplicationController < ActionController::Base
       end
     end
   end
-
 end

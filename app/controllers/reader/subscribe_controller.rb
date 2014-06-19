@@ -6,7 +6,7 @@ class Reader::SubscribeController < ApplicationController
 
   def channel_add
     begin
-      @client = youtube_client
+      @client = Providers::youtube_client
       profile = @client.profile params[:channel]
       flash[:alert] = t 'reader.subscribe.failure' unless profile
       sc = current_user.subscribed_channels.new

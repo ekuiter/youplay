@@ -11,8 +11,8 @@ gem 'oauth2' # link user to youtube account
 gem 'youtube_it' # access youtube data api
 gem 'rinku' # auto link video descriptions
 #gem 'bzip2-ruby' # extract MediathekView bzip2 files
-gem 'rubyzip' # extract MediathekView zip files
-gem 'xml-simple' # parse MediathekView xml
+#gem 'rubyzip' # extract MediathekView zip files
+#gem 'xml-simple' # parse MediathekView xml
 gem 'jquery-rails'
 gem 'json', '1.7.7'
 gem 'turbolinks'
