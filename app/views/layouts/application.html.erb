@@ -4,9 +4,11 @@
   <title><%= generate_title %></title>
   <%= favicon_link_tag "favicon.ico" %>
   <%= stylesheet_link_tag 'application', :media => 'all' %>
-  <script type="text/javascript">
-    var token = "<%= current_user.token %>";
-  </script>
+  <% unless current_user.blank? %>
+    <script type="text/javascript">
+      var token = "<%= current_user.token %>";
+    </script>
+  <% end %>
   <%= javascript_include_tag 'application' %>
   <script type="text/javascript" src="<%= Constants::jw_folder client: true %>/jwplayer.js"></script>
   <%= csrf_meta_tags %>
