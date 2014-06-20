@@ -34,7 +34,7 @@ module Reader
                                               url: video.unique_id, uploaded_at: video.uploaded_at
             hiding_rules.each do |hiding_rule|
               if (hiding_rule.channel.blank? and video.title.downcase.include?(hiding_rule.pattern.downcase)) or
-                 (channel == hiding_rule.channel and video.title.include?(hiding_rule.pattern))
+                 (channel == hiding_rule.channel and video.title.downcase.include?(hiding_rule.pattern.downcase))
                 HideVideo.create cached_video: cached_video, channel: channel, user_id: hiding_rule.user_id
               end
             end
