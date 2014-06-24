@@ -79,8 +79,7 @@ en:
       topic: "Topic"
       likes: "Likes"
       dislikes: "Dislikes"
-    download:
-      download: "Download this video"
+    native_client: "Open in client"
     favorite: "Mark as favorite"
     no_favorite: "Remove favorite"
     description: "Description"
@@ -102,6 +101,7 @@ en:
     duration: "Duration"
     all_videos: "All videos"
     only_favorites: "Only favorites"
+    deleted: "Log entry deleted."
   conf:
     edit_settings: "Edit settings"
     manage_people: "Manage people"
@@ -113,11 +113,6 @@ en:
     success: "You updated your settings successfully."
     failure: "Your settings couldn't be updated. Check your input."
     admin: "Administrator"
-    youtube: "You are currently linked to the YouTube account %{account}."
-    youtube_null: "You are currently not linked to a YouTube account."
-    youtube_link: "Want to change that?"
-    youtube_reset: "Reset?"
-    youtube_account: "YouTube account"
     users:
       no_users_found: "No users found."
       new: "Create new user"

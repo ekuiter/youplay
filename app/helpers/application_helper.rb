@@ -1,17 +1,10 @@
 module ApplicationHelper
-
   def title(title, options = {})
     @title = content = title
     if options[:link]
       content = link_to title, options[:link], target: options[:target]
     end
-    str = "<h1 onmouseover=\"#{options[:onmouseover]}\" onmouseout=\"#{options[:onmouseout]}\" style=\"#{options[:style]}\">
-    #{content}#{options[:additional_content]}
-      <span class=\"module_description\">
-        #{t "modules.#{@module+''}_description", application_name: t('application.name') if @module}
-      </span>
-    </h1>"
-    @page_title = str.html_safe
+    @page_title = render "/page_title", content: content, options: options
     nil
   end
 
@@ -19,25 +12,10 @@ module ApplicationHelper
     "#{@title ? "#@title | " : ''}#{t 'application.name'}"
   end
 
-  def modules
-    {
-        t('modules.player') => player_path,
-        t('modules.log') => log_path,
-        t('modules.stats') => stats_path,
-        t('modules.conf') => conf_path,
-        t('modules.reader') => reader_path
-    }
-  end
-
   def set_focus_to(id)
     javascript_tag "$('##{id}').focus()"
   end
-
-  def js_redirect_to(options)
-    return javascript_tag "window.setTimeout(\"window.location.href = '#{options[:url]}'\", #{options[:delay]})" if options[:delay].present?
-    javascript_tag "window.location.href = '#{options[:url]}'"
-  end
-
+  
   def error_messages!(resource)
     return '' if resource.errors.empty?
 
@@ -55,12 +33,6 @@ module ApplicationHelper
 
     html.html_safe
   end
-
-  def video_duration(video)
-    return nil unless video.duration
-    duration = video.duration / 60
-    "#{duration} #{t 'player.meta.minutes', count: duration}"
-  end
   
   def void
     "javascript:void(0)"
@@ -69,5 +41,40 @@ module ApplicationHelper
   def ajax_channel(provider, channel, tag)
     "<#{tag} class=\"ajax-user\" data-user=\"#{provider}:#{channel}\">#{image_tag "loading-small.gif"}</#{tag}>".html_safe
   end
-
+  
+  def user_browser
+    user_agent = request.env['HTTP_USER_AGENT'].downcase
+    begin
+      if user_agent.index('msie') && !user_agent.index('opera') && !user_agent.index('webtv')
+        return 'Internet Explorer'
+      elsif user_agent.index('gecko/')
+        return 'Gecko'
+      elsif user_agent.index('opera')
+        return 'Opera'
+      elsif user_agent.index('konqueror')
+        return 'Konqueror'
+      elsif user_agent.index('ipod')
+        return 'iPod'
+      elsif user_agent.index('ipad')
+        return 'iPad'
+      elsif user_agent.index('iphone')
+        return 'iPhone'
+      elsif user_agent.index('chrome/')
+        return 'Chrome'
+      elsif user_agent.index('applewebkit/')
+        return 'Safari'
+      elsif user_agent.index('googlebot/')
+        return 'Google Bot'
+      elsif user_agent.index('msnbot')
+        return 'MSN Bot'
+      elsif user_agent.index('yahoo! slurp')
+        return 'Yahoo Bot'
+      #Everything thinks it's mozilla, so this goes last
+      elsif user_agent.index('mozilla/')
+        return 'Gecko'
+      else
+        return 'Unknown'
+      end
+    end
+  end
 end

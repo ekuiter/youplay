@@ -8,9 +8,7 @@ class Reader::HidingRulesController < ApplicationController
       hiding_rule = current_user.hiding_rules.new
       hiding_rule.pattern = params[:pattern]
       unless params[:channel].blank?
-        @client = Providers::youtube_client
-        profile = @client.profile params[:channel]
-        flash[:alert] = t 'reader.hiding_rules.failure' unless profile
+        profile = Providers::youtube_client.profile params[:channel]
         hiding_rule.channel = profile.user_id
       end
       if hiding_rule.save

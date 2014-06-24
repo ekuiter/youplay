@@ -1,0 +1,87 @@
+div.videos td.delete a {
+  border: 0;
+}
+
+div.videos table {
+  font-size: 15px;
+}
+
+.videos table {
+  table-layout: fixed;
+}
+
+.videos table td a {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-bottom: 1px solid rgba(0,0,0,0);
+}
+
+a.no_favorite {
+  display: block;
+  float: left;
+  margin: 0 10px 0 5px;
+  width: 20px;
+  height: 20px;
+  background: url(<%= asset_path("favorite.png") %>) no-repeat bottom;
+}
+
+a.no_favorite:hover {
+  background-position: top;
+  border: none;
+}
+
+a.favorite {
+  display: block;
+  float: left;
+  margin: 0 10px 0 5px;
+  width: 20px;
+  height: 20px;
+  background: url(<%= asset_path("favorite.png") %>) no-repeat top;
+}
+
+a.favorite:hover {
+  background-position: bottom;
+  border: none;
+}
+
+#pages {
+  float: left;
+  margin: 10px 5px;
+}
+
+#results {
+  float: right;
+  margin: 10px 5px;
+}
+
+#pages strong, #results strong {
+  margin-right: 5px;
+}
+
+h3#log_heading {
+  margin: 0;
+  padding: 10px;
+}
+
+h3#log_heading span {
+  font-size: 16px;
+  font-weight: normal;
+  padding-left: 10px;
+}
+
+.videos td.ajax-user img, #subscribe .ajax-user img {
+  position: relative;
+  top: 2px;
+  left: 50%;
+  margin-left: -8px;
+}
+
+a.noborder:hover {
+  border-bottom: none;
+}
+
+#options {
+  padding-left: 6px;
+}

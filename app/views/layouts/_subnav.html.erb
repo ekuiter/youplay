@@ -1,0 +1,11 @@
+<% if user_signed_in? %>
+  <li style="background-color:white;padding:2px">
+    <form id="search-form">
+      <input style="margin:4px 4px 2px 4px;width:220px" type="text" id="search" placeholder="<%= t 'sidebar.search' %>" value="<%= @search %>" />
+      <input type="submit" style="visibility:hidden;position:fixed" />
+    </form>
+  </li>
+<% end %>
+<% begin send("#{@module}_actions").reverse.each do |action| %>
+  <li><%= link_to action[:name], action[:path], class: (@current_path == action[:path] ? "active" : "") %></li>
+<% end; rescue; end %>

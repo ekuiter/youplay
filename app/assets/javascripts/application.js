@@ -12,7 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require_tree .
 //= require turbolinks
 //= require swfobject
 //= require twitter/typeahead.min
+//= require init
+//= require_tree .

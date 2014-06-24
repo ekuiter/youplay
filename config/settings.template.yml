@@ -1,0 +1,12 @@
+native_client: youplay://
+player_width: 800
+player_height: 475
+videos_per_channel: 10
+upload_pass: 
+developer_key: 
+client_id: 
+client_secret: 
+secret_token: 
+device_secret: 
+
+#heroku config:set native_client=youplay:// player_width=800 player_height=475 videos_per_channel=10 upload_pass= developer_key= client_id= client_secret= secret_token= devise_secret=

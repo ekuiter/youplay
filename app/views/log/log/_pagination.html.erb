@@ -2,19 +2,19 @@
   <div id="pages">
     <strong><%= t "video_list.page" %></strong>
     <% if @current_page > 2 %>
-        <%= first_page %> |
+        <%= link_to_page t('video_list.first'), 1 %> |
     <% end %>
     <% if @current_page > 1 %>
-        <%= previous_page %> |
+        <%= link_to_page t('video_list.previous'), @current_page - 1 %> |
     <% end %>
     <% pages.each do |page| %>
         <%= page.html_safe %>
     <% end %>
     <% if @current_page < @page_count %>
-        | <%= next_page %>
+        | <%= link_to_page t('video_list.next'), @current_page + 1 %>
     <% end %>
     <% if @current_page < @page_count - 1 %>
-        | <%= last_page %>
+        | <%= link_to_page t('video_list.last'), @page_count %>
     <% end %>
   </div>
 <% end %>

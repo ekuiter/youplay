@@ -1,0 +1,56 @@
+#loading {
+  position: fixed;
+  display: none;
+  float: left;
+  width: 32px;
+  height: 32px;
+}
+
+#page_title {
+  margin: 20px 0 20px 0;
+  color: #fff;
+}
+
+#page_title h1 {
+  font-size: 24px;
+}
+
+#page_title h1 .module_description {
+  font-size: 14px;
+  font-weight: normal;
+  margin-left: 40px;
+}
+
+#page_title a {
+  color: #fff;
+}
+
+#page_title a:hover {
+  border-bottom-color: #fff;
+}
+
+#subnav li {
+  float: right;
+  padding: 0;
+  margin-top: 19px;
+}
+
+#subnav li a {
+  display: block;
+  background-color: white;
+  padding: 7px 15px 4px 15px;
+  margin: 0;
+}
+
+#subnav li a:hover {
+  border-bottom: none;
+  background-color: #eee;
+}
+
+#subnav li:last-child a {
+  border: none;
+}
+
+#subnav li a.active {
+  background-color: #ddd;
+}

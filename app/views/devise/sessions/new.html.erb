@@ -2,22 +2,18 @@
 
 <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
     <table>
-
       <tr>
         <td><%= f.label :username, t('devise.username') %></td>
         <td><%= f.text_field :username %></td>
       </tr>
       <%= set_focus_to 'user_username' %>
-
       <tr>
         <td><%= f.label :password, t('devise.password') %></td>
         <td><%= f.password_field :password %></td>
       </tr>
-
       <tr>
         <td></td>
         <td><%= f.submit t('devise.login') %></td>
       </tr>
-
     </table>
 <% end %>

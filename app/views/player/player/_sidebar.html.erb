@@ -1,0 +1,45 @@
+<table>
+  <tbody>
+  <tr>
+    <td class="desc"><%= t 'player.meta.channel' %></td>
+    <td><%= @video.channel.link %></td>
+  </tr>
+  <tr>
+    <td class="desc"><%= t 'player.meta.date' %></td>
+    <td><%= l @video.uploaded_at, format: :short %></td>
+  </tr>
+  <tr>
+    <td class="desc"><%= t 'player.meta.duration' %></td>
+    <td><%= @video.humanize_duration %></td>
+  </tr>
+  <tr>
+     <td class="desc"><%= t 'player.meta.topic' %></td>
+     <td><%= @video.topic %></td>
+  </tr>
+  <tr>
+    <td class="desc"><%= t 'player.meta.views' %></td>
+    <td><%= number_with_delimiter @video.views %></td>
+  </tr>
+  <% if @video.rating_allowed? %>
+      <tr>
+        <td class="desc"><%= t 'player.meta.likes' %></td>
+        <td><%= number_with_delimiter @video.rating.likes %></td>
+      </tr>
+      <tr>
+        <td class="desc"><%= t 'player.meta.dislikes' %></td>
+        <td><%= number_with_delimiter @video.rating.dislikes %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+<p id="download"><%= link_to image_tag("download.gif"), @video.native_client_url %>
+  <%= link_to t('player.native_client'), @video.native_client_url %></p>
+<div class="clear"></div>
+<p id="favorite"><% if @video.saved_video.favorite.nil? %>
+  <%= link_to "", void, class: :no_favorite, 'data-url' => log_set_favorite_path(@video.saved_video) %>
+  <%= link_to t("player.favorite"), void, 'data-text' => t("player.no_favorite") %>
+  <% else %>
+  <%= link_to "", void, class: :favorite, method: :delete, 'data-url' => log_set_favorite_path(@video.saved_video) %>
+  <%= link_to t("player.no_favorite"), void, 'data-text' => t("player.favorite") %>
+  <% end %>
+</p>

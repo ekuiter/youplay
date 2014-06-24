@@ -1,2 +1,0 @@
-module Reader::SubscribeHelper
-end

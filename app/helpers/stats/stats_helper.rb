@@ -1,2 +1,0 @@
-module Stats::StatsHelper
-end

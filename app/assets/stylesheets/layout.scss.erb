@@ -1,0 +1,44 @@
+$site_width: 1160px;
+$inner_width: 1040px;
+$inner_padding: 10px;
+$sidebar_pos: fixed;
+$sidebar_padding: 10px;
+$sidebar_width: $site_width - $inner_width - 2 * $inner_padding - 2 * $sidebar_padding - 1;
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, serif;
+  background: #565656 url(<%= asset_path 'background.gif' %>) repeat-x top;
+}
+
+#wrapper {
+  width: $site_width;
+  margin: 20px auto 20px auto;
+}
+
+#inner_wrapper {
+  width: $inner_width;
+  float: right;
+  background-color: #fff;
+  padding: $inner_padding;
+  margin-bottom: 20px;
+}
+
+#sidebar {
+  position: $sidebar_pos;
+  width: $sidebar_width;
+  background-color: #fff;
+  padding: $sidebar_padding;
+  font-size: 12px;
+  border-right: 1px dotted #555;
+}
+
+#page_title {
+  margin-left: $sidebar_width + 2 * $sidebar_padding + $inner_padding + 1;
+}
+
+#loading {
+  margin-left: ($sidebar_width + 2 * $sidebar_padding) / 2 - 16;
+  background-image: url(<%= asset_path 'loading.gif' %>);
+}

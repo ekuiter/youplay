@@ -1,0 +1,72 @@
+div.clear {
+  clear: both;
+}
+
+div#flash div {
+  padding: 8px;
+  margin-bottom: 20px;
+  border: 1px solid #555;
+}
+
+div#flash div.notice {
+  background-color: #a6ff00;
+}
+
+div#flash div.alert {
+  background-color: #ff9e99;
+}
+
+a {
+  color: #009;
+  text-decoration: none;
+}
+
+a:hover {
+  border-bottom: 1px dotted #009;
+  color: #009;
+}
+
+a img {
+  border: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 10px 0 10px 0;
+}
+
+h3 {
+  margin: 18px 0 14px 7px;
+}
+
+div.recently_watched_videos h3 {
+  margin: 30px 0 20px 0;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 6px;
+}
+
+ul li {
+  padding-bottom: 3px;
+}
+
+table.wide {
+  width: 100%;
+}
+
+th {
+  text-align: left;
+}
+
+table.striped tr:nth-child(even) {
+  background-color: #eee;
+}
+
+table td {
+  padding: 3px;
+}
+
+table tr th {
+  padding: 6px 0 6px 3px;
+}

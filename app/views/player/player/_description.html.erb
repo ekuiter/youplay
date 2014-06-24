@@ -1,0 +1,10 @@
+<div id="description" style="overflow:hidden">
+  <h4><%= t("player.description") %></h4>
+  <p>
+    <% if @video.description.blank? %>
+      <em><%= t "player.description_empty" %></em>
+    <% else %>
+      <%= @video.humanize_description %>
+    <% end %>
+  </p>
+</div>

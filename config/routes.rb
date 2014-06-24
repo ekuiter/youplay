@@ -15,8 +15,8 @@ Youplay::Application.routes.draw do
   namespace :reader do
     get "" => "reader#index"
     delete "" => "reader#hide", as: "hide"
-    get "update" => "reader#update"
-    get "tidy" => "reader#tidy"
+    get "update" => "worker#update"
+    get "tidy" => "worker#tidy"
     delete "show(/:id)" => "reader#show", as: "show"
     delete "channel/:channel" => "reader#hide_channel", as: "hide_channel"
     get "hidden" => "reader#hidden"
@@ -24,8 +24,8 @@ Youplay::Application.routes.draw do
     delete "hiding_rules/:hiding_rule" => "hiding_rules#destroy", as: "delete_hiding_rule"
     post "hiding_rules" => "hiding_rules#create", as: "add_hiding_rule"
     get "subscribe" => "subscribe#index"
-    delete "subscribe/channel(/:channel)" => "subscribe#channel_delete", as: "delete_channel"
-    post "subscribe/channel" => "subscribe#channel_add", as: "add_channel"
+    delete "subscribe/channel(/:channel)" => "subscribe#destroy", as: "delete_channel"
+    post "subscribe/channel" => "subscribe#create", as: "add_channel"
   end
   
   namespace :log do

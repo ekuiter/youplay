@@ -1,5 +1,3 @@
-<% @action_name = t 'conf.manage_people' %>
-
 <%= render 'conf/conf/conf_head' %>
 
 <p id="options"><%= link_to t('conf.people.new'), new_conf_person_path %></p>
@@ -11,6 +9,7 @@
   <tr>
     <th><%= t 'conf.people.name' %></th>
     <th><%= t 'devise.email' %></th>
+    <th style="width:60px"></th>
   </tr>
   <% @people.each do |person| %>
       <tr>

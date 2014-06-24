@@ -1,14 +1,12 @@
 class Api::AuthenticatedController < Api::ApiController
-  before_filter :authenticate_user_from_token!
+  before_filter :authenticate_by_token!
   
   private
   
-  def authenticate_user_from_token!
+  def authenticate_by_token!
     begin
       raise "no token given" unless params[:token].presence
-      parts = params[:token].split(':')
-      id = parts[0]
-      token = parts[1]
+      id, token = params[:token].split(':')
       user = User.find(id) rescue raise("user not found")
 
       if user && Devise.secure_compare(user.authentication_token, token)

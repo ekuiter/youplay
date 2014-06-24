@@ -1,35 +1,10 @@
-class Reader::ReaderController < ApplicationController
-
-  include Reader::MediaReader
-  
-  skip_before_filter :authenticate_user!, only: [:update, :json]
-  
-  def pass
-    "VtfTNRv1Fv9mrTTa6E6KCFNs1VlPdCyTczZH247ZL9gQCThL69SOjDjJh89yVBfO"
-  end
-  
-  def update
-    unless params[:pass].nil? || params[:pass] != pass
-      User.first.update_videos
-    end
-    render nothing: true
-  end
-  
-  def tidy
-    unless params[:pass].nil? || params[:pass] != pass
-      User.first.tidy_videos
-    end
-    render nothing: true
-  end
-
+class Reader::ReaderController < ApplicationController  
   def index
     @videos = current_user.new_videos
   end
   
   def hide
-    params[:videos].each do |video|
-      hide_video video
-    end
+    params[:videos].each {|v| hide_video v}
     render nothing: true
   end
 
@@ -43,11 +18,22 @@ class Reader::ReaderController < ApplicationController
   end
 
   private
-  
-  def authenticate
-    authenticate_or_request_with_http_basic do |username, password|
-      username == current_user.username && current_user.valid_password?(password)
-    end
+
+  def hide_video(id)
+    set_cached_video(id)
+    current_user.hide_videos.create cached_video: @cached_video, channel: @cached_video.channel
   end
 
+  def show_video(id)
+    set_cached_video(id)
+    if @cached_video
+      current_user.hide_videos.where(cached_video_id: @cached_video.id)
+    else
+      current_user.hide_videos
+    end.destroy_all
+  end
+  
+  def set_cached_video(id)
+    @cached_video = CachedVideo.where(url: id).first
+  end
 end

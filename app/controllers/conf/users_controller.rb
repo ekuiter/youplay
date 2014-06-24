@@ -1,5 +1,7 @@
 class Conf::UsersController < AdminController
-
+  before_filter :set_user, only: [:edit, :update, :destroy]
+  before_filter :user_params, only: [:create, :update]
+  
   def index
     @users = User.all
   end
@@ -9,17 +11,11 @@ class Conf::UsersController < AdminController
   end
 
   def edit
-    @user = User.find params[:id]
   end
 
   def create
-    user_params = params[:user]
-    admin = params[:user][:admin].to_i == 1 ? true : false
-    logger.debug "Admin: #{params[:user][:admin]}"
-    logger.debug "Admin: #{admin}"
-    user_params.delete :admin
-    @user = User.new user_params
-    @user.admin = admin
+    @user = User.new @user_params
+    @user.admin = @admin
     if @user.save
       redirect_to conf_users_path, notice: t('conf.users.create.success', user: @user.username)
     else
@@ -27,44 +23,34 @@ class Conf::UsersController < AdminController
     end
   end
 
-
   def update
-    begin
-      notice = nil
-      user_params = params[:user]
-      admin = user_params[:admin].to_i == 1 ? true : false
-      @user = User.find params[:id]
-      if @user.update_attributes full_name: user_params[:full_name],
-                                 email: user_params[:email]
-        @user.admin = admin unless @user == current_user
-        if @user.save
-          if user_params[:password].empty?
-            notice = t 'conf.users.update.success', user: @user.username
-          else
-            if @user.update_attributes password: user_params[:password],
-                                       password_confirmation: user_params[:password_confirmation]
-              notice = t 'conf.users.update.success', user: @user.username
-            end
-          end
-        end
-      end
-      if notice
-        flash.now.notice = t 'conf.users.update.success', user: @user.username
-      end
+    @user.full_name = @user_params[:full_name]
+    @user.email = @user_params[:email]
+    @user.admin = @admin unless @user == current_user
+    unless @user_params[:password].empty?
+      @user.password = @user_params[:password]
+      @user.password_confirmation = @user_params[:password_confirmation]
+    end
+    if @user.save
+      redirect_to conf_users_path, notice: t('conf.users.update.success', user: @user.username)
+    else
       render 'edit'
-    rescue RuntimeError
-      redirect_to conf_users_path, alert: $!.message
     end
   end
 
   def destroy
-    begin
-      @user = User.find(params[:id])
-      @user.destroy
-      redirect_to conf_users_path, notice: t('conf.users.destroy', user: @user.username)
-    rescue RuntimeError
-      redirect_to conf_users_path, alert: $!.message
-    end
+    @user.destroy
+    redirect_to conf_users_path, notice: t('conf.users.destroy', user: @user.username)
   end
-
+  
+  private
+  
+  def set_user
+    @user = User.find params[:id]
+  end
+  
+  def user_params
+    @user_params = params[:user]
+    @admin = @user_params.delete(:admin).to_i == 1
+  end
 end

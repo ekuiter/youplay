@@ -8,5 +8,4 @@ class CachedVideo < ActiveRecord::Base
   def play_url
     "#{Rails.application.routes.url_helpers.play_path}?#{url}"
   end
-
 end

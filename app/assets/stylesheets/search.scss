@@ -1,0 +1,26 @@
+.tt-suggestions {
+  width: 420px;
+  font-size: 12px;
+  border: 1px solid #888;
+  margin: 5px 0 0 -190px;
+}
+
+.tt-suggestion a {
+  color: black;
+}
+
+.tt-suggestion a:hover {
+  color: #009;
+}
+
+.tt-suggestion div {
+  width: 310px;
+}
+
+.tt-suggestion em {
+  display: block;
+  width: 100px;
+  float: right;
+  padding-left: 10px;
+  font-size: 0.8em;
+}

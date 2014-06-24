@@ -4,26 +4,17 @@
 
 <%= form_tag conf_update_settings_path, method: :put do %>
     <table>
-
       <tr>
         <td><%= label_tag :max_recently_watched, t('conf.max_recently_watched') %></td>
         <td><%= text_field_tag :max_recently_watched, @max_recently_watched %></td>
       </tr>
-
-      <tr>
-        <td><%= label_tag :max_title_length, t('conf.max_title_length') %></td>
-        <td><%= text_field_tag :max_title_length, @max_title_length %></td>
-      </tr>
-
       <tr>
         <td><%= label_tag :player_skin, t('conf.player_skin') %></td>
         <td><%= select_tag :player_skin, options_for_select(@player_skins) %></td>
       </tr>
-
       <tr>
         <td></td>
         <td><%= submit_tag t('devise.save') %></td>
       </tr>
-
     </table>
 <% end %>

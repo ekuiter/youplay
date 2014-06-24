@@ -1,0 +1,13 @@
+<div id="player"></div>
+<script type="text/javascript">
+  jwplayer("player").setup({
+  flashplayer: "<%= jw_folder %>/player.swf",
+  file: "<%= video.url %>",
+  autoplay: "false",
+  controlbar: "bottom",
+  width: "<%= player_width %>",
+  height: "<%= player_height %>",
+  plugins: "hd-2,backstroke-1",
+  skin: "<%= skin_file %>"
+});
+</script>

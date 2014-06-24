@@ -1,31 +1,5 @@
 class User < ActiveRecord::Base
-
-  # reader: latest_videos, hidden_videos, new_videos
-  include Reader::UserHelper
-
-  # log: watched_videos
-  include Log::UserHelper
-
-  # player: recently_watched_videos
-  include Player::UserHelper
-
-  # conf: max_recently_watched, max_recently_watched=
-  #       max_title_length, max_title_length=
-  #       player_skin, player_skin=
-  include Conf::UserHelper
-
-  # stats: /
-  include Stats::UserHelper
-
-  include HttpRequest
-
-  # Include devise modules
-  devise :database_authenticatable, :trackable, :validatable, :registerable
-
-  # Setup accessible (or protected) attributes for your model
   attr_accessible :username, :full_name, :email, :password, :password_confirmation, :remember_me
-  # attr_accessible :title, :body
-
   has_many :videos, dependent: :destroy
   has_many :subscribed_channels, dependent: :destroy
   has_many :people, dependent: :destroy
@@ -36,58 +10,21 @@ class User < ActiveRecord::Base
   has_many :favorites, dependent: :destroy
   validates :username, :full_name, presence: true
   validates :username, uniqueness: true
-
+  
+  devise :database_authenticatable, :trackable, :validatable, :registerable
+  
+  include UserMixins::Reader
+  include UserMixins::Log
+  include UserMixins::Player
+  include UserMixins::Conf
+  include UserMixins::Stats
+  include UserMixins::Admin
+  include UserMixins::Token
+  
   before_destroy do |user|
     user
-    last_admin
-  end
-
-  def admin
-    role == 'admin' ? true : false
-  end
-
-  def admin=(boolean)
-    if boolean
-      write_attribute :role, 'admin'
-      true
-    else
-      last_admin
-      write_attribute :role, ''
-      false
-    end
-  end
-
-  def self.admins
-    where role: 'admin'
-  end
-
-  def role=
+    preserve_last_admin!
   end
   
   before_save :ensure_authentication_token
- 
-  def ensure_authentication_token
-    if authentication_token.blank?
-      self.authentication_token = generate_authentication_token
-    end
-  end
-  
-  def token
-    "#{id}:#{authentication_token}"
-  end
-
-  private
-
-  def generate_authentication_token
-    loop do
-      token = Devise.friendly_token
-      break token unless User.where(authentication_token: token).first
-    end
-  end
-
-  def last_admin
-    admins = self.class.admins
-    raise 'You can\'t remove the last admin' if admins.count == 1 && admins.first == self
-  end
-
 end

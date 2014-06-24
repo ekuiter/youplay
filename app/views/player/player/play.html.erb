@@ -1,86 +1,19 @@
 <%= title @video.title, link: @video.url, target: '_blank', style: 'white-space: nowrap; overflow: hidden; text-overflow: ellipsis' %>
 
-<div id="video_sidebar" class="<%= noembed = @video.provider == :youtube && @video.access_control['embed'] != 'allowed';
- 'sidebar_noembed' if noembed %>">
-  <table>
-    <tbody>
-    <tr>
-      <td class="desc"><%= t 'player.meta.channel' %></td>
-      <td><%= @video.channel.link %></td>
-    </tr>
-    <tr>
-      <td class="desc"><%= t 'player.meta.date' %></td>
-      <td><%= l @video.uploaded_at, format: :short %></td>
-    </tr>
-    <tr>
-      <td class="desc"><%= t 'player.meta.duration' %></td>
-      <td><%= video_duration @video %></td>
-    </tr>
-    <tr>
-       <td class="desc"><%= t 'player.meta.topic' %></td>
-       <td><%= @video.topic %></td>
-    </tr>
-    <tr>
-      <td class="desc"><%= t 'player.meta.views' %></td>
-      <td><%= number_with_delimiter @video.views %></td>
-    </tr>
-    <% if @video.access_control['rate'] == 'allowed' && @video.rating %>
-        <tr>
-          <td class="desc"><%= t 'player.meta.likes' %></td>
-          <td><%= number_with_delimiter @video.rating.likes %></td>
-        </tr>
-        <tr>
-          <td class="desc"><%= t 'player.meta.dislikes' %></td>
-          <td><%= number_with_delimiter @video.rating.dislikes %></td>
-        </tr>
-    <% end %>
-    </tbody>
-  </table>
-  <p id="download"><%= link_to image_tag("download.gif"), video_download_url %>
-    <%= link_to t('player.download.download'), video_download_url %></p>
-  <div class="clear"></div>
-  <p id="favorite"><% if @saved_video.favorite.nil? %>
-    <%= link_to "", void, class: :no_favorite, 'data-url' => log_set_favorite_path(@saved_video) %>
-    <%= link_to t("player.favorite"), void, 'data-text' => t("player.no_favorite") %>
-    <% else %>
-    <%= link_to "", void, class: :favorite, method: :delete, 'data-url' => log_set_favorite_path(@saved_video) %>
-    <%= link_to t("player.no_favorite"), void, 'data-text' => t("player.favorite") %>
-    <% end %></p>
+<div id="video_sidebar" class="<%= 'sidebar_noembed' unless @video.embedding_allowed? %>">
+  <%= render "sidebar" %>
 </div>
 
-<% if noembed then %>
-  <div class="noembed">
-    <%= link_to image_tag(@video.thumbnail), @video.url, target: '_blank' %>
-    <div>
-      <strong>
-        <%= t 'player.noembed' %>
-      </strong>
-      <p>
-        <%= t('player.noembed2', link: link_to(t('player.noembed_link'), @video.url, target: '_blank')).html_safe %>
-      </p>
-    </div>
-  </div>
+<% if @video.embedding_allowed? %>
+  <%= play @video %>
 <% else %>
-  <%= player %>
+  <%= render "noembed" %>
 <% end %>
 
-<% if @video.access_control['comment'] == 'allowed' || !@video.description.blank? %>
-  <div id="description">
-    <h4><%= t("player.description") %></h4>
-    <p><%= @video.description.blank? ? "<em>#{t("player.description_empty")}</em>".html_safe : description %></p>
-  </div>
+<% if @video.commenting_allowed? or @video.description %>
+  <%= render "description" %>
 <% end %>
 
-<% if @video.access_control['comment'] == 'allowed' then %>
-<div id="comments">
-  <h4><%= t("player.comments") %></h4>
-  <div class="separator">
-  </div>
-  <% @video.comments.each do |comment| %>
-  <div class="comment">
-    <em><%= comment.author.uri.gsub("http://gdata.youtube.com/feeds/api/users/", "") %></em>
-    <span><%= comment.content %></span>
-  </div>
-  <% end %>
-</div>
+<% if @video.commenting_allowed? %>
+  <%= render "comments" %>
 <% end %>

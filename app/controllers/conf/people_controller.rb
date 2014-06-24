@@ -1,5 +1,6 @@
 class Conf::PeopleController < ApplicationController
-
+  before_filter :set_person, only: [:edit, :update, :destroy]
+  
   def index
     @people = current_user.people
   end
@@ -9,7 +10,6 @@ class Conf::PeopleController < ApplicationController
   end
 
   def edit
-    @person = current_user.people.find params[:id]
   end
 
   def create
@@ -22,15 +22,18 @@ class Conf::PeopleController < ApplicationController
   end
 
   def update
-    @person = current_user.people.find params[:id]
-    @person.update_attributes params[:person]
-    flash.now.notice = t 'conf.people.update.success', person: @person.name
-    render 'edit'
+    @person.update_attributes name: params[:person][:name], email: params[:person][:email]
+    redirect_to conf_people_url, notice: t('conf.people.update.success', person: @person.name)
   end
 
   def destroy
-    @person = current_user.people.find params[:id]
     @person.destroy
     redirect_to conf_people_url, notice: t('conf.people.destroy', person: @person.name)
+  end
+  
+  private
+  
+  def set_person
+    @person = current_user.people.find params[:id]
   end
 end
