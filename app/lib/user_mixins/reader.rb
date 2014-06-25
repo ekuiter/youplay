@@ -20,7 +20,7 @@ module UserMixins
           unless videos.include? video.unique_id
             cached_video = CachedVideo.create channel: channel, title: video.title,
                                               url: video.unique_id, uploaded_at: video.uploaded_at
-            hide_video_if_rule_applies(video)
+            hide_video_if_rule_applies(video, channel, cached_video)
           end
         end
       end
@@ -57,7 +57,7 @@ module UserMixins
       xml.videos[0..Settings::videos_per_channel - 1]
     end
   
-    def hide_video_if_rule_applies(video)
+    def hide_video_if_rule_applies(video, channel, cached_video)
       hiding_rules.each do |hiding_rule|
         if (hiding_rule.channel.blank? and video.title.downcase.include?(hiding_rule.pattern.downcase)) or
            (channel == hiding_rule.channel and video.title.downcase.include?(hiding_rule.pattern.downcase))
