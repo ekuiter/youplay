@@ -54,7 +54,7 @@ module UserMixins
       url = "http://gdata.youtube.com/feeds/api/users/UC#{channel}/uploads?v=2"
       raw_xml = HttpRequest::http_request(url: url).body
       xml = YouTubeIt::Parser::VideosFeedParser.new(raw_xml).parse
-      xml.videos[0..Settings::videos_per_channel - 1]
+      xml.videos[0..Integer(Settings::videos_per_channel) - 1]
     end
   
     def hide_video_if_rule_applies(video, channel, cached_video)
