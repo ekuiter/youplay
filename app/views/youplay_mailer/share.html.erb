@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <style type="text/css">
+      #wrapper {
+        width: 800px;
+        margin: 20px auto;
+        font-family: Arial;
+        font-size: 15px;
+      }
+      #container {
+        border: 1px solid black;
+        padding: 15px 20px;
+        background-color: #eee;
+      }
+      #inner {
+        width: 420px;
+      }
+      .clear {
+        clear: both;
+      }
+      h1 {
+        margin-top: 10px;
+        border-bottom: 1px solid #999;
+      }
+      h2 {
+        font-size: 1.6em;
+      }
+      h2 span {
+        font-size: 0.7em;
+      }
+      p {
+        line-height: 1.8em;
+        margin-bottom: 0;
+      }
+      a {
+        color: #009;
+        text-decoration: none;
+      }
+      a:hover {
+        border-bottom: 1px dotted #009;
+        color: #009;
+      }
+      img {
+        border: none;
+        float: right;
+        padding: 0 0 20px 20px;
+      }      
+      p.message {
+        border: 1px solid #aaa;
+        border-radius: 10px;
+        background-color: #fff;
+        font-style: italic;
+        padding: 8px 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="container">
+        <h1><%= @user.full_name %> <%= t "player.share_mail.shared" %></h1>
+        <%= link_to image_tag(@video.thumbnail, alt: @video.title, width: 320), @video.url %>
+        <div id="inner">
+          <p><%= t("player.share_mail.shared3", person: @person.name, link: mail_to(@user.email, @user.full_name)).html_safe %></p>
+          <h2>
+            <%= link_to @video.title, @video.url %>
+            <span>(<%= t "player.share_mail.by" %> <%= @video.channel.fetch.link %>)</span>
+          </h2>
+          <p><%= t "player.share_mail.watch2" %> <strong><%= link_to t("player.share_mail.here"), @video.url %></strong>.</p>
+          <% unless @message.blank? %>
+            <p>
+              <%= @user.full_name %> <%= t "player.share_mail.message" %>
+              <p class="message">
+                <%= @message.gsub('\n', "<br />").html_safe %>
+              </p>
+            </p>
+          <% end %>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <small style="display:block;margin-top:10px;text-align:center">
+        <%= t("player.share_mail.generated2", link: link_to("youplay", root_url)).html_safe %><br />
+        <%= t "player.share_mail.reply_to" %> <%= mail_to(@user.email) %>
+      </small>
+    </div>
+  </body>
+</html>

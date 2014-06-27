@@ -10,4 +10,11 @@ class Api::PlayerController < Api::AuthenticatedController
     @video = play_video params rescue raise "invalid video"
     render json: @video
   end
+  
+  def share
+    video = play_video params rescue raise "invalid video"
+    person = current_user.people.find params[:person]
+    YouplayMailer.share(current_user, video, person, params[:message]).deliver
+    render nothing: true
+  end
 end

@@ -7,6 +7,9 @@
   <% if user_signed_in? %>
     <script type="text/javascript">
       var token = "<%= j current_user.token %>";
+      <% if @video %>
+        var video_id = "<%= j @video.id %>";
+      <% end %>
     </script>
   <% end %>
   <%= javascript_include_tag 'application' %>

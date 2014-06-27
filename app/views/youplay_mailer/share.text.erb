@@ -1,0 +1,27 @@
+=================================================
+<%= @user.full_name %> <%= t "player.share_mail.shared" %>
+=================================================
+
+<%= t "player.share_mail.shared2", person: @person.name, user: @user.full_name, email: @user.email %>
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<%= @video.title %> (<%= t "player.share_mail.by" %> <%= @video.channel.fetch.name %>)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+<%= t "player.share_mail.watch" %>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<%= @video.url %>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<% unless @message.blank? %>
+
+<%= @user.full_name %> <%= t "player.share_mail.message" %>
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<%= @message.gsub('\n', "\n") %>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<% end %>
+
+_________________________________________________
+
+<%= t "player.share_mail.generated", root: root_url %>
+<%= t "player.share_mail.reply_to" %> <%= @user.email %>

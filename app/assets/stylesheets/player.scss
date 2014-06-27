@@ -153,3 +153,18 @@ p#favorite a.favorite, p#favorite a.no_favorite {
   font-size: 12px;
   margin-top: 2px;
 }
+
+#share_form select {
+  width: 100%;
+}
+
+#share_form textarea {
+  width: 100%;
+  height: 50px;
+  margin-top: 5px;
+}
+
+#share_form input {
+  float: right;
+  width: 80px;
+}

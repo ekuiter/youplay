@@ -3,6 +3,7 @@ window.player =
 
 player.init = ->
   player.prepare.favoriteVideo()
+  player.prepare.share()
   
 player.prepare.favoriteVideo = ->
   $("#video_sidebar #favorite").click ->
@@ -18,3 +19,13 @@ player.prepare.favoriteVideo = ->
       text = label.data("text")
       label.data("text", label.text())
       label.text(text)
+  
+player.prepare.share = ->
+  value = $("#share_form input").val()
+  $("#share_form").submit ->
+    $("#share_form input").val(value)
+    person = $("#share_form select").val()
+    message = $("#share_form textarea").val().replace("\n", " \\n")
+    $.ajax("/api/share/#{person}/?#{video_id}&message=#{message}&token=#{token}").done ->
+      $("#share_form input").val("#{value} ✓")
+    false

@@ -51,6 +51,7 @@ Youplay::Application.routes.draw do
     get "login" => "auth#login"
     get "" => "player#index"
     get "play" => "player#play"
+    get "share/:person" => "player#share"
     get "log(/:search(/:page/:results))" => "log#index"
     get "reader" => "reader#index"
   end

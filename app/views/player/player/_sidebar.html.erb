@@ -43,3 +43,10 @@
   <%= link_to t("player.no_favorite"), void, 'data-text' => t("player.favorite") %>
   <% end %>
 </p>
+<p>
+  <form id="share_form">
+    <%= select_tag :person, options_for_select(@people.map {|p| [p.name, p.id] }) %>
+    <%= text_area_tag :message, nil, placeholder: "Message" %>
+    <%= submit_tag t('player.share') %>
+  </form>
+</p>
