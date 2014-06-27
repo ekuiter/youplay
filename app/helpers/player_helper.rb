@@ -6,7 +6,6 @@ module PlayerHelper
     skin_folder = Settings.skin_folder client: true
     player_skin = current_user.player_skin
     skin_file = "#{skin_folder}/#{player_skin}.zip"
-    pp video.provider
     partial = video.provider.player_partial(player_skin)
     render "player/player/providers/#{partial}", video: video, player_width: player_width, 
            player_height: player_height, jw_folder: jw_folder, skin_file: skin_file
