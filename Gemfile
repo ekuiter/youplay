@@ -22,6 +22,7 @@ gem 'unicorn'
 gem 'twitch', '= 0.0.2'
 gem 'swfobject-rails'
 gem 'twitter-typeahead-rails'
+gem 'sass', '3.2.13'
 
 # Gems used only for assets and not required
 # in production environments by default.
