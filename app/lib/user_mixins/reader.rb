@@ -32,7 +32,7 @@ module UserMixins
         keep = false
         users.each do |user|
           watched, hidden, channel_videos = select_watched_hidden_channel_videos(user, cached_video)
-          keep = true if channel_videos.count <= Settings::videos_per_channel or
+          keep = true if channel_videos.count <= Settings.videos_per_channel or
                          (not watched.include? cached_video.url and
                           not hidden.include? cached_video.id)
         end
@@ -54,7 +54,7 @@ module UserMixins
       url = "http://gdata.youtube.com/feeds/api/users/UC#{channel}/uploads?v=2"
       raw_xml = HttpRequest::http_request(url: url).body
       xml = YouTubeIt::Parser::VideosFeedParser.new(raw_xml).parse
-      xml.videos[0..Integer(Settings::videos_per_channel) - 1]
+      xml.videos[0..Integer(Settings.videos_per_channel) - 1]
     end
   
     def hide_video_if_rule_applies(video, channel, cached_video)

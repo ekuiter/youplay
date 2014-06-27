@@ -65,7 +65,7 @@
           <p><%= t("player.share_mail.shared3", person: @person.name, link: mail_to(@user.email, @user.full_name)).html_safe %></p>
           <h2>
             <%= link_to @video.title, @video.url %>
-            <span>(<%= t "player.share_mail.by" %> <%= @video.channel.fetch.link %>)</span>
+            <span>(<%= t "player.share_mail.by" %> <%= @video.channel.link %>)</span>
           </h2>
           <p><%= t "player.share_mail.watch2" %> <strong><%= link_to t("player.share_mail.here"), @video.url %></strong>.</p>
           <% unless @message.blank? %>

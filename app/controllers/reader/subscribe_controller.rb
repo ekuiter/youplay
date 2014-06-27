@@ -5,10 +5,10 @@ class Reader::SubscribeController < ApplicationController
 
   def create
     begin
-      profile = Providers::youtube_client.profile params[:channel]
-      channel = current_user.subscribed_channels.new channel: profile.user_id
+      youplay_channel = YouplayChannel.new(name: params[:channel], provider: YouplayProvider.youtube)
+      channel = current_user.subscribed_channels.new channel: youplay_channel.id
       if channel.save
-        flash[:notice] = t 'reader.subscribe.channel_success', channel: profile.username_display
+        flash[:notice] = t 'reader.subscribe.channel_success', channel: youplay_channel.name
       else
         flash[:alert] = t 'reader.subscribe.failure'
       end

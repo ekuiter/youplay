@@ -14,6 +14,7 @@ class Video < ActiveRecord::Base
   end
   
   def youplay_channel
-    YouplayChannel.new(id: channel_topic, provider: provider.to_sym)
+    youplay_provider = YouplayProvider.new provider: provider
+    YouplayChannel.new(id: channel_topic, provider: youplay_provider)
   end
 end

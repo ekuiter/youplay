@@ -23,7 +23,7 @@ module UserMixins
       player_skin = configurations.find_by_feature 'player_skin'
       player_skin = default if player_skin.nil?
       player_skin = player_skin.value if player_skin != default
-      if player_skin == I18n.t('conf.youtube_player') || FileTest.exist?("#{Settings::skin_folder}/#{player_skin}.zip")
+      if player_skin == I18n.t('conf.youtube_player') || FileTest.exist?("#{Settings.skin_folder}/#{player_skin}.zip")
         player_skin
       else
         false
@@ -36,7 +36,7 @@ module UserMixins
       skins << current_skin
       youtube_player = I18n.t('conf.youtube_player')
       skins << youtube_player if youtube_player != current_skin
-      files = Dir.open(Settings::skin_folder).entries
+      files = Dir.open(Settings.skin_folder).entries
       files.each do |file|
         extension = File.extname file
         name = File.basename file, extension
@@ -47,7 +47,7 @@ module UserMixins
 
     def player_skin=(player_skin) # set current jw player skin
       raise ArgumentError, 'skin doesn\'t exist' unless player_skin == I18n.t('conf.youtube_player') ||
-          FileTest.exist?("#{Settings::skin_folder}/#{player_skin}.zip")
+          FileTest.exist?("#{Settings.skin_folder}/#{player_skin}.zip")
       conf = configurations.find_by_feature 'player_skin'
       conf = configurations.new if conf.nil?
       conf.feature = 'player_skin'

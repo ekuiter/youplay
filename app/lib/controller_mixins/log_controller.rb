@@ -31,9 +31,9 @@ module ControllerMixins
     end
     
     def videos_with_channel_names(videos)
-      channels = Channel.all
+      YouplayChannel.prefetch_all
       videos.each do |video|
-          video.channel_topic = video.youplay_channel.fetch(channels).name rescue nil
+          video.channel_topic = video.youplay_channel.name rescue nil
       end
       videos
     end

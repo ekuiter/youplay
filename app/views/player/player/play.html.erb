@@ -1,19 +1,19 @@
 <%= title @video.title, link: @video.url, target: '_blank', style: 'white-space: nowrap; overflow: hidden; text-overflow: ellipsis' %>
 
-<div id="video_sidebar" class="<%= 'sidebar_noembed' unless @video.embedding_allowed? %>">
+<div id="video_sidebar" class="<%= 'sidebar_noembed' unless @video.allowed?(:embedding) %>">
   <%= render "sidebar" %>
 </div>
 
-<% if @video.embedding_allowed? %>
+<% if @video.allowed? :embedding %>
   <%= play @video %>
 <% else %>
   <%= render "noembed" %>
 <% end %>
 
-<% if @video.commenting_allowed? or @video.description %>
+<% if @video.allowed?(:commenting) or @video.description %>
   <%= render "description" %>
 <% end %>
 
-<% if @video.commenting_allowed? %>
+<% if @video.allowed? :commenting %>
   <%= render "comments" %>
 <% end %>

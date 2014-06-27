@@ -1,11 +1,12 @@
 class ChannelController < ApplicationController
-  
   def info
     if params[:channels].is_a? Array
       channels = [params[:i]]
-      params[:channels].each do |data|
-        split = data.split(':')
-        channel = YouplayChannel.new(id: split[1], provider: split[0].to_sym).fetch
+      YouplayChannel.prefetch_all
+      params[:channels].each do |channel|
+        parts = channel.split(':')
+        provider = YouplayProvider.new provider: parts.first
+        channel = YouplayChannel.new id: parts.last, provider: provider
         channels.push username: channel.name, url: channel.url
       end
       render json: channels
@@ -13,5 +14,4 @@ class ChannelController < ApplicationController
       render nothing: true
     end
   end
-
 end

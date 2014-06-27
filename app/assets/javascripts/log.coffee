@@ -14,7 +14,7 @@ log.prepare.favoriteVideos = ->
         icon.toggleFavoriteIcon()
 
 log.loadUsers = ->
-  user_number = 15
+  user_number = 50
   user_elements = (i) ->
     $(".ajax-user").slice(i*user_number, (i+1)*user_number)
     

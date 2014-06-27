@@ -29,16 +29,8 @@ class YouplayVideo
     Rinku.auto_link(description.gsub("\n", '<br />'), :all, 'target="_blank"').html_safe
   end
   
-  def embedding_allowed?
-    not (provider == :youtube && access_control['embed'] != 'allowed')
-  end
-  
-  def rating_allowed?
-    provider == :youtube && access_control['rate'] == 'allowed'
-  end
-  
-  def commenting_allowed?
-    provider == :youtube && access_control['comment'] == 'allowed'
+  def allowed?(method)
+    provider.allowed? self, method
   end
   
   def native_client_url

@@ -2,8 +2,9 @@ class Api::ReaderController < Api::AuthenticatedController
   def index
     new_videos = current_user.new_videos
     mappings = {}
+    YouplayChannel.prefetch_all
     new_videos.map do |channel, videos|
-      mappings[channel] = YouplayChannel.new(id: channel, provider: :youtube).fetch.name
+      mappings[channel] = YouplayChannel.new(id: channel, provider: YouplayProvider.youtube).name
     end
     new_videos = Hash[new_videos.map {|channel, videos| [mappings[channel], videos] }]
     new_videos.each do |channel, videos|
@@ -15,8 +16,8 @@ class Api::ReaderController < Api::AuthenticatedController
   end
   
   def subscribe
-    profile = Providers::youtube_client.profile params[:channel]
-    raise unless current_user.subscribed_channels.create(channel: profile.user_id)
+    channel = YouplayChannel.new(name: params[:channel], provider: YouplayProvider.youtube)
+    raise unless current_user.subscribed_channels.create(channel: channel.id)
     render nothing: true
   end
   
@@ -24,8 +25,8 @@ class Api::ReaderController < Api::AuthenticatedController
     hiding_rule = current_user.hiding_rules.new
     hiding_rule.pattern = params[:pattern]
     unless params[:channel].blank?
-      profile = Providers::youtube_client.profile params[:channel]
-      hiding_rule.channel = profile.user_id
+      channel = YouplayChannel.new(name: params[:channel], provider: YouplayProvider.youtube)
+      hiding_rule.channel = channel.id
     end
     raise unless hiding_rule.save
     render nothing: true

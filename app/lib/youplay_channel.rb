@@ -1,45 +1,77 @@
-class YouplayChannel
+class YouplayChannel  
+  class << self
+   attr_accessor :prefetched_channels
+  end
+ 
   attr_accessor :id, :name, :provider
+  
+  def self.prefetch_all
+    self.prefetched_channels = Channel.all
+  end
   
   def initialize(hash={})
     hash.each do |key, value|
       instance_variable_set("@#{key}".to_sym, value)
     end
   end
-  
-  def fetch(channels = nil)
-    return self if @id && @name
-    profile = if channels
-      channels.select {|c| c.channel_id == @id and c.provider == @provider.to_s }
-    else
-      Channel.where(channel_id: @id, provider: @provider)
-    end.first
-    if profile
-      @id = profile.channel_id
-      @name = profile.channel_name
-      return self
-    end
-    if @provider == :youtube
-      profile = Providers::youtube_client.profile(@id)
-      @id = profile.user_id
-      @name = profile.username_display
-    elsif @provider == :twitch
-      profile = Providers::twitch_client.getChannel(@id)[:body]
-      @id = profile['name']
-      @name = profile['display_name']
-    else
-      raise 'no provider given'
-    end
-    Channel.create channel_id: @id, channel_name: @name, provider: @provider
-    self
+
+  def id
+    @id ||= fetch(:id)
   end
-  
+
+  def name
+    @name ||= fetch(:name)
+  end
+
   def url
-    return "http://www.youtube.com/channel/UC#{id}" if provider == :youtube
-    return "http://www.twitch.tv/#{id}" if provider == :twitch
+    provider.channel_url(id)
+  end
+
+  def link
+    "<a href=\"#{url}\" target=\"_blank\">#{name}</a>".html_safe
+  end
+
+  private
+
+  def find_channel(instance_method, cache_method)
+    prefetched_channels = self.class.prefetched_channels
+    instance_variable = instance_variable_get("@#{instance_method}")
+    if prefetched_channels
+      prefetched_channels.select {|c| c.send(cache_method) == instance_variable and c.provider == @provider.to_s }
+    else
+      conditions = { provider: @provider.to_s }
+      conditions[cache_method] = instance_variable
+      Channel.where conditions
+    end.first
+  end
+
+  def fetch_from_cache
+    channel = find_channel(:id, :channel_id) if @name.blank?
+    channel = find_channel(:name, :channel_name) if @id.blank?
+    if channel
+      @id = channel.channel_id
+      @name = channel.channel_name
+      true
+    else
+      false
+    end
   end
   
-  def link
-    "<a href=\"#{fetch.url}\" target=\"_blank\">#{fetch.name}</a>".html_safe
+  def insert_into_cache
+    channel = @provider.channel(@id) if @name.blank?
+    channel = @provider.channel(@name) if @id.blank?
+    @id = channel[:id]
+    @name = channel[:name]
+    Channel.create channel_id: @id, channel_name: @name, provider: @provider.to_s
   end
+
+  def fetch(method)
+    raise "neither id nor name given" if @id.blank? and @name.blank?
+    raise "provider not given" if @provider.blank?
+    raise "provider invalid" unless @provider.kind_of?(YouplayProvider)
+    return send(method) if fetch_from_cache
+    insert_into_cache
+    send(method)
+  end
+
 end

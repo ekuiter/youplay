@@ -14,6 +14,6 @@ class Reader::WorkerController < ApplicationController
   private
   
   def upload_pass_valid?
-    params[:pass].presence && params[:pass] == Settings::upload_pass
+    params[:pass].presence && params[:pass] == Settings.upload_pass
   end
 end

@@ -20,7 +20,7 @@
     <td class="desc"><%= t 'player.meta.views' %></td>
     <td><%= number_with_delimiter @video.views %></td>
   </tr>
-  <% if @video.rating_allowed? and @video.rating %>
+  <% if @video.allowed?(:rating) and @video.rating %>
       <tr>
         <td class="desc"><%= t 'player.meta.likes' %></td>
         <td><%= number_with_delimiter @video.rating.likes %></td>

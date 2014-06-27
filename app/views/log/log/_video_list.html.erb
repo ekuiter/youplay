@@ -16,7 +16,7 @@
               <td><%= image_tag "providers/#{video.provider}.png" %></td>
               <td><%= l video.created_at, format: :short %></td>
               <td class="title"><%= link_to video.title.html_safe, video.play_url %></td>
-              <%= ajax_channel video.provider, video.channel_topic, 'td' %>
+              <%= ajax_channel video.provider.to_s, video.channel_topic, 'td' %>
               <td><%= YouplayVideo.humanize_duration(video) %></td>
               <td class="delete"><%= favorited = @favorited_video_ids.include?(video.id); link_to "", void, class: (favorited ? :favorite : :no_favorite), method: (favorited ? :delete : :get), "data-url" => log_set_favorite_path(video) %>
                 <%= link_to image_tag('delete.png', width: 20, height: 20), log_delete_video_path(video), method: :delete, confirm: t('confirm') %></td>
