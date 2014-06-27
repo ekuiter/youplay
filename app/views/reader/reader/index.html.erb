@@ -1,12 +1,12 @@
 <%= render 'reader/reader/reader_head' %>
   
-<div id="reader">
-  <div id="reader-controls">
-    <%= render "reader/subscribe/subscribe" %>
-    <hr />
-    <%= render "reader/hiding_rules/hiding_rules" %>
-  </div>
+<div id="reader-controls">
+  <%= render "reader/subscribe/subscribe" %>
+  <hr />
+  <%= render "reader/hiding_rules/hiding_rules" %>
+</div>
   
+<div id="reader">  
   <% if @videos.blank? %>
     <h3><%= t "reader.no_videos" %></h3>
   <% else %>

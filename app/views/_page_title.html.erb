@@ -1,6 +1,5 @@
-<h1 onmouseover="<%= options[:onmouseover] %>" onmouseout="<%= options[:onmouseout] %>" style="<%= options[:style] %>">
+<h1 style="<%= options[:style] %>">
 <%= content %>
-<%= options[:additional_content] %>
   <span class="module_description">
     <%= t "modules.#{@module}_description", application_name: t('application.name') if @module %>
   </span>

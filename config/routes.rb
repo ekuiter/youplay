@@ -55,7 +55,7 @@ Youplay::Application.routes.draw do
     get "log(/:search(/:page/:results))" => "log#index"
     get "reader" => "reader#index"
     get "subscribe" => "reader#subscribe"
-    get "hiding_rule" => "reader#hiding_rule"
+    get "add_hiding_rule" => "reader#add_hiding_rule"
   end
   
 end

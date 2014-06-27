@@ -44,9 +44,9 @@
   <% end %>
 </p>
 <p>
-  <form id="share_form">
+  <form id="share-form">
     <%= select_tag :person, options_for_select(@people), include_blank: true %>
     <%= text_area_tag :message, nil, placeholder: "Message" %>
-    <%= submit_tag t('player.share') %>
+    <%= submit_tag t('player.share'), id: :submit %>
   </form>
 </p>
