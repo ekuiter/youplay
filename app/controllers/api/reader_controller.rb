@@ -13,4 +13,21 @@ class Api::ReaderController < Api::AuthenticatedController
     end
     render json: new_videos
   end
+  
+  def subscribe
+    profile = Providers::youtube_client.profile params[:channel]
+    current_user.subscribed_channels.create channel: profile.user_id
+    render nothing: true
+  end
+  
+  def hiding_rule  
+    hiding_rule = current_user.hiding_rules.new
+    hiding_rule.pattern = params[:pattern]
+    unless params[:channel].blank?
+      profile = Providers::youtube_client.profile params[:channel]
+      hiding_rule.channel = profile.user_id
+    end
+    hiding_rule.save
+    render nothing: true
+  end
 end

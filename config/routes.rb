@@ -54,6 +54,8 @@ Youplay::Application.routes.draw do
     get "share/:person" => "player#share"
     get "log(/:search(/:page/:results))" => "log#index"
     get "reader" => "reader#index"
+    get "subscribe" => "reader#subscribe"
+    get "hiding_rule" => "reader#hiding_rule"
   end
   
 end

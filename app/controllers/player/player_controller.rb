@@ -7,7 +7,7 @@ class Player::PlayerController < ApplicationController
   end
 
   def play
-    @people = current_user.people
+    @people = current_user.people.map {|p| [p.name, p.id] }
     return @video = play_video(params) if Rails.env.development?
     begin
       @video = play_video params

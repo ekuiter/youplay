@@ -20,7 +20,7 @@
     <td class="desc"><%= t 'player.meta.views' %></td>
     <td><%= number_with_delimiter @video.views %></td>
   </tr>
-  <% if @video.rating_allowed? %>
+  <% if @video.rating_allowed? and @video.rating %>
       <tr>
         <td class="desc"><%= t 'player.meta.likes' %></td>
         <td><%= number_with_delimiter @video.rating.likes %></td>
@@ -45,7 +45,7 @@
 </p>
 <p>
   <form id="share_form">
-    <%= select_tag :person, options_for_select(@people.map {|p| [p.name, p.id] }) %>
+    <%= select_tag :person, options_for_select(@people), include_blank: true %>
     <%= text_area_tag :message, nil, placeholder: "Message" %>
     <%= submit_tag t('player.share') %>
   </form>

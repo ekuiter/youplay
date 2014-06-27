@@ -10,6 +10,7 @@ reader.init = ->
       reader.prepare.hideVideo($(this))
     $("td .play").each ->
       reader.prepare.playVideo($(this))
+    reader.prepare.controls()
   
 reader.prepare.hideChannel = (hide) ->
   channel = hide.parent().parent()
@@ -46,3 +47,20 @@ reader.prepare.refresh = ->
   , 15 * 60 * 1000
   $(document).on "page:before-change", ->
     clearTimeout(timeout)
+    
+reader.prepare.controls = ->
+  value_subscribe = $("#subscribe-form #submit").val()
+  $("#subscribe-form").submit ->
+    $("#subscribe-form #submit").val(value_subscribe)
+    channel = $("#subscribe-form #channel").val()
+    $.ajax("/api/subscribe/?channel=#{channel}&token=#{token}").done ->
+      $("#subscribe-form #submit").val("#{value_subscribe} ✓")
+    false
+  value_hiding_rule = $("#hiding-rule-form #submit").val()
+  $("#hiding-rule-form").submit ->
+    $("#hiding-rule-form #submit").val(value_hiding_rule)
+    channel = $("#hiding-rule-form #channel").val()
+    pattern = $("#hiding-rule-form #pattern").val()
+    $.ajax("/api/hiding_rule/?pattern=#{pattern}&channel=#{channel}&token=#{token}").done ->
+      $("#hiding-rule-form #submit").val("#{value_hiding_rule} ✓")
+    false

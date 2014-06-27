@@ -4,10 +4,7 @@
 
 <p id="options"><%= link_to t('reader.subscribe.delete_all'), reader_delete_channel_path, method: :delete, confirm: t('confirm')  %></p>
 
-<%= form_tag(reader_add_channel_path, method: :post) do %>
-    <%= text_field_tag :channel, "", style: "width:200px" %>
-    <%= submit_tag t('reader.subscribe.subscribe') %>
-<% end %>
+<%= render "subscribe" %>
    
 <div id="subscribe">
   <% if @subscribed_channels.blank? %>

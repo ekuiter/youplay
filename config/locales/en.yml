@@ -160,6 +160,7 @@ en:
     manage_hidden: "Manage hidden videos"
     manage_hiding_rules: "Manage hiding rules"
     hiding_rules:
+      add: "Add hiding rule"
       success: "Hiding rule saved."
       failure: "An error occured while saving. Check your input."
       no_hiding_rules: "There are no hiding rules yet."
