@@ -2,6 +2,6 @@ class Provider
   attr_accessor :provider
   
   def initialize
-    self.provider = self.class.name.split("::").last.underscore.split("_").first.to_sym
+    self.provider = self.class.name.split("::").last.underscore.gsub("_provider", "").to_sym
   end
 end

@@ -4,7 +4,7 @@ class YouplayProvider
   end
   
   def self.providers
-    [:youtube, :twitch]
+    [:youtube, :twitch, :newgrounds_audio, :newgrounds_video]
   end
   
   attr_accessor :provider, :instance
@@ -18,9 +18,13 @@ class YouplayProvider
     self.instance = hash[:instance] if hash[:instance]
   end
   
+  def as_json(args = nil)
+    provider.to_s
+  end
+  
   def provider=(value)
     raise "invalid provider" if value.to_sym == :youplay
-    @instance = Providers.const_get("#{value.capitalize}Provider".to_s).new
+    @instance = Providers.const_get("#{value.to_s.camelize}Provider".to_s).new
     @provider = value.to_sym
   end
   
@@ -45,6 +49,14 @@ class YouplayProvider
   def player_partial(player_skin)
     if @instance.respond_to?(:player_partial)
       @instance.player_partial(player_skin)
+    else
+      provider.to_s
+    end
+  end
+  
+  def image
+    if @instance.respond_to?(:image)
+      @instance.image
     else
       provider.to_s
     end

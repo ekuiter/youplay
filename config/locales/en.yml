@@ -2,7 +2,6 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  bad_request: "Bad request."
   application:
     name: "youplay"
   imprint: "Imprint"
@@ -60,8 +59,8 @@ en:
       logout: "Logout"
     search: "Search"
   player:
-    play_youtube: "Play YouTube or Twitch videos"
-    play_video: "Play video with YouTube or Twitch url"
+    play_youtube: "Play YouTube, Twitch and other videos"
+    play_video: "Play video with url"
     wrong_url: 'That is not a valid video.'
     play: "Play"
     noembed: "Unfortunately, embedding this video is not possible."

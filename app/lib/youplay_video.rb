@@ -1,6 +1,6 @@
 class YouplayVideo    
   attr_accessor :id, :url, :title, :duration, :access_control, :uploaded_at, :topic, :views, 
-                :rating, :description, :thumbnail, :channel, :comments, :provider, :saved_video, :embed_type, :embed_id
+                :rating, :description, :thumbnail, :channel, :comments, :provider, :saved_video, :embed_type, :embed_id, :file
   
   def initialize(hash={})
     hash.each do |key, value|

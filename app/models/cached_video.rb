@@ -5,7 +5,9 @@ class CachedVideo < ActiveRecord::Base
   validates :channel, :title, :url, :uploaded_at, presence: true
   validates :url, uniqueness: true
 
-  def play_url
-    "#{Rails.application.routes.url_helpers.play_path}?#{url}"
+  include UrlMixin
+
+  def provider
+    :youtube
   end
 end

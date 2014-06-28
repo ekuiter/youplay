@@ -60,7 +60,9 @@
     <div id="wrapper">
       <div id="container">
         <h1><%= @user.full_name %> <%= t "player.share_mail.shared" %></h1>
-        <%= link_to image_tag(@video.thumbnail, alt: @video.title, width: 320), @video.url %>
+        <% if @video.thumbnail %>
+          <%= link_to image_tag(@video.thumbnail, alt: @video.title, width: 320), @video.url %>
+        <% end %>
         <div id="inner">
           <p><%= t("player.share_mail.shared3", person: @person.name, link: mail_to(@user.email, @user.full_name)).html_safe %></p>
           <h2>

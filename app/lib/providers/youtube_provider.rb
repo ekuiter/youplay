@@ -1,10 +1,12 @@
 class Providers::YoutubeProvider < Provider
   def video_id(params)
     id = nil
-    params.each do |key, value|      
-      id = value and break if key.include? 'youtube.com/watch?v' || key == 'v' || key == 'url'      
-      id = key and break if value.nil?
-      id = value and break if value.include? 'youtube.com/watch?v='
+    params.each do |key, value|           
+      if value.nil?
+        id = key.gsub("youtube:", "") if key.starts_with?("youtube:")
+      else
+        id = value and break if value.include? 'youtube.com/watch?v='
+      end
     end
     split = id.split('v=')
     id = split.length == 2 ? split[1].split('&')[0] : split[0].split('&')[0]

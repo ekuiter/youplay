@@ -30,7 +30,7 @@ search.prepare.form = (engine) ->
     source: engine.ttAdapter()
     templates:
       suggestion: (video) ->
-        "<a href=\"/play?#{video.url}\">
+        "<a href=\"/play?#{video.provider}:#{video.url}\">
            <em>#{video.channel_topic}</em>
            <div>#{video.title}</div>
         </a>"

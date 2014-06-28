@@ -7,7 +7,7 @@ class Log::LogController < ApplicationController
     if @collection.count == 1
       redirect_to @collection.first.play_url
     elsif @collection.count == 0
-      redirect_to "#{play_url}?#{params[:search]}"
+      redirect_to "#{play_url}?url=#{params[:search]}"
     else
       log @collection, params[:results], params[:page], true
     end

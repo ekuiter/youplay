@@ -1,12 +1,14 @@
 class Providers::TwitchProvider < Provider
   def video_id(params)
-    id = nil
     params.each do |key, value|     
-      return key if value.nil?       
-      return "a#{value.split('/b/').last}" if value.include?('twitch.tv/') && value.include?('/b/')
-      return "c#{value.split('/c/').last}" if value.include?('twitch.tv/') && value.include?('/c/')
+      if value.nil?
+        return key.gsub("twitch:", "") if key.starts_with?("twitch:")
+      else
+        return "a#{value.split('/b/').last}" if value.include?('twitch.tv/') && value.include?('/b/')
+        return "c#{value.split('/c/').last}" if value.include?('twitch.tv/') && value.include?('/c/')
+      end
     end
-    raise 'no video id given' if id.blank?
+    raise 'no video id given'
   end
   
   def fetch_video(id)

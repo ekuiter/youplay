@@ -13,7 +13,7 @@
         </tr>
         <% @videos.each do |video| %>
             <tr>
-              <td><%= image_tag "providers/#{video.provider}.png" %></td>
+              <td><%= image_tag "providers/#{YouplayProvider.new(provider: video.provider).image}.png" %></td>
               <td><%= l video.created_at, format: :short %></td>
               <td class="title"><%= link_to video.title.html_safe, video.play_url %></td>
               <%= ajax_channel video.provider.to_s, video.channel_topic, 'td' %>

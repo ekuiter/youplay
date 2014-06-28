@@ -1,0 +1,24 @@
+<% if video.file.ends_with? ".zip" %>
+  <%= render "noembed" %>
+<% elsif video.file.ends_with? ".swf" %>
+<object type="application/x-shockwave-flash" data="<%= video.file %>" width="<%= player_width %>" height="<%= player_height %>">
+  <param name="wmode" value="direct">
+  <param name="allowscriptaccess" value="never">
+  <param name="allowfullscreen" value="true">
+  <param name="allowfullscreeninteractive" value="true">
+</object>
+<% else %>
+<div id="player"></div>
+<script type="text/javascript">
+  jwplayer("player").setup({
+  flashplayer: "<%= jw_folder %>/player.swf",
+  file: "<%= video.file %>",
+  autoplay: "false",
+  controlbar: "bottom",
+  width: "<%= player_width %>",
+  height: "<%= player_height %>",
+  plugins: "hd-2,backstroke-1",
+  skin: "<%= skin_file %>"
+});
+</script>
+<% end %>

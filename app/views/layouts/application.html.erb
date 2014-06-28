@@ -8,7 +8,7 @@
     <script type="text/javascript">
       var token = "<%= j current_user.token %>";
       <% if @video %>
-        var video_id = "<%= j @video.id %>";
+        var video_id = "<%= "#{@video.provider}:#{@video.id}" %>";
       <% end %>
     </script>
   <% end %>

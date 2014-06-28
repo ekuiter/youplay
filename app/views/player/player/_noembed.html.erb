@@ -1,5 +1,7 @@
 <div class="noembed">
-  <%= link_to image_tag(@video.thumbnail), @video.url, target: '_blank' %>
+  <% if @video.thumbnail %>
+    <%= link_to image_tag(@video.thumbnail), @video.url, target: '_blank' %>
+  <% end %>
   <div>
     <strong>
       <%= t 'player.noembed' %>

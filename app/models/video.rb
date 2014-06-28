@@ -4,10 +4,8 @@ class Video < ActiveRecord::Base
   has_one :favorite, dependent: :destroy
   validates :channel_topic, :title, :url, :user_id, :browser, :provider, presence: true
   validates :url, uniqueness: {scope: [:user_id, :provider]}
-
-  def play_url
-    "#{Rails.application.routes.url_helpers.play_path}?#{url}"
-  end
+  
+  include UrlMixin
   
   def as_json(args = nil)
     super except: [:updated_at, :user_id]
