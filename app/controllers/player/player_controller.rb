@@ -8,6 +8,12 @@ class Player::PlayerController < ApplicationController
 
   def play
     @people = current_user.people.map {|p| [p.name, p.id] }
-    @video = play_video params
+    return @video = play_video(params) if Rails.env.development?
+    begin
+      @video = play_video params
+    rescue
+      flash[:alert] = t('player.wrong_url')
+      redirect_to player_path
+    end
   end
 end

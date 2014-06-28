@@ -10,7 +10,6 @@ module ControllerMixins
         video.saved_video = current_user.videos.create browser: view_context.user_browser, channel_topic: video.channel.id,
                              title: video.title, url: video.id, duration: video.duration, provider: video.provider.to_s
       end
-      pp video.provider.to_s
       video
     end
     
