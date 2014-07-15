@@ -58,7 +58,7 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     erubis (2.7.0)
-    excon (0.37.0)
+    excon (0.38.0)
     execjs (2.2.0)
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
@@ -212,4 +212,4 @@ DEPENDENCIES
   twitter-typeahead-rails
   uglifier (>= 1.0.3)
   unicorn
-  youtube_it
+  youtube_it (= 2.4.0)

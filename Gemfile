@@ -8,7 +8,7 @@ gem 'rails', '3.2.11'
 
 gem 'devise' # user authentication
 gem 'oauth2' # link user to youtube account
-gem 'youtube_it' # access youtube data api
+gem 'youtube_it', '= 2.4.0' # access youtube data api
 gem 'rinku' # auto link video descriptions
 #gem 'bzip2-ruby' # extract MediathekView bzip2 files
 #gem 'rubyzip' # extract MediathekView zip files
