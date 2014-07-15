@@ -34,6 +34,6 @@ class YouplayVideo
   end
   
   def native_client_url
-    "#{Settings.native_client}#{url}"
+    "#{Settings.native_client}#{provider}:#{id}"
   end
 end
