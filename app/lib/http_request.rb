@@ -14,6 +14,11 @@ module HttpRequest
       if !data[:user].blank? && !data[:pass].blank? then # use authentication if needed
         request.basic_auth data[:user], data[:pass]
       end
+      if data[:headers]
+        data[:headers].each do |key, value|
+          request.add_field(key, value)
+        end
+      end
       response = http.request request
     else # post requests
       http = Net::HTTP.new uri.host, uri.port
