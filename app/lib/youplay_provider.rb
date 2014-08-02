@@ -4,7 +4,7 @@ class YouplayProvider
   end
   
   def self.providers
-    [:youtube, :twitch, :newgrounds_audio, :newgrounds_video]
+    [:youtube, :twitch, :vimeo, :newgrounds_audio, :newgrounds_video]
   end
   
   attr_accessor :provider, :instance

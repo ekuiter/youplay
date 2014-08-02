@@ -12,10 +12,12 @@
     <td class="desc"><%= t 'player.meta.duration' %></td>
     <td><%= @video.humanize_duration %></td>
   </tr>
-  <tr>
-     <td class="desc"><%= t 'player.meta.topic' %></td>
-     <td><%= @video.topic %></td>
-  </tr>
+  <% if @video.topic %>
+    <tr>
+       <td class="desc"><%= t 'player.meta.topic' %></td>
+       <td><%= @video.topic %></td>
+    </tr>
+  <% end %>
   <tr>
     <td class="desc"><%= t 'player.meta.views' %></td>
     <td><%= number_with_delimiter @video.views %></td>

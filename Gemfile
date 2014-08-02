@@ -9,6 +9,8 @@ gem 'rails', '3.2.11'
 gem 'devise' # user authentication
 gem 'oauth2' # link user to youtube account
 gem 'youtube_it', '= 2.4.0' # access youtube data api
+gem 'twitch', '= 0.0.2'
+gem 'vimeo', '= 1.5.4'
 gem 'rinku' # auto link video descriptions
 #gem 'bzip2-ruby' # extract MediathekView bzip2 files
 #gem 'rubyzip' # extract MediathekView zip files
@@ -19,7 +21,6 @@ gem 'turbolinks'
 gem 'mysql2'
 gem 'rails_12factor'
 gem 'unicorn'
-gem 'twitch', '= 0.0.2'
 gem 'swfobject-rails'
 gem 'twitter-typeahead-rails'
 gem 'sass', '3.2.13'
