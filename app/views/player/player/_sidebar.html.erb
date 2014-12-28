@@ -2,7 +2,12 @@
   <tbody>
   <tr>
     <td class="desc"><%= t 'player.meta.channel' %></td>
-    <td><%= @video.channel.link %></td>
+    <td>
+      <a href="<%= @video.channel.url %>" target="_blank" style="float: right">
+        <img src="/assets/newtab.png" width="16" height="16" />
+      </a>
+      <%= link_to @video.channel.name, search_path(:channel, "#{@video.channel.provider}:#{@video.channel.id}") %>
+    </td>
   </tr>
   <tr>
     <td class="desc"><%= t 'player.meta.date' %></td>
@@ -44,6 +49,13 @@
   <%= link_to "", void, class: :favorite, method: :delete, 'data-url' => log_set_favorite_path(@video.saved_video) %>
   <%= link_to t("player.no_favorite"), void, 'data-text' => t("player.favorite") %>
   <% end %>
+</p>
+<p>
+  <form id="category-form">
+    <% category = @video.saved_video.category ? @video.saved_video.category.id : nil %>
+    <%= select_tag :category, options_for_select(@categories, category), include_blank: true %>
+    <%= submit_tag t('devise.save'), id: :submit %>
+  </form>
 </p>
 <p>
   <form id="share-form">

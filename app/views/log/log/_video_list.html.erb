@@ -6,18 +6,43 @@
         <tr>
           <th style="width:20px"></th>
           <th style="width:100px"><%= t 'video_list.date' %></th>
-          <th><%= t 'video_list.title' %></th>
+          <th>
+            <%= form_tag "/log", method: :post, style: "float: left; margin-top: -1px; margin-right: 10px", class: "category-all" do |f| %>
+              <a href="#" class="noborder"
+                style="float: left; width: 16px; height: 16px; margin-top: 1px; margin-right: 5px">
+               <img src="/assets/newtab.png" width="16" height="16" />
+              </a>
+              <%= select_tag :category, options_for_select(@categories, @unique_category_id), include_blank: true %>
+              <%= hidden_field_tag :search, params[:search] %>
+              <%= submit_tag t('devise.save'), id: :submit %>
+            <% end %>
+            <%= t 'video_list.title' %>
+          </th>
           <th style="width:200px"><%= t 'video_list.channel_topic' %></th>
           <th style="width:80px"><%= t 'video_list.duration' %></th>
           <th style="width:60px"></th>
         </tr>
         <% @videos.each do |video| %>
             <tr>
-              <td><%= image_tag "providers/#{YouplayProvider.new(provider: video.provider).image}.png" %></td>
+              <td>
+                <a href="<%= search_path :provider, video.provider %>">
+                  <%= image_tag "providers/#{YouplayProvider.new(provider: video.provider).image}.png" %>
+                </a>
+              </td>
               <td><%= l video.created_at, format: :short %></td>
-              <td class="title"><%= link_to video.title.html_safe, video.play_url %></td>
+              <td class="title">
+                <a href="<%= search_path :category, video.category_id.nil? ? -1 : video.category_id %>"
+                  style="float: left; width: 16px; height: 16px; margin-top: 1px; margin-right: 5px">
+                 <img src="/assets/newtab.png" width="16" height="16" />
+                </a>
+                <form class="category" style="float: left; margin-right: 10px; margin-top: -1px">
+                  <% category = video.category ? video.category.id : nil %>
+                  <%= select_tag :category, options_for_select(@categories, category), include_blank: true, id: "#{video.provider}:#{video.url}" %>
+                </form>
+                <%= link_to video.title.html_safe, video.play_url %>
+              </td>
               <%= ajax_channel video.provider.to_s, video.channel_topic, 'td' %>
-              <td><%= YouplayVideo.humanize_duration(video) %></td>
+              <td><small><%= YouplayVideo.humanize_duration(video) %></small></td>
               <td class="delete"><%= favorited = @favorited_video_ids.include?(video.id); link_to "", void, class: (favorited ? :favorite : :no_favorite), method: (favorited ? :delete : :get), "data-url" => log_set_favorite_path(video) %>
                 <%= link_to image_tag('delete.png', width: 20, height: 20), log_delete_video_path(video), method: :delete, confirm: t('confirm') %></td>
             </tr>

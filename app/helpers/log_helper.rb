@@ -39,4 +39,10 @@ module LogHelper
     end
     results
   end
+
+  def search_path(type, search = nil)
+    path = "#{log_path}/?search=#{type}"
+    path += ":#{search}" if search
+    path
+  end
 end

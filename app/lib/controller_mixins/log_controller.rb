@@ -3,13 +3,28 @@ module ControllerMixins
     private
     
     def search(search)
-      search = search ? search : ""
-      collection = if search == "favorites"
-        current_user.videos.joins(:favorite)
-      elsif not search.blank?
-        current_user.videos.where "title like ?", "%#{search}%"
-      else
-        current_user.videos
+      search = search ? search.strip : ""
+      videos = current_user.videos.includes(:category)
+      begin
+        collection = if search == "favorites"
+          videos.joins(:favorite)
+        elsif search.starts_with? "provider:"
+          provider = search.gsub("provider:", "").strip
+          videos.where provider: provider
+        elsif search.starts_with? "channel:"
+          channel = search.gsub("channel:", "").strip.split(":")
+          videos.where provider: channel[0], channel_topic: channel[1]
+        elsif search.starts_with? "category:"
+          category_id = search.gsub("category:", "").strip.to_i
+          category_id = category_id == -1 ? nil : current_user.categories.find(category_id)
+          videos.where category_id: category_id
+        elsif not search.blank?
+          videos.where "title like ?", "%#{search}%"
+        else
+          videos
+        end
+      rescue
+        collection = videos.none
       end
       [search, collection]
     end
