@@ -13,7 +13,18 @@ module ControllerMixins
           videos.where provider: provider
         elsif search.starts_with? "channel:"
           channel = search.gsub("channel:", "").strip.split(":")
-          videos.where provider: channel[0], channel_topic: channel[1]
+          result = videos.where provider: channel[0], channel_topic: channel[1]
+          if result.blank?
+            YouplayProvider.providers.each do |provider|
+              begin
+                channel_id = YouplayChannel.new(provider: YouplayProvider.new(provider: provider), name: channel[0]).id
+                result = videos.where provider: provider, channel_topic: channel_id
+                break
+              rescue
+              end
+            end
+          end
+          result
         elsif search.starts_with? "category:"
           category_id = search.gsub("category:", "").strip.to_i
           category_id = category_id == -1 ? nil : current_user.categories.find(category_id)
