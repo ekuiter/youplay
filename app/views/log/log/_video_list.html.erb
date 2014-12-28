@@ -5,7 +5,7 @@
       <table class="wide striped">
         <tr>
           <th style="width:20px"></th>
-          <th style="width:100px"><%= t 'video_list.date' %></th>
+          <th style="width:120px"><%= t 'video_list.date' %></th>
           <th>
             <%= form_tag "/log", method: :post, style: "float: left; margin-top: -1px; margin-right: 10px", class: "category-all" do |f| %>
               <a href="#" class="noborder"
@@ -19,7 +19,6 @@
             <%= t 'video_list.title' %>
           </th>
           <th style="width:200px"><%= t 'video_list.channel_topic' %></th>
-          <th style="width:80px"><%= t 'video_list.duration' %></th>
           <th style="width:60px"></th>
         </tr>
         <% @videos.each do |video| %>
@@ -29,7 +28,7 @@
                   <%= image_tag "providers/#{YouplayProvider.new(provider: video.provider).image}.png" %>
                 </a>
               </td>
-              <td><%= l video.created_at, format: :short %></td>
+              <td><%= l video.created_at, format: :full %></td>
               <td class="title">
                 <a href="<%= search_path :category, video.category_id.nil? ? -1 : video.category_id %>"
                   style="float: left; width: 16px; height: 16px; margin-top: 1px; margin-right: 5px">
@@ -42,7 +41,6 @@
                 <%= link_to video.title.html_safe, video.play_url %>
               </td>
               <%= ajax_channel video.provider.to_s, video.channel_topic, 'td' %>
-              <td><small><%= YouplayVideo.humanize_duration(video) %></small></td>
               <td class="delete"><%= favorited = @favorited_video_ids.include?(video.id); link_to "", void, class: (favorited ? :favorite : :no_favorite), method: (favorited ? :delete : :get), "data-url" => log_set_favorite_path(video) %>
                 <%= link_to image_tag('delete.png', width: 20, height: 20), log_delete_video_path(video), method: :delete, confirm: t('confirm') %></td>
             </tr>
