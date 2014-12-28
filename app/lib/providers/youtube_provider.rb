@@ -17,6 +17,7 @@ class Providers::YoutubeProvider < Provider
   def fetch_video(id)
     video = client.video_by id
     channel_name = video.author.uri.gsub('http://gdata.youtube.com/feeds/api/users/', '')
+    comments = client.comments(id)
     YouplayVideo.new provider: YouplayProvider.new(instance: self),
                      id: id,
                      title: video.title,
@@ -29,7 +30,8 @@ class Providers::YoutubeProvider < Provider
                      rating: video.rating,
                      description: video.description,
                      thumbnail: video.thumbnails[1].url,
-                     comments: client.comments(id),
+                     comments: comments,
+                     comment_length: comment_length(comments),
                      channel: YouplayChannel.new(name: channel_name)
   end
   
@@ -57,5 +59,13 @@ class Providers::YoutubeProvider < Provider
   def client
     require "youtube_it"
     @client ||= YouTubeIt::Client.new client_id: Settings.client_id, client_secret: Settings.client_secret, dev_key: Settings.developer_key
+  end
+
+  def comment_length(comments)
+    if comments.length < 5
+      nil
+    else
+      comments.map {|comment| comment.content.length}.sum / comments.length
+    end
   end
 end

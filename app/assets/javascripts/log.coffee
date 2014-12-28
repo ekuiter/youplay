@@ -50,8 +50,9 @@ log.loadUsers = ->
         i = parseInt(data[0])
         j = 1
         user_elements(i).each ->
+          float = if $(this).parents("#reader").length == 0 then "float: right;" else ""
           $(this).html("
-            <a href=\"#{data[j]["url"]}\" target=\"_blank\" style=\"float: right; width: 16px; height: 16px; margin-right: 5px\">
+            <a href=\"#{data[j]["url"]}\" target=\"_blank\" style=\"#{float} width: 16px; height: 16px; margin-right: 5px\" class=\"noborder\">
               <img src=\"/assets/newtab.png\" width=\"16\" height=\"16\" />
             </a>
             <a href=\"/log/?search=channel:#{$(this).data("user")}\">#{data[j]["username"]}</a>

@@ -1,10 +1,11 @@
 class Video < ActiveRecord::Base
-  attr_accessible :browser, :channel_topic, :station, :title, :url, :user, :duration, :provider, :favorite, :category
+  attr_accessible :browser, :channel_topic, :station, :title, :url, :user, :duration, :provider, :favorite, :category, :comment_length
   belongs_to :user
   belongs_to :category
   has_one :favorite, dependent: :destroy
   validates :channel_topic, :title, :url, :user_id, :browser, :provider, presence: true
   validates :url, uniqueness: {scope: [:user_id, :provider]}
+  validates :comment_length, :duration, numericality: { only_integer: true }
   scope :none, where(:id => nil).where("id IS NOT ?", nil)
 
   include UrlMixin

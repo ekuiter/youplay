@@ -1,5 +1,5 @@
 class YouplayVideo    
-  attr_accessor :id, :url, :title, :duration, :access_control, :uploaded_at, :topic, :views, 
+  attr_accessor :id, :url, :title, :duration, :access_control, :uploaded_at, :topic, :views, :comment_length,
                 :rating, :description, :thumbnail, :channel, :comments, :provider, :saved_video, :embed_type, :embed_id, :file
   
   def initialize(hash={})

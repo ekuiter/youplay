@@ -8,7 +8,8 @@ module ControllerMixins
       video.saved_video = current_user.videos.where(url: video.id).first
       if video.saved_video.nil?
         video.saved_video = current_user.videos.create browser: view_context.user_browser, channel_topic: video.channel.id,
-                             title: video.title, url: video.id, duration: video.duration, provider: video.provider.to_s
+                             title: video.title, url: video.id, duration: video.duration, provider: video.provider.to_s,
+                             comment_length: video.comment_length
       end
       video
     end
