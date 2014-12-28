@@ -5,7 +5,7 @@ class Video < ActiveRecord::Base
   has_one :favorite, dependent: :destroy
   validates :channel_topic, :title, :url, :user_id, :browser, :provider, presence: true
   validates :url, uniqueness: {scope: [:user_id, :provider]}
-  validates :comment_length, :duration, numericality: { only_integer: true }
+  validates :comment_length, :duration, numericality: { only_integer: true, allow_nil: true }
   scope :none, where(:id => nil).where("id IS NOT ?", nil)
 
   include UrlMixin

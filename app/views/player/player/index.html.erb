@@ -15,14 +15,14 @@
       <h3><%= t 'video_list.recently_watched_videos' %></h3>
       <table class="wide striped">
         <tr>
-          <th style="width:100px"><%= t 'video_list.date' %></th>
+          <th style="width:130px"><%= t 'video_list.date' %></th>
           <th><%= t 'video_list.title' %></th>
           <th style="width:200px"><%= t 'video_list.channel_topic' %></th>
           <th style="width:60px"></th>
         </tr>
         <% @recently_watched_videos.each do |video| %>
             <tr>
-              <td><%= l video.created_at, format: :short %></td>
+              <td><%= l video.created_at, format: :full %></td>
               <td><%= link_to video.title.html_safe, video.play_url %></td>
               <%= ajax_channel video.provider.to_s, video.channel_topic, 'td' %>
               <td class="delete"><%= favorited = @favorited_video_ids.include?(video.id); link_to "", void, class: (favorited ? :favorite : :no_favorite), method: (favorited ? :delete : :get), "data-url" => log_set_favorite_path(video) %>
