@@ -23,7 +23,11 @@ class Conf::PeopleController < ApplicationController
 
   def update
     @person.update_attributes name: params[:person][:name], email: params[:person][:email]
-    redirect_to conf_people_url, notice: t('conf.people.update.success', person: @person.name)
+    if @person.save
+      redirect_to conf_people_url, notice: t('conf.people.update.success', person: @person.name)
+    else
+      render 'edit'
+    end
   end
 
   def destroy
