@@ -1,0 +1,18 @@
+<%= render 'conf/conf/conf_head' %>
+
+<%= form_for @category, url: conf_category_path do |f| %>
+    <%= error_messages! @category %>
+    <table>
+      <tr>
+        <td><%= f.label :name %></td>
+        <td><%= f.text_field :name %></td>
+      </tr>
+      <%= set_focus_to 'category_name' %>
+      <tr>
+        <td></td>
+        <td><%= f.submit t('devise.save') %></td>
+      </tr>
+    </table>
+<% end %>
+
+<p><%= link_to t('conf.categories.delete'), conf_category_path(@category), method: :delete, confirm: t('confirm') %></p>

@@ -1,0 +1,16 @@
+<%= render 'conf/conf/conf_head' %>
+
+<%= form_for @category, url: conf_categories_path do |f| %>
+    <%= error_messages! @category %>
+    <table>
+      <tr>
+        <td><%= f.label :name %></td>
+        <td><%= f.text_field :name %></td>
+      </tr>
+      <%= set_focus_to 'category_name' %>
+      <tr>
+        <td></td>
+        <td><%= f.submit t('conf.categories.create.button') %></td>
+      </tr>
+    </table>
+<% end %>

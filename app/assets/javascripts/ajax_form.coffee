@@ -30,3 +30,4 @@ AjaxForm.prototype.ajax = (urlFunc) ->
 AjaxForm.subscribe = new AjaxForm("subscribe")
 AjaxForm.hiding_rule = new AjaxForm("hiding-rule")
 AjaxForm.share = new AjaxForm("share")
+AjaxForm.category = new AjaxForm("category")

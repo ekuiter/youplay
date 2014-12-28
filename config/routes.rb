@@ -32,6 +32,7 @@ Youplay::Application.routes.draw do
     get "favorite/:id" => "log#set_favorite", as: "set_favorite"
     delete "favorite/:id" => "log#unset_favorite", as: "unset_favorite"
     get "(:page/:results)" => "log#index"
+    post "(:page/:results)" => "log#category"
     delete ":id" => "log#destroy", as: "delete_video"
   end
   
@@ -41,6 +42,7 @@ Youplay::Application.routes.draw do
     put "settings" => "conf#update_settings", as: "update_settings"
     resources :users, except: :show
     resources :people, except: :show
+    resources :categories, except: :show
   end
   
   namespace :stats do
@@ -51,6 +53,7 @@ Youplay::Application.routes.draw do
     get "login" => "auth#login"
     get "" => "player#index"
     get "play" => "player#play"
+    get "category/:category" => "player#category"
     get "share/:person" => "player#share"
     get "log(/:search(/:page/:results))" => "log#index"
     get "reader" => "reader#index"

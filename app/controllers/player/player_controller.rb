@@ -7,7 +7,9 @@ class Player::PlayerController < ApplicationController
   end
 
   def play
-    @people = current_user.people.map {|p| [p.name, p.id] }
+    block = Proc.new {|o| [o.name, o.id] }
+    @people = current_user.people.map(&block)
+    @categories = current_user.categories.map(&block)
     return @video = play_video(params) if Rails.env.development?
     begin
       @video = play_video params

@@ -117,8 +117,9 @@ en:
     deleted: "Log entry deleted."
   conf:
     edit_settings: "Edit settings"
-    manage_people: "Manage people"
-    manage_users: "Manage users"
+    manage_people: "My people"
+    manage_categories: "My categories"
+    manage_users: "Users"
     max_recently_watched: "Number of recently watched videos"
     max_title_length: "Maximum length of video titles"
     player_skin: "Player skin"
@@ -151,6 +152,19 @@ en:
       update:
         success: "Person \"%{person}\" has been updated."
       delete: "Delete person"
+      name: "Name"
+    categories:
+      no_categories_found: "No categories found."
+      delete: "Delete category"
+      new: "Create new category"
+      edit: "Edit \"%{category}\""
+      create:
+        button: "Create"
+        success: "Category \"%{category}\" has been created."
+      destroy: "Category \"%{category}\" has been deleted."
+      update:
+        success: "Category \"%{category}\" has been updated."
+      delete: "Delete category"
       name: "Name"
   reader:
     read: "Show reader"

@@ -4,6 +4,7 @@ window.log =
 log.init = ->
   $(".videos").each ->
     log.prepare.favoriteVideos() 
+  log.prepare.category()
   log.loadUsers()
 
 log.prepare.favoriteVideos = ->
@@ -12,6 +13,23 @@ log.prepare.favoriteVideos = ->
     icon.click ->
       $.ajax(icon.data("url"), type: icon.data("method")).done ->
         icon.toggleFavoriteIcon()
+
+log.prepare.category = ->
+  $("form.category-all a").click ->
+    category = $("form.category-all select").val()
+    category = -1 if !category
+    window.location.href = "/log/?search=category:#{category}"
+  $("form.category").each ->
+    $(this).children("select").change ->
+      select = $(this)
+      options = $(this).children("option")
+      selected = $(this).children("option:selected")
+      options.each ->
+        $(this).text($(this).text().replace(" ✓", ""))
+      category = select.val()
+      category = -1 if !category
+      $.ajax("/api/category/#{category}?#{select[0].id}&token=#{token}").done ->
+        selected.text("#{selected.text()} ✓")
 
 log.loadUsers = ->
   user_number = 50
@@ -32,5 +50,10 @@ log.loadUsers = ->
         i = parseInt(data[0])
         j = 1
         user_elements(i).each ->
-          $(this).html("<a href=\"#{data[j]["url"]}\" target=\"_blank\">#{data[j]["username"]}</a>")
+          $(this).html("
+            <a href=\"#{data[j]["url"]}\" target=\"_blank\" style=\"float: right; width: 16px; height: 16px; margin-right: 5px\">
+              <img src=\"/assets/newtab.png\" width=\"16\" height=\"16\" />
+            </a>
+            <a href=\"/log/?search=channel:#{$(this).data("user")}\">#{data[j]["username"]}</a>
+          ")
           j++

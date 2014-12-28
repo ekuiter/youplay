@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_many :cached_videos, through: :hide_videos
   has_many :configurations, dependent: :destroy
   has_many :favorites, dependent: :destroy
+  has_many :categories, dependent: :destroy
   validates :username, :full_name, presence: true
   validates :username, uniqueness: true
   

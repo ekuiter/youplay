@@ -1,10 +1,12 @@
 class Video < ActiveRecord::Base
-  attr_accessible :browser, :channel_topic, :station, :title, :url, :user, :duration, :provider, :favorite
+  attr_accessible :browser, :channel_topic, :station, :title, :url, :user, :duration, :provider, :favorite, :category
   belongs_to :user
+  belongs_to :category
   has_one :favorite, dependent: :destroy
   validates :channel_topic, :title, :url, :user_id, :browser, :provider, presence: true
   validates :url, uniqueness: {scope: [:user_id, :provider]}
-  
+  scope :none, where(:id => nil).where("id IS NOT ?", nil)
+
   include UrlMixin
   
   def as_json(args = nil)

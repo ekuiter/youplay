@@ -10,6 +10,21 @@ class Api::PlayerController < Api::AuthenticatedController
     @video = play_video params rescue raise "invalid video"
     render json: @video
   end
+
+  def category
+    info = id_from_params
+    puts info[:provider]
+    puts info[:id]
+    video = current_user.videos.where(provider: info[:provider], url: info[:id]).first
+    raise "invalid video" if video.nil?
+    if params[:category].to_i == -1
+      category = nil
+    else
+      category = current_user.categories.find params[:category]
+    end
+    video.update_attributes category: category
+    render nothing: true
+  end
   
   def share
     video = play_video params rescue raise "invalid video"
