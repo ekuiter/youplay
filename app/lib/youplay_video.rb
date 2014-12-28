@@ -21,6 +21,7 @@ class YouplayVideo
   def self.humanize_duration(video)
     return nil unless video.duration
     minutes = video.duration / 60
+    return "< 1 #{I18n.t 'player.meta.minutes.one'}" if minutes == 0
     "#{minutes} #{I18n.t 'player.meta.minutes', count: minutes}"
   end
   
