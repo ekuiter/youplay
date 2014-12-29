@@ -4,7 +4,7 @@ class Log::LogController < ApplicationController
   
   def index
     @categories = current_user.categories.map { |c| [c.name, c.id] }    
-    @search, @collection = search params[:search]
+    @collection, @search = figure_collection(params[:search])
     if @collection.count == 1
       redirect_to @collection.first.play_url
     elsif @collection.count == 0

@@ -19,11 +19,13 @@
         duration_deviation: number_with_precision(@duration_deviation, precision: 1)).html_safe %>
   </p>
 </div>
+
+<h3><%= t "stats.videos" %></h3>
+<p id="providers-legend" class="legend"></p>
+<canvas id="providers-doughnut" width="200" height="200"></canvas>
+<canvas id="providers-line" width="600" height="200"></canvas>
+
 <h3><%= t "stats.browsers" %></h3>
 <p id="browsers-legend" class="legend"></p>
 <canvas id="browsers-doughnut" width="200" height="200"></canvas>
 <canvas id="browsers-line" width="600" height="200"></canvas>
-<h3><%= t "stats.providers" %></h3>
-<p id="providers-legend" class="legend"></p>
-<canvas id="providers-doughnut" width="200" height="200"></canvas>
-<canvas id="providers-line" width="600" height="200"></canvas>

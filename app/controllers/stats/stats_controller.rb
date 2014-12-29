@@ -1,8 +1,7 @@
 class Stats::StatsController < ApplicationController
+  include ControllerMixins::StatsController
 
   def index
-    collection = current_user.videos
-
     @watched_videos = collection.count
     @start_date = collection.first.created_at
     @end_date = collection.last.created_at

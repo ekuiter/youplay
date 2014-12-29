@@ -200,7 +200,8 @@ en:
     no_videos: "There are no new videos."
   stats:
     browsers: "Browsers"
-    providers: "Providers"
+    videos: "Videos"
+    all_videos: "All videos"
     watched_videos: "You watched <strong>%{videos}</strong> videos, starting on <strong>%{start_date}</strong> up to <strong>%{end_date}</strong>."
     spent_watching: "You spent <strong>%{days}</strong> days, <strong>%{hours}</strong> hours and <strong>%{minutes}</strong> minutes watching."
     spent_life: "That's <strong>%{percent}</strong> percent of your entire lifetime since <strong>%{birthday}</strong>."

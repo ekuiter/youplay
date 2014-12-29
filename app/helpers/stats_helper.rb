@@ -22,6 +22,7 @@ module StatsHelper
     yield(result) if block_given?
     ret = [result]
     columns.each do |column|
+       column = column.split(".").last.to_sym if column.is_a?(String)
       ret.push(extract_column(result, column))
     end
     ret
@@ -29,5 +30,27 @@ module StatsHelper
 
   def extract_column(result, column)
     result.map {|record| record[column]}
+  end
+
+  def provider_labels
+    Proc.new do |record|
+      YouplayProvider.new(provider: record).name
+    end
+  end
+  
+  def add_line_dataset!(data, label, dataset)
+    StatsColors.next_color
+    data[:datasets].push label: label,
+      fillColor: StatsColors.color(0.5),
+      strokeColor: StatsColors.color,
+      pointColor: StatsColors.color,
+      data: dataset
+  end
+
+  def add_line_dataset_at_beginning!(data, label, dataset)
+    old_datasets = data[:datasets]
+    data[:datasets] = []
+    add_line_dataset!(data, label, dataset)
+    data[:datasets].push *old_datasets
   end
 end

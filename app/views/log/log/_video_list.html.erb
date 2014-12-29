@@ -25,7 +25,8 @@
             <tr>
               <td>
                 <a href="<%= search_path :provider, video.provider %>">
-                  <%= image_tag "providers/#{YouplayProvider.new(provider: video.provider).image}.png" %>
+                  <%= image_tag "providers/#{YouplayProvider.new(provider: video.provider).image}.png",
+                  alt: YouplayProvider.new(provider: video.provider).name %>
                 </a>
               </td>
               <td><%= l video.created_at, format: :full %></td>

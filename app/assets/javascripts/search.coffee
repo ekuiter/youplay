@@ -2,13 +2,19 @@ window.search =
   prepare: {}
 
 search.init = ->
+  search.prepare.module()
   search.prepare.submit()
-  engine = search.prepare.engine()
-  search.prepare.form(engine)
-            
+  if search.module == "log"
+    engine = search.prepare.engine()
+    search.prepare.form(engine)
+
+search.prepare.module = ->
+  search.module = if window.location.pathname.indexOf("stats") == -1 then "log" else "stats"
+  $("#search-form #search").attr("placeholder", if search.module == "log" then "Search ..." else "Show stats ...")            
+
 search.prepare.submit = ->
   $("#search-form").submit ->
-    window.location.href = "/log/?search=#{$('#search').val()}"
+    window.location.href = "/#{search.module}/?search=#{$('#search').val()}"
     false
     
 search.prepare.engine = ->
