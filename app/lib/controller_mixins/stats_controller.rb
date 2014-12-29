@@ -5,7 +5,7 @@ module ControllerMixins
     private
     
     def collection
-      @collection, @search = figure_collection(params[:search]) if @collection.nil?
+      @collection, @search, @search_type = figure_collection(params[:search]) if @collection.nil?
       @collection
     end
   end

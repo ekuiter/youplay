@@ -1,5 +1,5 @@
 <%= form_tag(reader_add_hiding_rule_path, method: :post, id: "hiding-rule-form") do %>
-  <%= text_field_tag :pattern, "", style: "width:200px", placeholder: t("reader.hiding_rules.pattern") %>
-    <%= text_field_tag :channel, "", style: "width:200px", placeholder: t("reader.hiding_rules.channel") %>
+  <%= text_field_tag :pattern, "", style: "width:140px", placeholder: t("reader.hiding_rules.pattern") %>
+    <%= text_field_tag :channel, "", style: "width:140px", placeholder: t("reader.hiding_rules.channel") %>
     <%= submit_tag t('reader.hiding_rules.add'), id: :submit %>
 <% end %>

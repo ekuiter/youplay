@@ -123,6 +123,7 @@ en:
     all_videos: "All videos"
     only_favorites: "Only favorites"
     deleted: "Log entry deleted."
+    stats: "Stats for this"
   conf:
     edit_settings: "Edit settings"
     manage_people: "My people"
@@ -201,8 +202,16 @@ en:
   stats:
     browsers: "Browsers"
     videos: "Videos"
-    all_videos: "All videos"
-    watched_videos: "You watched <strong>%{videos}</strong> videos, starting on <strong>%{start_date}</strong> up to <strong>%{end_date}</strong>."
-    spent_watching: "You spent <strong>%{days}</strong> days, <strong>%{hours}</strong> hours and <strong>%{minutes}</strong> minutes watching."
+    categories: "Categories"
+    watched_videos:
+      start_end_date: "You watched <strong>%{videos}</strong> videos, starting on <strong>%{start_date}</strong> up to <strong>%{end_date}</strong>."
+      start_date: "You watched <strong>%{videos}</strong> videos on <strong>%{start_date}</strong>."
+    spent_watching:
+      days_hours_minutes: "You spent <strong>%{days}</strong> days, <strong>%{hours}</strong> hours and <strong>%{minutes}</strong> minutes watching."
+      hours_minutes: "You spent <strong>%{hours}</strong> hours and <strong>%{minutes}</strong> minutes watching."
+      minutes: "You spent <strong>%{minutes}</strong> minutes watching."
     spent_life: "That's <strong>%{percent}</strong> percent of your entire lifetime since <strong>%{birthday}</strong>."
-    video_duration: "Your average video duration is <strong>%{duration_average}</strong> minutes with a deviation of <strong>%{duration_deviation}</strong> minutes."
+    video_duration: "Your average video duration is <strong>%{duration_average}</strong> minutes"
+    video_duration_deviation: "with a deviation of <strong>%{duration_deviation}</strong> minutes."
+    no_category: "No category"
+    search: "Search for this"

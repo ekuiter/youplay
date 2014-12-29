@@ -34,15 +34,25 @@ body {
   border-right: 1px dotted #555;
 }
 
-#reader-controls {
+.side-controls {
   position: fixed;
   top: 70px;
   left: 50%;
   margin-left: $site_width / 2;
   padding: $sidebar_padding;
   background-color: white;
-  width: 330px;
+  width: 250px;
   border-left: 1px dotted #555;
+}
+
+#stats-controls {
+  width: 200px;
+}
+
+#stats-controls li {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #page_title {

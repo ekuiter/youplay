@@ -15,20 +15,29 @@ stats.setCollection = ->
 
 stats.prepare = ->
   Chart.defaults.Line.pointDot = false
-  doughnut = (chart, data) ->
-    chart.Doughnut(data)
-  line = (legendElement) ->
-    (chart, data) ->
-      legend = chart.Line(data).generateLegend()
-      $("##{legendElement}").html(legend)
-  stats.chart "browsers-doughnut", "browsers/doughnut", doughnut
-  stats.chart "browsers-line", "browsers/line", line("browsers-legend")
-  stats.chart "providers-doughnut", "providers/doughnut", doughnut
-  stats.chart "providers-line", "providers/line", line("providers-legend")
+  stats.doughnut_and_line("browsers")
+  stats.doughnut_and_line("providers")
+  stats.doughnut_and_line("categories")
 
 stats.chart = (canvas, endpoint, callback) ->
   if $("##{canvas}").length > 0
     $.ajax("/api/stats/#{endpoint}?search=#{stats.collection}&token=#{token}").done (data) ->
       context = $("##{canvas}").get(0).getContext("2d")
       callback(new Chart(context), data)
+
+stats.doughnut = (canvasGroup) ->
+  canvas = "#{canvasGroup}-doughnut"
+  (chart, data) ->
+    chart.Doughnut(data)
+
+stats.line = (canvasGroup) ->
+  (chart, data) ->
+    canvas = "#{canvasGroup}-line"
+    chart = chart.Line(data)
+    legend = chart.generateLegend()
+    $("##{canvasGroup}-legend").html(legend)
+
+stats.doughnut_and_line = (canvasGroup) ->
+  stats.chart "#{canvasGroup}-doughnut", "#{canvasGroup}/doughnut", stats.doughnut(canvasGroup)
+  stats.chart "#{canvasGroup}-line", "#{canvasGroup}/line", stats.line(canvasGroup)
 

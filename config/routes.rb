@@ -63,6 +63,8 @@ Youplay::Application.routes.draw do
     get "stats/browsers/line" => "stats#browsers_line"
     get "stats/providers/doughnut" => "stats#providers_doughnut"
     get "stats/providers/line" => "stats#providers_line"
+    get "stats/categories/doughnut" => "stats#categories_doughnut"
+    get "stats/categories/line" => "stats#categories_line"
   end
   
 end

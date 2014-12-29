@@ -32,16 +32,28 @@ module StatsHelper
     result.map {|record| record[column]}
   end
 
-  def provider_labels
+  def providers_labels
     Proc.new do |record|
       YouplayProvider.new(provider: record).name
+    end
+  end
+
+  def categories_labels
+    Proc.new do |record|
+      categories = current_user.categories.all
+      if record.blank?
+        t "stats.no_category"
+      else
+        category = categories.select {|c| c.id == record}.first
+        category ? category.name : record
+      end
     end
   end
   
   def add_line_dataset!(data, label, dataset)
     StatsColors.next_color
     data[:datasets].push label: label,
-      fillColor: StatsColors.color(0.5),
+      fillColor: StatsColors.color(0.4),
       strokeColor: StatsColors.color,
       pointColor: StatsColors.color,
       data: dataset

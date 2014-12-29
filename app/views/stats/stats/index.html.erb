@@ -1,31 +1,79 @@
 <%= @module = 'stats'; render '/head' %>
 
+<div id="stats-controls" class="side-controls">
+  <h4><%= t "stats.videos" %></h4>
+  <ul>
+  <% @providers.each do |provider| %>
+    <li><%= link_to YouplayProvider.new(provider: provider).name, search_path(:provider, provider, stats_path) %></li>
+  <% end %>
+  </ul>
+  <h4><%= t "stats.browsers" %></h4>
+  <ul>
+  <% @browsers.each do |browser| %>
+    <li><%= link_to browser, search_path(:browser, browser, stats_path) %></li>
+  <% end %>
+  </ul>
+  <h4><%= t "stats.categories" %></h4>
+  <ul>
+  <% @categories.each do |category| %>
+    <li><%= link_to category.name, search_path(:category, category.id, stats_path) %></li>
+  <% end %>
+  </ul>
+</div>
+
+<% if @watched_videos.blank? %>
+<div class="callout">
+  <p><%= t "video_list.no_videos_found" %></p>
+</div>
+<% else %>
 <div class="callout">
   <p>
-  <%= t("stats.watched_videos", videos: @watched_videos, 
+  <% template = @start_date == @end_date ? "start_date" : "start_end_date" %>
+  <%= t("stats.watched_videos.#{template}", videos: @watched_videos, 
         start_date: l(@start_date, format: :text), end_date: l(@end_date, format: :text)).html_safe %>
   </p>
   <p>
-  <%= t("stats.spent_watching", days: number_with_delimiter(@days), 
+  <% template = @days > 0 ? "days_hours_minutes" : nil %>
+  <% if template.blank? then template = @hours > 0 ? "hours_minutes" : "minutes" end %>
+  <%= t("stats.spent_watching.#{template}", days: number_with_delimiter(@days), 
         hours: number_with_delimiter(@hours), minutes: number_with_delimiter(@minutes)).html_safe %>
   </p>
-  <% if @birthday %>
+  <% if @birthday && @percent.round(2) != 0 %>
   <p>
   <%= t("stats.spent_life", percent: number_with_precision(@percent, precision: 2), birthday: l(@birthday, format: :text)).html_safe %>
   </p>
   <% end %>
+  <% if @watched_videos > 1 %>
   <p>
-  <%= t("stats.video_duration", duration_average: number_with_precision(@duration_average, precision: 1), 
-        duration_deviation: number_with_precision(@duration_deviation, precision: 1)).html_safe %>
+  <%= t("stats.video_duration", duration_average: number_with_precision(@duration_average, precision: 1)).html_safe
+  %><% if @duration_deviation.round(1) == 0 %>.
+  <% else %>
+    <%= t("stats.video_duration_deviation", duration_deviation: number_with_precision(@duration_deviation, precision: 1)).html_safe %>
+  <% end %>
   </p>
+  <% end %>
 </div>
 
 <h3><%= t "stats.videos" %></h3>
+<% if @search_type == :provider %>
+<canvas id="providers-line" width="1000" height="200"></canvas>
+<% else %>
 <p id="providers-legend" class="legend"></p>
 <canvas id="providers-doughnut" width="200" height="200"></canvas>
 <canvas id="providers-line" width="600" height="200"></canvas>
+<% end %>
 
+<% if @search_type != :browser %>
 <h3><%= t "stats.browsers" %></h3>
 <p id="browsers-legend" class="legend"></p>
 <canvas id="browsers-doughnut" width="200" height="200"></canvas>
 <canvas id="browsers-line" width="600" height="200"></canvas>
+<% end %>
+
+<% if @search_type != :category %>
+<h3><%= t "stats.categories" %></h3>
+<p id="categories-legend" class="legend"></p>
+<canvas id="categories-doughnut" width="200" height="200"></canvas>
+<canvas id="categories-line" width="600" height="200"></canvas>
+<% end %>
+<% end %>

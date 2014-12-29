@@ -23,7 +23,8 @@ module ActionsHelper
   def log_actions
     [
       { name: t('video_list.all_videos'), path: log_path },
-      { name: t('video_list.only_favorites'), path: log_path(search: "favorites") }
+      { name: t('video_list.only_favorites'), path: log_path(search: "favorites") },
+      { name: t('video_list.stats'), path: search_path(@search, nil, stats_path) }      
     ]
   end
   
@@ -33,6 +34,14 @@ module ActionsHelper
       { name: t('reader.subscribe.button'), path: reader_subscribe_path },
       { name: t('reader.manage_hiding_rules'), path: reader_hiding_rules_path },
       { name: t('reader.manage_hidden'), path: reader_hidden_path }
+    ]
+  end
+
+  def stats_actions
+    [
+      { name: t("video_list.all_videos"), path: stats_path },
+      { name: t('video_list.only_favorites'), path: search_path("favorites", nil, stats_path) },
+      { name: t('stats.search'), path: search_path(@search, nil, log_path) }      
     ]
   end
 end

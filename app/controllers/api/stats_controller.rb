@@ -1,6 +1,7 @@
 class Api::StatsController < Api::AuthenticatedController
   include ControllerMixins::StatsController
   before_filter :reset_color
+  before_filter :invalid_search
   alias :helper :view_context
 
   def browsers_doughnut
@@ -12,19 +13,31 @@ class Api::StatsController < Api::AuthenticatedController
   end
 
   def providers_doughnut
-    data = doughnut collection, :provider, &helper.provider_labels
+    data = doughnut collection, :provider, &helper.providers_labels
     render json: data
   end
 
   def providers_line
-    data = line collection, :provider, &helper.provider_labels
-    all_videos = []
-    data[:datasets].each do |dataset|
-      dataset[:data].each_with_index do |record, index|
-        all_videos[index] = (all_videos[index] || 0) + record
+    data = line collection, :provider, &helper.providers_labels
+    if data[:datasets].length > 1
+      all_videos = []
+      data[:datasets].each do |dataset|
+        dataset[:data].each_with_index do |record, index|
+          all_videos[index] = (all_videos[index] || 0) + record
+        end
       end
+      helper.add_line_dataset_at_beginning! data, I18n.t("video_list.all_videos"), all_videos
     end
-    helper.add_line_dataset_at_beginning! data, I18n.t("stats.all_videos"), all_videos
+    render json: data
+  end
+
+  def categories_doughnut
+    data = doughnut collection, :category_id, &helper.categories_labels
+    render json: data
+  end
+
+  def categories_line
+    data = line collection, :category_id, &helper.categories_labels
     render json: data
   end
 
@@ -32,6 +45,10 @@ class Api::StatsController < Api::AuthenticatedController
 
   def reset_color
     StatsColors.reset
+  end
+
+  def invalid_search
+    render nothing: true if not collection or @search_type == :invalid    
   end
 
   def doughnut(collection, column)

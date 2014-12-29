@@ -6,11 +6,11 @@ module ControllerMixins
       search = search ? search.strip : ""
       videos = current_user.videos.includes(:category)
       begin
-        collection = if search == "favorites"
-          videos.joins(:favorite)
+        search_type, collection = if search == "favorites"
+          [:favorites, videos.joins(:favorite)]
         elsif search.starts_with? "provider:"
           provider = search.gsub("provider:", "").strip
-          videos.where provider: provider
+          [:provider, videos.where(provider: provider)]
         elsif search.starts_with? "channel:"
           channel = search.gsub("channel:", "").strip.split(":")
           result = videos.where provider: channel[0], channel_topic: channel[1]
@@ -24,20 +24,30 @@ module ControllerMixins
               end
             end
           end
-          result
+          [:channel, result]
         elsif search.starts_with? "category:"
-          category_id = search.gsub("category:", "").strip.to_i
-          category_id = category_id == -1 ? nil : current_user.categories.find(category_id)
-          videos.where category_id: category_id
+          category = search.gsub("category:", "").strip
+          category_id = category.to_i
+          begin
+            category_id = category_id == -1 ? nil : current_user.categories.find(category_id)
+            [:category, videos.where(category_id: category_id)]
+          rescue
+            category = current_user.categories.find_by_name(category)
+            [:category, videos.where(category_id: category.id)] if category
+          end
+        elsif search.starts_with? "browser:"
+          browser = search.gsub("browser:", "").strip
+          [:browser, videos.where(browser: browser)]
         elsif not search.blank?
-          videos.where "title like ?", "%#{search}%"
+          [:search, videos.where("title like ?", "%#{search}%")]
         else
-          videos
+          [:all_videos, videos]
         end
       rescue
-        collection = videos.none
+         search_type, collection = :invalid, videos.none
       end
-      [collection, search]
+      search_type = :invalid if search_type.blank?
+      [collection, search, search_type]
     end
   end
 end

@@ -40,8 +40,8 @@ module LogHelper
     results
   end
 
-  def search_path(type, search = nil)
-    path = "#{log_path}/?search=#{type}"
+  def search_path(type, search = nil, module_path = log_path)
+    path = "#{module_path}?search=#{type}"
     path += ":#{search}" if search
     path
   end
