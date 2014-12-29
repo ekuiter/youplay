@@ -59,3 +59,5 @@ module Youplay
     config.assets.initialize_on_precompile = false
   end
 end
+
+require File.join(Rails.root, "app", "lib", "array.rb")
