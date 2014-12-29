@@ -1,4 +1,8 @@
 class Providers::VimeoProvider < Provider
+  def name
+    "Vimeo"
+  end
+  
   def video_id(params)
     params.each do |key, value|     
       if value.nil?

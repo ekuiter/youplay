@@ -1,4 +1,8 @@
 class Providers::NewgroundsVideoProvider < Providers::NewgroundsProvider  
+  def name
+    "Newgrounds Video"
+  end
+  
   def video_id(params)
     video_id_by_url("newgrounds.com/portal/view/", :newgrounds_video, params)
   end

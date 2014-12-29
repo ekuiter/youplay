@@ -1,4 +1,8 @@
 class Providers::NiconicoProvider < Provider
+  def name
+    "Nico Nico"
+  end
+  
   def video_id(params)
     params.each do |key, value|     
       if value.nil?

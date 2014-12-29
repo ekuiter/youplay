@@ -1,4 +1,8 @@
 class Providers::TwitchProvider < Provider
+  def name
+    "Twitch"
+  end
+  
   def video_id(params)
     params.each do |key, value|     
       if value.nil?

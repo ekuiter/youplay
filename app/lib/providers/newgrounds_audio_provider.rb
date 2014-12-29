@@ -1,4 +1,8 @@
 class Providers::NewgroundsAudioProvider < Providers::NewgroundsProvider  
+  def name
+    "Newgrounds Audio"
+  end
+
   def video_id(params)
     video_id_by_url("newgrounds.com/audio/listen/", :newgrounds_audio, params)
   end

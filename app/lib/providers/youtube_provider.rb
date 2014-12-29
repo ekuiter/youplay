@@ -1,4 +1,8 @@
 class Providers::YoutubeProvider < Provider
+  def name
+    "YouTube"
+  end
+  
   def video_id(params)
     id = nil
     params.each do |key, value|           

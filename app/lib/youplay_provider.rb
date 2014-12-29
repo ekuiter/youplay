@@ -40,6 +40,10 @@ class YouplayProvider
   def to_sym
     provider.to_sym
   end
+
+  def name
+    @instance.name
+  end
   
   def play_video(params)
     id = @instance.video_id(params)
