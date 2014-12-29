@@ -1,1 +1,29 @@
 <%= @module = 'stats'; render '/head' %>
+
+<div class="callout">
+  <p>
+  <%= t("stats.watched_videos", videos: @watched_videos, 
+        start_date: l(@start_date, format: :text), end_date: l(@end_date, format: :text)).html_safe %>
+  </p>
+  <p>
+  <%= t("stats.spent_watching", days: number_with_delimiter(@days), 
+        hours: number_with_delimiter(@hours), minutes: number_with_delimiter(@minutes)).html_safe %>
+  </p>
+  <% if @birthday %>
+  <p>
+  <%= t("stats.spent_life", percent: number_with_precision(@percent, precision: 2), birthday: l(@birthday, format: :text)).html_safe %>
+  </p>
+  <% end %>
+  <p>
+  <%= t("stats.video_duration", duration_average: number_with_precision(@duration_average, precision: 1), 
+        duration_deviation: number_with_precision(@duration_deviation, precision: 1)).html_safe %>
+  </p>
+</div>
+<h3><%= t "stats.browsers" %></h3>
+<p id="browsers-legend" class="legend"></p>
+<canvas id="browsers-doughnut" width="200" height="200"></canvas>
+<canvas id="browsers-line" width="600" height="200"></canvas>
+<h3><%= t "stats.providers" %></h3>
+<p id="providers-legend" class="legend"></p>
+<canvas id="providers-doughnut" width="200" height="200"></canvas>
+<canvas id="providers-line" width="600" height="200"></canvas>

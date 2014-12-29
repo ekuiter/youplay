@@ -2,9 +2,13 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  date:
+    formats:
+      month: "%b %y"
   time:
     formats:
       full: "%d %b %y %H:%M"
+      text: "%B %d, %Y"
   application:
     name: "youplay"
   imprint: "Imprint"
@@ -194,3 +198,10 @@ en:
     show: "Show hidden videos"
     no_hidden_videos: "There are no hidden videos."
     no_videos: "There are no new videos."
+  stats:
+    browsers: "Browsers"
+    providers: "Providers"
+    watched_videos: "You watched <strong>%{videos}</strong> videos, starting on <strong>%{start_date}</strong> up to <strong>%{end_date}</strong>."
+    spent_watching: "You spent <strong>%{days}</strong> days, <strong>%{hours}</strong> hours and <strong>%{minutes}</strong> minutes watching."
+    spent_life: "That's <strong>%{percent}</strong> percent of your entire lifetime since <strong>%{birthday}</strong>."
+    video_duration: "Your average video duration is <strong>%{duration_average}</strong> minutes with a deviation of <strong>%{duration_deviation}</strong> minutes."

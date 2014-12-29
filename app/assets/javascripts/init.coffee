@@ -8,6 +8,7 @@ ready = ->
   log.init()
   reader.init()
   search.init()
+  stats.init()
           
 $(document).ready ready
 $(document).on "page:load", ready

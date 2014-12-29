@@ -1,0 +1,32 @@
+.callout {
+  font-size: 1.3em;
+  background-color: #efefef;
+  padding: 0 20px;
+  margin: 7px;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+}
+
+canvas {
+  padding: 8px;
+}
+
+.legend {
+  width: 200px;
+  float: right;
+}
+
+.legend span {
+  display: block;
+  width: 16px;
+  height: 16px;
+  float: left;
+  margin-right: 5px;
+}
+
+.legend li {
+  clear: both;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -59,6 +59,10 @@ Youplay::Application.routes.draw do
     get "reader" => "reader#index"
     get "subscribe" => "reader#subscribe"
     get "add_hiding_rule" => "reader#add_hiding_rule"
+    get "stats/browsers_doughnut" => "stats#browsers_doughnut"
+    get "stats/browsers_line" => "stats#browsers_line"
+    get "stats/providers_doughnut" => "stats#providers_doughnut"
+    get "stats/providers_line" => "stats#providers_line"
   end
   
 end
