@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessible :username, :full_name, :email, :password, :password_confirmation, :remember_me
+  attr_accessible :username, :full_name, :email, :password, :password_confirmation, :remember_me, :birthday
   has_many :videos, dependent: :destroy
   has_many :subscribed_channels, dependent: :destroy
   has_many :people, dependent: :destroy
@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   has_many :categories, dependent: :destroy
   validates :username, :full_name, presence: true
   validates :username, uniqueness: true
+  validate :birthday_past
   
   devise :database_authenticatable, :trackable, :validatable, :registerable
   
@@ -28,4 +29,10 @@ class User < ActiveRecord::Base
   end
   
   before_save :ensure_authentication_token
+
+  private
+
+  def birthday_past
+    errors.add(:birthday, "can't be in the future") if !birthday.blank? and birthday >= Date.today
+  end
 end

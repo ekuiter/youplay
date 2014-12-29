@@ -27,6 +27,7 @@ en:
     current_password: "Current password"
     email: "Email"
     full_name: "Full name"
+    birthday: "Birthday"
     remember_me: "Remember"
     register: "Register"
     forgot_your_password: "Forgot your password?"

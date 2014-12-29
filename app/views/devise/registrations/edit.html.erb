@@ -11,6 +11,10 @@
       </tr>
       <%= set_focus_to 'user_full_name' %>
       <tr>
+        <td><label for="user_birthday"><%= t "devise.birthday" %></label></td>
+      <td><input id="user_birthday" name="user[birthday]" type="date" value="<%= resource.birthday if resource.birthday %>" /></td>
+      </tr>
+      <tr>
         <td><%= f.label :email, t('devise.email') %></td>
         <td><%= f.email_field :email %></td>
       </tr>
