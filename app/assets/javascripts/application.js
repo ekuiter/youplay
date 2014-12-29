@@ -15,5 +15,6 @@
 //= require turbolinks
 //= require swfobject
 //= require twitter/typeahead.min
+//= require Chart
 //= require init
 //= require_tree .
