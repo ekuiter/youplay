@@ -15,6 +15,15 @@ stats.setCollection = ->
 
 stats.prepare = ->
   Chart.defaults.Line.pointDot = false
+  Chart.defaults.Line.legendTemplate = "
+    <ul class=\"<%=name.toLowerCase()%>-legend\">
+      <% for (var i=0; i<datasets.length; i++){%>
+      <li>
+        <span style=\"background-color:<%=datasets[i].strokeColor%>\"></span>
+        <%if(datasets[i].label){%><%=i+1%>. <%=datasets[i].label%><%}%>
+      </li>
+      <%}%>
+    </ul>"
   stats.doughnut_and_line("browsers")
   stats.doughnut_and_line("providers")
   stats.doughnut_and_line("categories")

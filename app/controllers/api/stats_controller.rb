@@ -5,11 +5,13 @@ class Api::StatsController < Api::AuthenticatedController
   alias :helper :view_context
 
   def browsers_doughnut
-    render json: doughnut(collection, :browser)
+    data = doughnut collection, :browser, &helper.browsers_labels
+    render json: data
   end
 
   def browsers_line
-    render json: line(collection, :browser)
+    data = line collection, :browser, &helper.browsers_labels(true)
+    render json: data
   end
 
   def providers_doughnut
@@ -18,7 +20,7 @@ class Api::StatsController < Api::AuthenticatedController
   end
 
   def providers_line
-    data = line collection, :provider, &helper.providers_labels
+    data = line collection, :provider, &helper.providers_labels(true)
     if data[:datasets].length > 1
       all_videos = []
       data[:datasets].each do |dataset|
@@ -26,7 +28,8 @@ class Api::StatsController < Api::AuthenticatedController
           all_videos[index] = (all_videos[index] || 0) + record
         end
       end
-      helper.add_line_dataset_at_beginning! data, I18n.t("video_list.all_videos"), all_videos
+      helper.add_line_dataset_at_beginning! data, helper.link_to(I18n.t("video_list.all_videos"), stats_path), all_videos
+      helper.line_data_generate_colors!(data)
     end
     render json: data
   end
@@ -37,24 +40,21 @@ class Api::StatsController < Api::AuthenticatedController
   end
 
   def categories_line
-    data = line collection, :category_id, &helper.categories_labels
+    data = line collection, :category_id, &helper.categories_labels(true)
     render json: data
   end
   
   def channels_doughnut
     video_count = current_user.videos.count
     data = doughnut collection, helper.channel_column, Proc.new { |data|
-      data.sort_by! {|record| -record[:value] }.select! {|record| record[:value] > video_count / 100}
+      data.select! {|record| record[:value] > video_count / 100}
     }, &helper.channels_labels
     render json: data
   end
 
   def channels_line
     video_count = current_user.videos.count
-    data = line collection, helper.channel_column, Proc.new { |data|
-      data[:datasets] = data[:datasets].sort_by! {|dataset| -dataset[:data].sum}[0..7]
-      helper.line_data_generate_colors!(data, 0.1)
-    }, &helper.channels_labels
+    data = line collection, helper.channel_column, &helper.channels_labels(true)
     render json: data
   end
 
@@ -69,10 +69,11 @@ class Api::StatsController < Api::AuthenticatedController
   end
 
   def doughnut(collection, column, adjust_data = nil)
-    column_data = collection.group(column).count(column)
+    column_data = collection.group(column).count
     data = column_data.map do |record, count|
       { label: record, value: count }
     end
+    data.sort_by! {|record| -record[:value]}
     adjust_data.call(data) if adjust_data
     if block_given?
       data.each do |record|
@@ -97,6 +98,8 @@ class Api::StatsController < Api::AuthenticatedController
     datasets.each do |record, record_data|
       helper.add_line_dataset! data, record, record_data.values
     end
+    data[:datasets] = data[:datasets].sort_by {|dataset| -dataset[:data].sum}[0..7]
+    helper.line_data_generate_colors!(data)
     adjust_data.call(data) if adjust_data
     if block_given?
       data[:datasets].each do |dataset|

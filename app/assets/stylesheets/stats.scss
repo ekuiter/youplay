@@ -32,6 +32,10 @@ canvas {
   text-overflow: ellipsis;
 }
 
+.legend a {
+  border: none;
+}
+
 #stats-controls {
   position: absolute;
   font-size: 14px;

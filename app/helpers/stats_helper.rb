@@ -36,32 +36,41 @@ module StatsHelper
     result.map {|record| record[column]}
   end
 
-  def providers_labels
+  def browsers_labels(create_link = false)
     Proc.new do |record|
-      YouplayProvider.new(provider: record).name
+      maybe_link_to record, search_path(:browser, record, stats_path), create_link
     end
   end
 
-  def categories_labels
+  def providers_labels(create_link = false)
+    Proc.new do |record|
+      maybe_link_to YouplayProvider.new(provider: record).name, search_path(:provider, record, stats_path), create_link
+    end
+  end
+
+  def categories_labels(create_link = false)
     Proc.new do |record|
       categories = current_user.categories.all
-      if record.blank?
+      label = if record.blank?
         t "stats.no_category"
       else
         category = categories.select {|c| c.id == record}.first
         category ? category.name : record
       end
+      maybe_link_to label, search_path(:category, record.blank? ? -1 : record, stats_path), create_link
     end
   end
   
-  def channels_labels
+  def channels_labels(create_link = false)
     Proc.new do |record|
       provider, id = record.split(":")
-      begin
-        YouplayChannel.new(provider: YouplayProvider.new(provider: provider), id: id).name
+      label = begin
+        youplay_channel = YouplayChannel.new(provider: YouplayProvider.new(provider: provider), id: id)
+        youplay_channel.name
       rescue
         id
       end
+      maybe_link_to label, search_path(:channel, record, stats_path), create_link
     end
   end
 
@@ -70,21 +79,8 @@ module StatsHelper
   end
 
   def add_line_dataset!(data, label, dataset)
-    StatsColors.next_color
     data[:datasets].push label: label,
-      fillColor: StatsColors.color(0.4),
-      strokeColor: StatsColors.color,
-      pointColor: StatsColors.color,
       data: dataset
-  end
-
-  def line_data_generate_colors!(data, opacity)
-    StatsColors.reset
-    data[:datasets].each do |dataset|
-      StatsColors.next_color
-      dataset[:fillColor] = StatsColors.color(opacity)
-      dataset[:strokeColor] = dataset[:pointColor] = StatsColors.color
-    end
   end
 
   def add_line_dataset_at_beginning!(data, label, dataset)
@@ -92,5 +88,14 @@ module StatsHelper
     data[:datasets] = []
     add_line_dataset!(data, label, dataset)
     data[:datasets].push *old_datasets
+  end
+
+  def line_data_generate_colors!(data, opacity = 0.2)
+    StatsColors.reset
+    data[:datasets].each do |dataset|
+      StatsColors.next_color
+      dataset[:fillColor] = StatsColors.color(opacity)
+      dataset[:strokeColor] = dataset[:pointColor] = StatsColors.color
+    end
   end
 end

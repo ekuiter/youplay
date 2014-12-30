@@ -21,6 +21,14 @@ module ApplicationHelper
     link_to body, url, html_options
   end
   
+  def maybe_link_to(body, url, create_link, html_options = {})
+    if create_link
+      link_to body, url, html_options
+    else
+      body
+    end
+  end
+  
   def error_messages!(resource)
     return '' if resource.errors.empty?
 
