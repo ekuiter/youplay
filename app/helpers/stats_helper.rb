@@ -22,7 +22,7 @@ module StatsHelper
     yield(result) if block_given?
     ret = [result]
     columns.each do |column|
-       column = column.split(".").last.to_sym if column.is_a?(String)
+      column = column.split(".").last.to_sym if column.is_a?(String)
       ret.push(extract_column(result, column))
     end
     ret
@@ -50,13 +50,37 @@ module StatsHelper
     end
   end
   
+  def channels_labels
+    Proc.new do |record|
+      provider, id = record.split(":")
+      begin
+        YouplayChannel.new(provider: YouplayProvider.new(provider: provider), id: id).name
+      rescue
+        id
+      end
+    end
+  end
+
+  def channel_column
+    "concat(provider, ':', channel_topic)".to_sym
+  end
+
   def add_line_dataset!(data, label, dataset)
     StatsColors.next_color
     data[:datasets].push label: label,
-      fillColor: StatsColors.color(0.4),
+      fillColor: StatsColors.color(0.3),
       strokeColor: StatsColors.color,
       pointColor: StatsColors.color,
       data: dataset
+  end
+
+  def line_data_generate_colors!(data)
+    StatsColors.reset
+    data[:datasets].each do |dataset|
+      StatsColors.next_color
+      dataset[:fillColor] = StatsColors.color(0.3)
+      dataset[:strokeColor] = dataset[:pointColor] = StatsColors.color
+    end
   end
 
   def add_line_dataset_at_beginning!(data, label, dataset)

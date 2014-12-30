@@ -15,6 +15,11 @@ module ApplicationHelper
   def set_focus_to(id)
     javascript_tag "$('##{id}').focus()"
   end
+
+  def nav_link_to(body, url, html_options = {})
+    html_options.merge! class: "active" if @current_path == url
+    link_to body, url, html_options
+  end
   
   def error_messages!(resource)
     return '' if resource.errors.empty?

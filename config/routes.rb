@@ -65,6 +65,8 @@ Youplay::Application.routes.draw do
     get "stats/providers/line" => "stats#providers_line"
     get "stats/categories/doughnut" => "stats#categories_doughnut"
     get "stats/categories/line" => "stats#categories_line"
+    get "stats/channels/doughnut" => "stats#channels_doughnut"
+    get "stats/channels/line" => "stats#channels_line"
   end
   
 end

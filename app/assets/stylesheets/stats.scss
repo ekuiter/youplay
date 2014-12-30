@@ -12,6 +12,7 @@ canvas {
 }
 
 .legend {
+  margin: 0;
   width: 200px;
   float: right;
 }
@@ -29,4 +30,23 @@ canvas {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+#stats-controls {
+  position: absolute;
+  font-size: 14px;
+}
+
+#stats-controls h4 {
+  margin: 0;
+}
+
+#stats-controls ul {
+  margin: 7px 0 10px 0;
+}
+
+#modules .active, #stats-controls .active {
+  color: black;
+  font-weight: bold;
+  border: none;
 }

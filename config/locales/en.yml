@@ -200,9 +200,20 @@ en:
     no_hidden_videos: "There are no hidden videos."
     no_videos: "There are no new videos."
   stats:
-    browsers: "Browsers"
     videos: "Videos"
+    providers: "Providers"
+    browsers: "Browsers"
     categories: "Categories"
+    channels: "Most watched channels"
+    search_type:
+      provider: "Provider"
+      channel: "Channel"
+      category: "Category"
+      browser: "Browser"
+      search: "Search"
+      all_videos: "All videos"
+      favorites: "Favorite videos"
+      invalid: "Invalid search"
     watched_videos:
       start_end_date: "You watched <strong>%{videos}</strong> videos, starting on <strong>%{start_date}</strong> up to <strong>%{end_date}</strong>."
       start_date: "You watched <strong>%{videos}</strong> videos on <strong>%{start_date}</strong>."

@@ -5,7 +5,7 @@ module ControllerMixins
     private
     
     def log(collection, results, page, detailed = false)
-      default_number = 50
+      default_number = 100
       @results_range = default_number..400
       @results = results.nil? ? default_number : Integer(results)
       @results = @results_range.min unless @results_range.include? @results

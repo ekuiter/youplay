@@ -18,6 +18,7 @@ stats.prepare = ->
   stats.doughnut_and_line("browsers")
   stats.doughnut_and_line("providers")
   stats.doughnut_and_line("categories")
+  stats.doughnut_and_line("channels")
 
 stats.chart = (canvas, endpoint, callback) ->
   if $("##{canvas}").length > 0

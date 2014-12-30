@@ -1,5 +1,13 @@
-<% if @page_count > 1 %>
-  <div id="pages">
+<div class="pagination">
+  <% if @video_count > @results_range.min %>
+    <strong><%= t 'video_list.results_per_page' %></strong>
+    <% results.each_with_index do |result, index| %>
+        <%= '|' unless index == 0 %>
+        <%= result.html_safe %>
+    <% end %>
+  <% end %> 
+  &nbsp;&nbsp;
+  <% if @page_count > 1 %>
     <strong><%= t "video_list.page" %></strong>
     <% if @current_page > 2 %>
         <%= link_to_page t('video_list.first'), 1 %> |
@@ -16,15 +24,5 @@
     <% if @current_page < @page_count - 1 %>
         | <%= link_to_page t('video_list.last'), @page_count %>
     <% end %>
-  </div>
-<% end %>
-
-<% if @video_count > @results_range.min %>
-  <div id="results">
-    <strong><%= t 'video_list.results_per_page' %></strong>
-    <% results.each_with_index do |result, index| %>
-        <%= '|' unless index == 0 %>
-        <%= result.html_safe %>
-    <% end %>
-  </div>
-<% end %>
+  <% end %>
+</div>

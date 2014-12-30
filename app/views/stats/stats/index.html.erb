@@ -1,10 +1,17 @@
 <%= @module = 'stats'; render '/head' %>
 
 <div id="stats-controls" class="side-controls">
-  <h4><%= t "stats.videos" %></h4>
+  <h4><%= t "stats.providers" %></h4>
   <ul>
   <% @providers.each do |provider| %>
-    <li><%= link_to YouplayProvider.new(provider: provider).name, search_path(:provider, provider, stats_path) %></li>
+    <li><%= nav_link_to YouplayProvider.new(provider: provider).name, search_path(:provider, provider, stats_path) %></li>
+  <% end %>
+  </ul>
+  <h4><%= t "stats.categories" %></h4>
+  <ul>
+    <li><%= nav_link_to t("stats.no_category"), search_path(:category, -1, stats_path) %></li>
+  <% @categories.each do |category| %>
+    <li><%= nav_link_to category.name, search_path(:category, category.id, stats_path) %></li>
   <% end %>
   </ul>
   <h4><%= t "stats.browsers" %></h4>
@@ -13,13 +20,10 @@
     <li><%= link_to browser, search_path(:browser, browser, stats_path) %></li>
   <% end %>
   </ul>
-  <h4><%= t "stats.categories" %></h4>
-  <ul>
-  <% @categories.each do |category| %>
-    <li><%= link_to category.name, search_path(:category, category.id, stats_path) %></li>
-  <% end %>
-  </ul>
+  <h4><%= t "stats.channels" %></h4>
 </div>
+
+<%= render "search_head" %>
 
 <% if @watched_videos.blank? %>
 <div class="callout">
@@ -63,6 +67,13 @@
 <canvas id="providers-line" width="600" height="200"></canvas>
 <% end %>
 
+<% if @search_type != :category %>
+<h3><%= t "stats.categories" %></h3>
+<p id="categories-legend" class="legend"></p>
+<canvas id="categories-doughnut" width="200" height="200"></canvas>
+<canvas id="categories-line" width="600" height="200"></canvas>
+<% end %>
+
 <% if @search_type != :browser %>
 <h3><%= t "stats.browsers" %></h3>
 <p id="browsers-legend" class="legend"></p>
@@ -70,10 +81,10 @@
 <canvas id="browsers-line" width="600" height="200"></canvas>
 <% end %>
 
-<% if @search_type != :category %>
-<h3><%= t "stats.categories" %></h3>
-<p id="categories-legend" class="legend"></p>
-<canvas id="categories-doughnut" width="200" height="200"></canvas>
-<canvas id="categories-line" width="600" height="200"></canvas>
+<% if @search_type != :channel %>
+<h3><%= t "stats.channels" %></h3>
+<p id="channels-legend" class="legend"></p>
+<canvas id="channels-doughnut" width="200" height="200"></canvas>
+<canvas id="channels-line" width="600" height="200"></canvas>
 <% end %>
 <% end %>
