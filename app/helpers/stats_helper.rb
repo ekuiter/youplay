@@ -1,8 +1,12 @@
 module StatsHelper
-  def months_by_timestamps(timestamps)
+  def months_by_column_data(column_data)
+    data_months = column_data.map do |key, value|
+      record, month = key
+      month
+    end.uniq.sort
     months = []
-    month = timestamps.uniq.sort.first
-    while month <= Date.today.at_beginning_of_month
+    month = data_months.first
+    while month <= data_months.last
       months.push month
       month = month.next_month
     end
@@ -62,23 +66,23 @@ module StatsHelper
   end
 
   def channel_column
-    "concat(provider, ':', channel_topic)".to_sym
+    "concat(provider, ':', channel_topic)"
   end
 
   def add_line_dataset!(data, label, dataset)
     StatsColors.next_color
     data[:datasets].push label: label,
-      fillColor: StatsColors.color(0.3),
+      fillColor: StatsColors.color(0.4),
       strokeColor: StatsColors.color,
       pointColor: StatsColors.color,
       data: dataset
   end
 
-  def line_data_generate_colors!(data)
+  def line_data_generate_colors!(data, opacity)
     StatsColors.reset
     data[:datasets].each do |dataset|
       StatsColors.next_color
-      dataset[:fillColor] = StatsColors.color(0.3)
+      dataset[:fillColor] = StatsColors.color(opacity)
       dataset[:strokeColor] = dataset[:pointColor] = StatsColors.color
     end
   end

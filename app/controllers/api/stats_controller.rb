@@ -53,7 +53,7 @@ class Api::StatsController < Api::AuthenticatedController
     video_count = current_user.videos.count
     data = line collection, helper.channel_column, Proc.new { |data|
       data[:datasets] = data[:datasets].sort_by! {|dataset| -dataset[:data].sum}[0..7]
-      helper.line_data_generate_colors!(data)
+      helper.line_data_generate_colors!(data, 0.1)
     }, &helper.channels_labels
     render json: data
   end
@@ -69,9 +69,9 @@ class Api::StatsController < Api::AuthenticatedController
   end
 
   def doughnut(collection, column, adjust_data = nil)
-    column_data = collection.pluck(column)
-    data = column_data.uniq.map do |record|
-      { label: record, value: column_data.count(record) }
+    column_data = collection.group(column).count(column)
+    data = column_data.map do |record, count|
+      { label: record, value: count }
     end
     adjust_data.call(data) if adjust_data
     if block_given?
@@ -84,18 +84,18 @@ class Api::StatsController < Api::AuthenticatedController
   end
 
   def line(collection, column, adjust_data = nil)
-    column_data_and_timestamps, column_data, timestamps = helper.pluck_multiple(collection, [column, "videos.created_at"]) do |result|
-      result.each do |record|
-        record[:created_at] = record[:created_at].to_date.change(day: 1)
-      end
+    column_data = collection.group(column).order("videos.created_at").
+      group("cast(date_format(date(videos.created_at), '%Y-%m-01') as date)").count
+    months = helper.months_by_column_data(column_data)
+    datasets = {}
+    column_data.each do |key, value|
+      record, month = key
+      datasets[record] ||= Hash[months.map {|month| [month, 0]}]
+      datasets[record][month] += value
     end
-    column_data = column_data.uniq
-    months = helper.months_by_timestamps(timestamps)    
-    data = { labels: helper.humanize_months(months), datasets: [] }    
-    column_data.each do |record|
-      record_and_timestamps = column_data_and_timestamps.select {|b| b[column] == record}
-      timestamps = helper.extract_column(record_and_timestamps, :created_at)
-      helper.add_line_dataset! data, record, months.map {|m| timestamps.count(m) }
+    data = { labels: helper.humanize_months(months), datasets: [] }
+    datasets.each do |record, record_data|
+      helper.add_line_dataset! data, record, record_data.values
     end
     adjust_data.call(data) if adjust_data
     if block_given?

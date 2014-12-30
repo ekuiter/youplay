@@ -44,6 +44,7 @@ group :development do
   gem 'binding_of_caller'
   gem 'meta_request'
   gem 'hirb'
+  gem 'ruby-prof'
 end
 
 group :production do
