@@ -17,7 +17,7 @@
   <h4><%= t "stats.browsers" %></h4>
   <ul>
   <% @browsers.each do |browser| %>
-    <li><%= link_to browser, search_path(:browser, browser, stats_path) %></li>
+    <li><%= nav_link_to browser, search_path(:browser, browser, stats_path) %></li>
   <% end %>
   </ul>
   <h4><%= t "stats.channels" %></h4>
@@ -74,6 +74,13 @@
 <canvas id="categories-line" width="600" height="200"></canvas>
 <% end %>
 
+<% if @search_type != :channel %>
+<h3><%= t "stats.channels" %></h3>
+<p id="channels-legend" class="legend"></p>
+<canvas id="channels-doughnut" width="200" height="200"></canvas>
+<canvas id="channels-line" width="600" height="200"></canvas>
+<% end %>
+
 <% if @search_type != :browser %>
 <h3><%= t "stats.browsers" %></h3>
 <p id="browsers-legend" class="legend"></p>
@@ -81,10 +88,4 @@
 <canvas id="browsers-line" width="600" height="200"></canvas>
 <% end %>
 
-<% if @search_type != :channel %>
-<h3><%= t "stats.channels" %></h3>
-<p id="channels-legend" class="legend"></p>
-<canvas id="channels-doughnut" width="200" height="200"></canvas>
-<canvas id="channels-line" width="600" height="200"></canvas>
-<% end %>
 <% end %>
