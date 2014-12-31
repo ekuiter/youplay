@@ -16,7 +16,7 @@ class Log::LogController < ApplicationController
   end
   
   def category
-    search, collection = search params[:search]
+    collection, = figure_collection(params[:search])
     if params[:category].blank?
       category_id = nil
     else
