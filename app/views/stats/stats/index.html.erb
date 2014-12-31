@@ -87,4 +87,10 @@
 <canvas id="browsers-line" width="600" height="200"></canvas>
 <% end %>
 
+<h3>*Series</h3>
+<ul>
+  <% @series.each do |series| %>
+    <li><%= series[:group].html_safe %> <em>(<%= series[:episodes] %>)</em></li>
+  <% end %>
+</ul>
 <% end %>
