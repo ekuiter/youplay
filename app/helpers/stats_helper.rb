@@ -75,7 +75,7 @@ module StatsHelper
   end
 
   def channel_column
-    "concat(provider, ':', channel_topic)"
+    "concat(videos.provider, ':', videos.channel_topic)"
   end
 
   def add_line_dataset!(data, label, dataset)

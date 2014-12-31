@@ -15,7 +15,10 @@ class Api::StatsController < Api::AuthenticatedController
   end
 
   def providers_doughnut
-    data = doughnut collection, :provider, &helper.providers_labels
+    data = doughnut collection, :provider, Proc.new { |data|
+      StatsColors.next_color if data.length > 1
+      data
+    }, &helper.providers_labels
     render json: data
   end
 
@@ -46,14 +49,17 @@ class Api::StatsController < Api::AuthenticatedController
   
   def channels_doughnut
     video_count = current_user.videos.count
+    one_percent = video_count / 100
     data = doughnut collection, helper.channel_column, Proc.new { |data|
-      data.select! {|record| record[:value] > video_count / 100}
+      one_percent_data = data.select {|record| record[:value] > one_percent}
+      i = 0
+      ten_records_data = data.select {i += 1; i <= 10}
+      one_percent_data.count > ten_records_data.count ? one_percent_data : ten_records_data      
     }, &helper.channels_labels
     render json: data
   end
 
   def channels_line
-    video_count = current_user.videos.count
     data = line collection, helper.channel_column, &helper.channels_labels(true)
     render json: data
   end
@@ -74,7 +80,7 @@ class Api::StatsController < Api::AuthenticatedController
       { label: record, value: count }
     end
     data.sort_by! {|record| -record[:value]}
-    adjust_data.call(data) if adjust_data
+    data = adjust_data.call(data) if adjust_data
     if block_given?
       data.each do |record|
         record[:label] = yield(record[:label])
@@ -100,7 +106,7 @@ class Api::StatsController < Api::AuthenticatedController
     end
     data[:datasets] = data[:datasets].sort_by {|dataset| -dataset[:data].sum}[0..7]
     helper.line_data_generate_colors!(data)
-    adjust_data.call(data) if adjust_data
+    data = adjust_data.call(data) if adjust_data
     if block_given?
       data[:datasets].each do |dataset|
         dataset[:label] = yield(dataset[:label])

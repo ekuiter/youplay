@@ -10,7 +10,7 @@ stats.setCollection = ->
     unless results?
       ""
     else
-      results[1] or 0
+      results[1] or ""
   stats.collection = $.urlParam("search")
 
 stats.prepare = ->
