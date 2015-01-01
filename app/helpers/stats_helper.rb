@@ -114,7 +114,7 @@ module StatsHelper
   def doughnut_and_line_metric(metric, search_type)
     return "" if @search_type == search_type
     <<html.html_safe
-    <h3>#{t "stats.#{search_type}"}</h3>
+    <h3>#{t "stats.#{metric}"}</h3>
     <p id="#{metric}-legend" class="legend"></p>
     <canvas id="#{metric}-doughnut" width="200" height="200"></canvas>
     <canvas id="#{metric}-line" width="600" height="200"></canvas>
