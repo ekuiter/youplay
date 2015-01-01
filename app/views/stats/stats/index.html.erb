@@ -66,31 +66,8 @@
 <canvas id="providers-line" width="600" height="200"></canvas>
 <% end %>
 
-<% if @search_type != :category %>
-<h3><%= t "stats.categories" %></h3>
-<p id="categories-legend" class="legend"></p>
-<canvas id="categories-doughnut" width="200" height="200"></canvas>
-<canvas id="categories-line" width="600" height="200"></canvas>
-<% end %>
-
-<% if @search_type != :channel %>
-<h3><%= t "stats.channels" %></h3>
-<p id="channels-legend" class="legend"></p>
-<canvas id="channels-doughnut" width="200" height="200"></canvas>
-<canvas id="channels-line" width="600" height="200"></canvas>
-<% end %>
-
-<% if @search_type != :browser %>
-<h3><%= t "stats.browsers" %></h3>
-<p id="browsers-legend" class="legend"></p>
-<canvas id="browsers-doughnut" width="200" height="200"></canvas>
-<canvas id="browsers-line" width="600" height="200"></canvas>
-<% end %>
-
-<h3>*Series</h3>
-<ul>
-  <% @series.each do |series| %>
-    <li><%= series[:group].html_safe %> <em>(<%= series[:episodes] %>)</em></li>
-  <% end %>
-</ul>
+<%= doughnut_and_line_metric(:categories, :category) %>
+<%= doughnut_and_line_metric(:channels, :channel) %>
+<%= doughnut_and_line_metric(:series, :series) %>
+<%= doughnut_and_line_metric(:browsers, :browser) %>
 <% end %>

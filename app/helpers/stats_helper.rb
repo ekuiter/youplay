@@ -74,8 +74,20 @@ module StatsHelper
     end
   end
 
+  def limit_data(amount = current_user.videos.count / 100, default = 20)
+    Proc.new do |data|
+      amount_data = data.select {|record| record[:value] > amount}
+      default_data = data[0..default]
+      amount_data.count > default_data.count ? amount_data : default_data      
+    end
+  end
+
   def channel_column
     "concat(videos.provider, ':', videos.channel_topic)"
+  end
+
+  def month_column
+    "cast(date_format(date(videos.created_at), '%Y-%m-01') as date)"
   end
 
   def add_line_dataset!(data, label, dataset)
@@ -98,4 +110,14 @@ module StatsHelper
       dataset[:strokeColor] = dataset[:pointColor] = StatsColors.color
     end
   end
+
+  def doughnut_and_line_metric(metric, search_type)
+    return "" if @search_type == search_type
+    <<html.html_safe
+    <h3>#{t "stats.#{search_type}"}</h3>
+    <p id="#{metric}-legend" class="legend"></p>
+    <canvas id="#{metric}-doughnut" width="200" height="200"></canvas>
+    <canvas id="#{metric}-line" width="600" height="200"></canvas>
+html
+  end 
 end

@@ -50,15 +50,49 @@ module Series
       series[adjust_group(group_parts)] = series[group_parts]
       series.delete(group_parts)
     end
-    series.each do |group, column_data|
-      column_data.sort_by! {|record| record[:episode]}
+    if block_given?
+      series_array = series.map do |group, column_data|
+        { label: group, value: column_data.length }
+      end
+      series_array.sort_by! {|series| -series[:value]}
+      yield(series_array, column)
+    else
+      series.each do |group, column_data|
+        column_data.sort_by! {|record| record[:episode]}
+      end
+      series_array = series.map do |group, column_data|
+        { group: group, videos: column_data }
+      end
+      series_array.sort_by! do |series|
+        -series[:episodes] = series[:videos].length
+      end
+      series_array
     end
-    series_array = series.map do |group, column_data|
-      { group: group, videos: column_data }
+  end
+
+  def make_series_doughnut
+    Proc.new do |series_array, column|
+      data = helper.limit_data.call(series_array)
+      data.push({ label: t("stats.no_series_found"), value: 1 }) if data.blank?
+      data.generate_colors!
+      data
     end
-    series_array.sort_by! do |series|
-      -series[:episodes] = series[:videos].length
+  end
+
+  def make_series_line
+    Proc.new do |series_array, column|
+      series_array = series_array[0..7]
+      match_series = "^(#{series_array.map {|series| series[:label]}.join("|")})"
+      months = collection.where("#{column} regexp ?", match_series).pluck(helper.month_column).uniq
+      data = { labels: helper.humanize_months(months), datasets: [] }
+      series_array.map do |series|
+        dataset ||= Hash[months.map {|month| [month, 0]}]
+        series_months = collection.where("#{column} like ?", "#{series[:label]}%").pluck(helper.month_column)
+        series_months.each {|month| dataset[month] += 1}
+        helper.add_line_dataset!(data, series[:label], dataset.values)
+      end
+      helper.line_data_generate_colors!(data)
+      data
     end
-    series_array
   end
 end

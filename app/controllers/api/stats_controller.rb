@@ -1,17 +1,16 @@
 class Api::StatsController < Api::AuthenticatedController
   include ControllerMixins::StatsController
+  include Series
   before_filter :reset_color
   before_filter :invalid_search
   alias :helper :view_context
 
   def browsers_doughnut
-    data = doughnut collection, :browser, &helper.browsers_labels
-    render json: data
+    render json: doughnut(collection, :browser, &helper.browsers_labels)
   end
 
   def browsers_line
-    data = line collection, :browser, &helper.browsers_labels(true)
-    render json: data
+    render json: line(collection, :browser, &helper.browsers_labels(true))
   end
 
   def providers_doughnut
@@ -38,30 +37,28 @@ class Api::StatsController < Api::AuthenticatedController
   end
 
   def categories_doughnut
-    data = doughnut collection, :category_id, &helper.categories_labels
-    render json: data
+    render json: doughnut(collection, :category_id, &helper.categories_labels)
   end
 
   def categories_line
-    data = line collection, :category_id, &helper.categories_labels(true)
-    render json: data
+    render json: line(collection, :category_id, &helper.categories_labels(true))
   end
   
   def channels_doughnut
-    video_count = current_user.videos.count
-    one_percent = video_count / 100
-    data = doughnut collection, helper.channel_column, Proc.new { |data|
-      one_percent_data = data.select {|record| record[:value] > one_percent}
-      i = 0
-      ten_records_data = data.select {i += 1; i <= 10}
-      one_percent_data.count > ten_records_data.count ? one_percent_data : ten_records_data      
-    }, &helper.channels_labels
-    render json: data
+    render json: doughnut(collection, helper.channel_column,
+                          helper.limit_data, &helper.channels_labels)
   end
 
   def channels_line
-    data = line collection, helper.channel_column, &helper.channels_labels(true)
-    render json: data
+    render json: line(collection, helper.channel_column, &helper.channels_labels(true))
+  end
+
+  def series_doughnut
+    render json: find_series(collection, :title, &make_series_doughnut)
+  end
+
+  def series_line
+    render json: find_series(collection, :title, &make_series_line)
   end
 
   private
@@ -92,7 +89,7 @@ class Api::StatsController < Api::AuthenticatedController
 
   def line(collection, column, adjust_data = nil)
     column_data = collection.group(column).order("videos.created_at").
-      group("cast(date_format(date(videos.created_at), '%Y-%m-01') as date)").count
+      group(helper.month_column).count
     months = helper.months_by_column_data(column_data)
     datasets = {}
     column_data.each do |key, value|

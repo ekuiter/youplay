@@ -1,6 +1,5 @@
 class Stats::StatsController < ApplicationController
   include ControllerMixins::StatsController
-  include Series
   alias :helper :view_context
 
   def index
@@ -26,8 +25,6 @@ class Stats::StatsController < ApplicationController
       @duration_average = duration_stats.mean / 60
       std_dev = duration_stats.standard_deviation
       @duration_deviation = std_dev.nil? ? 0 : std_dev / 60
-      
-      @series = find_series(collection, :title)
     end
   end
 end
