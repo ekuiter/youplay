@@ -38,13 +38,14 @@ module StatsHelper
 
   def browsers_labels(create_link = false)
     Proc.new do |record|
-      maybe_link_to record, search_path(:browser, record, stats_path), create_link
+      maybe_link_to record, search_path(:browser, record, stats_path), create_link, title: record
     end
   end
 
   def providers_labels(create_link = false)
     Proc.new do |record|
-      maybe_link_to YouplayProvider.new(provider: record).name, search_path(:provider, record, stats_path), create_link
+      name = YouplayProvider.new(provider: record).name
+      maybe_link_to name, search_path(:provider, record, stats_path), create_link, title: name
     end
   end
 
@@ -57,7 +58,7 @@ module StatsHelper
         category = categories.select {|c| c.id == record}.first
         category ? category.name : record
       end
-      maybe_link_to label, search_path(:category, record.blank? ? -1 : record, stats_path), create_link
+      maybe_link_to label, search_path(:category, record.blank? ? -1 : record, stats_path), create_link, title: label
     end
   end
   
@@ -70,7 +71,7 @@ module StatsHelper
       rescue
         id
       end
-      maybe_link_to label, search_path(:channel, record, stats_path), create_link
+      maybe_link_to label, search_path(:channel, record, stats_path), create_link, title: label
     end
   end
 
