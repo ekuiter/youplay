@@ -39,11 +39,13 @@
   <% template = @days > 0 ? "days_hours_minutes" : nil %>
   <% if template.blank? then template = @hours > 0 ? "hours_minutes" : "minutes" end %>
   <%= t("stats.spent_watching.#{template}", days: number_with_delimiter(@days), 
-        hours: number_with_delimiter(@hours), minutes: number_with_delimiter(@minutes)).html_safe %>
+        hours: number_with_delimiter(@hours), minutes: number_with_delimiter(@minutes)).html_safe %><%=
+      t("stats.spent_time_frame", percent_time_frame: number_with_precision(@percent_time_frame, precision: 2)).html_safe
+      %>
   </p>
-  <% if @birthday && @percent.round(2) != 0 %>
+  <% if @birthday && @percent_lifetime.round(2) != 0 %>
   <p>
-  <%= t("stats.spent_life", percent: number_with_precision(@percent, precision: 2), birthday: l(@birthday, format: :text)).html_safe %>
+  <%= t("stats.spent_life", percent_lifetime: number_with_precision(@percent_lifetime, precision: 2), birthday: l(@birthday, format: :text)).html_safe %>
   </p>
   <% end %>
   <% if @watched_videos > 1 %>

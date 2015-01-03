@@ -19,7 +19,8 @@ class Stats::StatsController < ApplicationController
       @minutes = (minutes_total % 60).to_i
       
       @birthday = current_user.birthday ? current_user.birthday.to_time : nil
-      @percent = duration_total / (Date.today.to_time - @birthday) * 100
+      @percent_lifetime = duration_total / (Date.today.to_time - @birthday) * 100
+      @percent_time_frame = duration_total / (@end_date.to_time - @start_date.to_time) * 100
 
       duration_stats = DescriptiveStatistics::Stats.new(durations)
       @duration_average = duration_stats.mean / 60
