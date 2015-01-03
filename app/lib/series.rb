@@ -89,7 +89,7 @@ module Series
         dataset ||= Hash[months.map {|month| [month, 0]}]
         series_months = collection.where("#{column} like ?", "#{series[:label]}%").pluck(helper.month_column)
         series_months.each {|month| dataset[month] += 1 if dataset.keys.include?(month)}
-        label = "<a href=\"#\" title=\"#{series[:label]}\">#{series[:label]}</a>"
+        label = helper.link_to(series[:label], helper.search_path(:series, series[:label], stats_path), title: series[:label])
         helper.add_line_dataset!(data, label, dataset.values)
       end
       helper.line_data_generate_colors!(data)

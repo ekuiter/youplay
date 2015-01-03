@@ -42,6 +42,9 @@ module ControllerMixins
             raise if youplay_category.blank?
             [:category, videos.where(category_id: youplay_category.id), youplay_category.name]
           end
+        elsif search.starts_with? "series:"
+          series = search.gsub("series:", "").strip
+          [:series, videos.where("title like ?", "#{series}%"), series]
         elsif search.starts_with? "browser:"
           browser = search.gsub("browser:", "").strip
           [:browser, videos.where(browser: browser), browser]
