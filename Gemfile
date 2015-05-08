@@ -8,7 +8,7 @@ gem 'rails', '3.2.11'
 
 gem 'devise' # user authentication
 gem 'oauth2' # link user to youtube account
-gem 'youtube_it', '= 2.4.0' # access youtube data api
+gem 'google-api-client', '~> 0.8.6' # access youtube data api
 gem 'twitch', '= 0.0.2'
 gem 'vimeo', '= 1.5.4'
 gem 'rinku' # auto link video descriptions
@@ -16,7 +16,6 @@ gem 'rinku' # auto link video descriptions
 #gem 'rubyzip' # extract MediathekView zip files
 #gem 'xml-simple' # parse MediathekView xml
 gem 'jquery-rails'
-gem 'json', '1.7.7'
 gem 'turbolinks'
 gem 'mysql2'
 gem 'rails_12factor'
@@ -26,6 +25,7 @@ gem 'twitter-typeahead-rails'
 gem 'sass', '3.2.13'
 gem 'chart-js-rails', '~> 0.0.7'
 gem 'descriptive-statistics', '~> 2.1.2'
+gem 'iso8601', '~> 0.8.6'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -36,7 +36,7 @@ group :assets do
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platform => :ruby
 
-  gem 'uglifier', '>= 1.0.3'
+  gem 'uglifier'
 end
 
 group :development do
