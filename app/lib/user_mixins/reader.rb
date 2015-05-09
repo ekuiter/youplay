@@ -17,11 +17,11 @@ module UserMixins
       subscribed_channels = SubscribedChannel.pluck(:channel).uniq
       playlists = fetch_playlists(subscribed_channels)
       playlists.each do |channel, playlist|
-        Rails.logger.debug "[youplay/update] Updating channel #{channel} with playlist #{playlist}"
+        Rails.logger.info "[youplay/update] Updating channel #{channel} with playlist #{playlist}"
         fetch_videos(playlist).each do |video|
           videoId = video.snippet.resourceId.videoId
           unless videos.include? videoId
-            Rails.logger.debug "[youplay/update]   [#{videoId}] #{video.snippet.title}"
+            Rails.logger.info "[youplay/update]   [#{videoId}] #{video.snippet.title}"
             cached_video = CachedVideo.create channel: channel[2..-1], title: video.snippet.title,
                 url: videoId, uploaded_at: video.snippet.publishedAt
             hide_video_if_rule_applies(video, channel, cached_video)
@@ -44,10 +44,10 @@ module UserMixins
                           not hidden.include? cached_video.id)
         end
         unless keep
-          Rails.logger.debug "[youplay/tidy] Remove cached        video [#{cached_video.url}] #{cached_video.title}"
+          Rails.logger.info "[youplay/tidy] Remove cached        video [#{cached_video.url}] #{cached_video.title}"
           cached_videos_to_destroy << cached_video.id
           hide_videos.select {|v| v.cached_video_id == cached_video.id}.each do |hidden_video|
-            Rails.logger.debug "[youplay/tidy] Remove        hidden video [#{cached_video.url}]"
+            Rails.logger.info "[youplay/tidy] Remove        hidden video [#{cached_video.url}]"
             hide_videos_to_destroy << hidden_video.id
           end
         end
