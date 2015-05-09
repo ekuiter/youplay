@@ -57,14 +57,12 @@ class Providers::YoutubeProvider < Provider
     return false if method == :commenting
   end
 
-  private
-
   def client
     return @client if @client
 
     require 'google/api_client'
 
-    @client = Google::APIClient.new
+    @client = Google::APIClient.new application_name: "youplay", application_version: "1.0"
     @client.authorization = nil
     @client.key = Settings.developer_key
 
@@ -88,6 +86,8 @@ class Providers::YoutubeProvider < Provider
     client
     @api
   end
+
+  private
 
   def comment_length(comments)
     if comments.length < 5

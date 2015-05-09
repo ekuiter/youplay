@@ -11,15 +11,19 @@ module UserMixins
       end
       videos
     end
-    
+
     def update_videos
       videos, hiding_rules = CachedVideo.all.map {|v| v.url}, HidingRule.all
-      subscribed_channels = SubscribedChannel.all.map {|subscribed_channel| subscribed_channel.channel}.uniq
-      subscribed_channels.each do |channel|
-        fetch_videos(channel).each do |video|
-          unless videos.include? video.unique_id
-            cached_video = CachedVideo.create channel: channel, title: video.title,
-                                              url: video.unique_id, uploaded_at: video.uploaded_at
+      subscribed_channels = SubscribedChannel.pluck(:channel).uniq
+      playlists = fetch_playlists(subscribed_channels)
+      playlists.each do |channel, playlist|
+        Rails.logger.debug "[youplay/update] Updating channel #{channel} with playlist #{playlist}"
+        fetch_videos(playlist).each do |video|
+          videoId = video.snippet.resourceId.videoId
+          unless videos.include? videoId
+            Rails.logger.debug "[youplay/update]   [#{videoId}] #{video.snippet.title}"
+            cached_video = CachedVideo.create channel: channel[2..-1], title: video.snippet.title,
+                url: videoId, uploaded_at: video.snippet.publishedAt
             hide_video_if_rule_applies(video, channel, cached_video)
           end
         end
@@ -39,8 +43,36 @@ module UserMixins
         cached_video.destroy unless keep
       end
     end
-    
+
     private
+
+    def fetch_playlists(channels)
+      set_client_and_api
+      max_results = 50
+      playlists = {}
+
+      channels.each_slice(max_results).each do |channels|
+        channel_items = @client.execute(api_method: @api.channels.list,
+            parameters: { part: 'contentDetails', id: "UC#{channels.join(",UC")}", maxResults: max_results }
+        ).data.items
+        channel_items.each { |channel| playlists[channel.id] = channel.content_details.related_playlists.uploads }
+      end
+
+      playlists
+    end
+
+    def fetch_videos(playlist)
+      set_client_and_api
+
+      @client.execute(api_method: @api.playlist_items.list,
+          parameters: { part: 'snippet', playlistId: playlist, maxResults: Settings.videos_per_channel }
+      ).data.items
+    end
+
+    def set_client_and_api
+      @client ||= YouplayProvider.youtube.instance.client
+      @api ||= YouplayProvider.youtube.instance.api
+    end
     
     def hidden_cached_videos
       CachedVideo.joins(:hide_videos).where("hide_videos.user_id" => id).all
@@ -50,17 +82,10 @@ module UserMixins
       CachedVideo.joins("INNER JOIN videos ON videos.url = cached_videos.url").where(["videos.user_id = ?", id])
     end
   
-    def fetch_videos(channel)
-      url = "http://gdata.youtube.com/feeds/api/users/UC#{channel}/uploads?v=2"
-      raw_xml = HttpRequest::http_request(url: url).body
-      xml = YouTubeIt::Parser::VideosFeedParser.new(raw_xml).parse
-      xml.videos[0..Integer(Settings.videos_per_channel) - 1]
-    end
-  
     def hide_video_if_rule_applies(video, channel, cached_video)
       hiding_rules.each do |hiding_rule|
-        if (hiding_rule.channel.blank? and video.title.downcase.include?(hiding_rule.pattern.downcase)) or
-           (channel == hiding_rule.channel and video.title.downcase.include?(hiding_rule.pattern.downcase))
+        if (hiding_rule.channel.blank? and video.snippet.title.downcase.include?(hiding_rule.pattern.downcase)) or
+           (channel == hiding_rule.channel and video.snippet.title.downcase.include?(hiding_rule.pattern.downcase))
           HideVideo.create cached_video: cached_video, channel: channel, user_id: hiding_rule.user_id
         end
       end
