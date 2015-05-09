@@ -53,9 +53,9 @@ module UserMixins
         end
       end
       count = HideVideo.delete hide_videos_to_destroy
-      Rails.logger.debug "[youplay/tidy] Removed #{count} hidden videos"
+      Rails.logger.info "[youplay/tidy] Removed #{count} hidden videos"
       count = CachedVideo.delete cached_videos_to_destroy
-      Rails.logger.debug "[youplay/tidy] Removed #{count} cached videos"
+      Rails.logger.info "[youplay/tidy] Removed #{count} cached videos"
     end
 
     private
