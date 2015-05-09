@@ -12,6 +12,7 @@ reader.init = ->
     $("td .play").each ->
       reader.prepare.playOrHideVideo $(this), ->
     reader.prepare.controls()
+    reader.prepare.selection()
   
 reader.prepare.hideChannel = (hide) ->
   channel = hide.parent().parent()
@@ -49,3 +50,22 @@ reader.prepare.controls = ->
     pattern = AjaxForm.hiding_rule.val("#pattern")
     channel = AjaxForm.hiding_rule.val("#channel")
     "/api/add_hiding_rule/?pattern=#{pattern}&channel=#{channel}"
+
+reader.prepare.selection = ->
+  getSelected = ->
+    t = ''
+    if window.getSelection
+      t = window.getSelection()
+    else if document.getSelection
+      t = document.getSelection()
+    else if document.selection
+      t = document.selection.createRange().text
+    t
+  $("#reader").mouseup ->
+    selection = getSelected()
+    pattern = selection.toString().trim()
+    channel = $(window.getSelection().focusNode).parents(".channel-row").children("h3").text().trim()
+    $("#hiding-rule-form #pattern").val(pattern)
+    $("#hiding-rule-form #channel").val(channel)
+  $(document).keyup (e) ->
+    $("#hiding-rule-form").submit() if e.keyCode == 13 and getSelected().toString()
