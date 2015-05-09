@@ -1,5 +1,5 @@
 class Video < ActiveRecord::Base
-  attr_accessible :browser, :channel_topic, :station, :title, :url, :user, :duration, :provider, :favorite, :category, :comment_length
+  attr_accessible :browser, :channel_topic, :station, :title, :url, :user, :duration, :provider, :favorite, :category, :comment_length, :category_id
   belongs_to :user
   belongs_to :category
   has_one :favorite, dependent: :destroy

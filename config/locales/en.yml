@@ -175,6 +175,11 @@ en:
         success: "Category \"%{category}\" has been updated."
       delete: "Delete category"
       name: "Name"
+      quick: "Quick categorization"
+      quick_description: "Here you can set a category for complete YouTube channels and their videos. Use this
+        to quickly get category statistics without setting each video's category individually."
+      quick_nothing_found: "No relevant channels found. Watch more videos to use this tool."
+      quick_fail: "You need to choose at least one channel and a category."
   reader:
     read: "Show reader"
     update: "Update videos"

@@ -43,6 +43,8 @@ Youplay::Application.routes.draw do
     resources :users, except: :show
     resources :people, except: :show
     resources :categories, except: :show
+    get "categories/quick" => "categories#quick", as: "quick"
+    post "categories/quick" => "categories#save_quick"
   end
   
   namespace :stats do

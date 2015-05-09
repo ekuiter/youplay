@@ -1,0 +1,30 @@
+<%= render 'conf/conf/conf_head' %>
+
+<div class="side-controls">
+  <ul>
+    <li><%= link_to t('conf.categories.new'), new_conf_category_path %></li>
+    <li><%= link_to t('conf.categories.quick'), conf_quick_path %></li>
+  </ul>
+</div>
+
+<h2><%= t('conf.categories.quick') %></h2>
+
+<p><%= t('conf.categories.quick_description') %></p>
+
+<% if @categories.empty? %>
+    <p><strong><%= t 'conf.categories.no_categories_found' %></strong></p>
+<% elsif @uncategorized_channels.empty? %>
+    <p><strong><%= t 'conf.categories.quick_nothing_found' %></strong></p>
+<% else %>
+<div>
+  <%= form_tag do %>
+    <%= select_tag :category, options_for_select(@categories.map { |c| [c.name, c.id] }), include_blank: true %>
+    <%= submit_tag t('devise.save') %>
+    <p>
+      <%= select_tag :channel, options_for_select(@uncategorized_channels), multiple: true, size: @channel_number %>
+    </p>
+  <% end %>
+</div>
+<% end %>
+
+<p></p>
