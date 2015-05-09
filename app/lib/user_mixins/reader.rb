@@ -39,7 +39,7 @@ module UserMixins
           watched, hidden, channel_videos = select_watched_hidden_channel_videos(
               videos, hide_videos, cached_videos, user, cached_video
           )
-          keep = true if channel_videos.count <= Settings.videos_per_channel or
+          keep = true if channel_videos.count <= Settings.videos_per_channel.to_i or
                          (not watched.include? cached_video.url and
                           not hidden.include? cached_video.id)
         end
