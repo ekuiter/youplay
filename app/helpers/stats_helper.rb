@@ -117,8 +117,8 @@ module StatsHelper
     <<html.html_safe
     <h3>#{t "stats.#{metric}"}</h3>
     <p id="#{metric}-legend" class="legend"></p>
-    <canvas id="#{metric}-doughnut" width="200" height="200"></canvas>
-    <canvas id="#{metric}-line" width="600" height="200"></canvas>
+    <canvas id="#{metric}-doughnut" width="185" height="185"></canvas>
+    <canvas id="#{metric}-line" width="585" height="185"></canvas>
 html
   end 
 end

@@ -14,7 +14,7 @@
               </a>
               <%= select_tag :category, options_for_select(@categories, @unique_category_id), include_blank: true %>
               <%= hidden_field_tag :search, params[:search] %>
-              <%= submit_tag t('devise.save'), id: :submit %>
+              <%= submit_tag t('devise.save'), id: :submit, confirm: t('confirm') %>
             <% end %>
             <%= t 'video_list.title' %>
           </th>
