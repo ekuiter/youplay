@@ -32,16 +32,30 @@ module UserMixins
     
     def tidy_videos
       users, videos, hide_videos, cached_videos = User.all, Video.all, HideVideo.all, CachedVideo.all
+      cached_videos_to_destroy, hide_videos_to_destroy = [], []
       cached_videos.each do |cached_video|
         keep = false
         users.each do |user|
-          watched, hidden, channel_videos = select_watched_hidden_channel_videos(user, cached_video)
+          watched, hidden, channel_videos = select_watched_hidden_channel_videos(
+              videos, hide_videos, cached_videos, user, cached_video
+          )
           keep = true if channel_videos.count <= Settings.videos_per_channel or
                          (not watched.include? cached_video.url and
                           not hidden.include? cached_video.id)
         end
-        cached_video.destroy unless keep
+        unless keep
+          Rails.logger.debug "[youplay/tidy] Remove cached        video [#{cached_video.url}] #{cached_video.title}"
+          cached_videos_to_destroy << cached_video.id
+          hide_videos.select {|v| v.cached_video_id == cached_video.id}.each do |hidden_video|
+            Rails.logger.debug "[youplay/tidy] Remove        hidden video [#{cached_video.url}]"
+            hide_videos_to_destroy << hidden_video.id
+          end
+        end
       end
+      count = HideVideo.delete hide_videos_to_destroy
+      Rails.logger.debug "[youplay/tidy] Removed #{count} hidden videos"
+      count = CachedVideo.delete cached_videos_to_destroy
+      Rails.logger.debug "[youplay/tidy] Removed #{count} cached videos"
     end
 
     private
@@ -91,7 +105,7 @@ module UserMixins
       end
     end
   
-    def select_watched_hidden_channel_videos(user, cached_video)
+    def select_watched_hidden_channel_videos(videos, hide_videos, cached_videos, user, cached_video)
       watched = videos.select {|v| v.user_id == user.id}.map {|v| v.url}
       hidden = hide_videos.select {|v| v.user_id == user.id}.map {|v| v.cached_video_id}
       channel_videos = cached_videos.select {|v| v.channel == cached_video.channel}
