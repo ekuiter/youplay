@@ -24,7 +24,7 @@ module UserMixins
             Rails.logger.info "[youplay/update]   [#{videoId}] #{video.snippet.title}"
             cached_video = CachedVideo.create channel: channel[2..-1], title: video.snippet.title,
                 url: videoId, uploaded_at: video.snippet.publishedAt
-            hide_video_if_rule_applies(video, channel, cached_video)
+            hide_video_if_rule_applies(video, channel[2..-1], cached_video)
           end
         end
       end
