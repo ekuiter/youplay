@@ -32,7 +32,7 @@ module Series
     match.blank? ? nil : match[0].to_i
   end
 
-  def find_series(collection, column)
+  def find_series(collection, column, duration = false)
     column_data = collection.pluck(column)
     column_data.sort!
     i = 0
@@ -55,7 +55,7 @@ module Series
         { label: group, value: column_data.length }
       end
       series_array.sort_by! {|series| -series[:value]}
-      yield(series_array, column)
+      yield(series_array, column, duration, collection)
     else
       series.each do |group, column_data|
         column_data.sort_by! {|record| record[:episode]}
@@ -71,8 +71,14 @@ module Series
   end
 
   def make_series_doughnut
-    Proc.new do |series_array, column|
-      data = helper.limit_data.call(series_array)
+    Proc.new do |series_array, column, duration, collection|
+      data = helper.limit_data(duration).call(series_array)
+      if duration
+        data.each do |series|
+          series[:value] = helper.seconds_to_hours collection.where("#{column} like ?", "#{series[:label]}%").sum(:duration)
+        end
+        data.sort_by! {|series| -series[:value]}
+      end
       data.push({ label: t("stats.no_series_found"), value: 1 }) if data.blank?
       data.generate_colors!
       data
@@ -80,15 +86,22 @@ module Series
   end
 
   def make_series_line
-    Proc.new do |series_array, column|
+    Proc.new do |series_array, column, duration|
       series_array = series_array[0..7]
       match_series = "^(#{series_array.map {|series| series[:label]}.join("|")})"
-      months = collection.where("#{column} regexp ?", match_series).pluck(helper.month_column).uniq
+      months = helper.months_by_months_data collection.where("#{column} regexp ?", match_series).pluck(helper.month_column).uniq.sort
       data = { labels: helper.humanize_months(months), datasets: [] }
       series_array.map do |series|
-        dataset ||= Hash[months.map {|month| [month, 0]}]
-        series_months = collection.where("#{column} like ?", "#{series[:label]}%").pluck(helper.month_column)
-        series_months.each {|month| dataset[month] += 1 if dataset.keys.include?(month)}
+        dataset = Hash[months.map {|month| [month, 0]}]
+        series_videos = collection.where("#{column} like ?", "#{series[:label]}%").select([helper.month_column + " as month", :duration])
+        series_videos.each do |video|
+          dataset[video.month] += (duration ? video.duration.to_i : 1) if dataset.keys.include?(video.month)
+        end
+        if duration
+          dataset.each do |month, duration|
+            dataset[month] = helper.seconds_to_hours duration
+          end
+        end
         label = helper.link_to(series[:label], helper.search_path(:series, series[:label], stats_path), title: series[:label])
         helper.add_line_dataset!(data, label, dataset.values)
       end

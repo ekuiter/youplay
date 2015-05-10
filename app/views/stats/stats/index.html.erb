@@ -59,13 +59,24 @@
   <% end %>
 </div>
 
-<h3><%= t "stats.videos" %></h3>
+<h3>
+  <%= t "stats.videos" %>
+  <span class="stats-filter">
+    <%= link_to t('stats.filter.video_count'), void, class: :active, id: "providers-count" %> |
+    <%= link_to t('stats.filter.video_duration'), void, id: "providers-duration" %>
+  </span>
+</h3>
 <% if @search_type == :provider %>
 <canvas id="providers-line" width="1000" height="200"></canvas>
 <% else %>
-<p id="providers-legend" class="legend"></p>
-<canvas id="providers-doughnut" width="185" height="185"></canvas>
-<canvas id="providers-line" width="585" height="185"></canvas>
+<div class="metric">
+    <p id="providers-legend" class="legend providers count"></p>
+    <p id="providers-legend-duration" class="legend providers duration invisible"></p>
+    <canvas id="providers-doughnut" class="providers count" width="185" height="185"></canvas>
+    <canvas id="providers-line" class="providers count" width="585" height="185"></canvas>
+    <canvas id="providers-doughnut-duration" class="providers duration invisible" width="185" height="185"></canvas>
+    <canvas id="providers-line-duration" class="providers duration invisible" width="585" height="185"></canvas>
+</div>
 <% end %>
 
 <%= doughnut_and_line_metric(:categories, :category) %>

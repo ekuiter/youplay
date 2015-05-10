@@ -54,3 +54,27 @@ canvas {
   font-weight: bold;
   border: none;
 }
+
+.stats-filter {
+  font-weight: normal;
+  font-size: 0.8em;
+  float: right;
+  display: block;
+  margin: 5px 10px 0 0;
+}
+
+.stats-filter a.active {
+  font-weight: bold;
+}
+
+.stats-filter a:hover {
+  border: none;
+}
+
+.invisible {
+  display: none;
+}
+
+.metric {
+  height: 220px;
+}

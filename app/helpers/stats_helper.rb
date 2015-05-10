@@ -1,12 +1,16 @@
 module StatsHelper
   def months_by_column_data(column_data)
-    data_months = column_data.map do |key, value|
+    months_data = column_data.map do |key, value|
       record, month = key
       month
     end.uniq.sort
+    months_by_months_data months_data
+  end
+
+  def months_by_months_data(months_data)
     months = []
-    month = data_months.first
-    while month <= data_months.last
+    month = months_data.first
+    while month <= months_data.last
       months.push month
       month = month.next_month
     end
@@ -17,6 +21,10 @@ module StatsHelper
     months.map do |month|
       l(month, format: :month)
     end
+  end
+
+  def seconds_to_hours(seconds)
+    seconds / 60 / 60
   end
 
   def pluck_multiple(collection, columns)
@@ -75,10 +83,17 @@ module StatsHelper
     end
   end
 
-  def limit_data(amount = current_user.videos.count / 100, default = 20)
+  def limit_data(duration = false)
+    default = 20
+    amount = if duration
+      current_user.videos.sum(:duration)
+    else
+      current_user.videos.count
+    end / 100
     Proc.new do |data|
       amount_data = data.select {|record| record[:value] > amount}
-      default_data = data[0..default]
+      default_data = data[0..default-1]
+      Rails.logger.debug "duration:#{duration.to_s},amount:#{amount_data.count},default:#{default_data.count}"
       amount_data.count > default_data.count ? amount_data : default_data      
     end
   end
@@ -115,10 +130,21 @@ module StatsHelper
   def doughnut_and_line_metric(metric, search_type)
     return "" if @search_type == search_type
     <<html.html_safe
-    <h3>#{t "stats.#{metric}"}</h3>
-    <p id="#{metric}-legend" class="legend"></p>
-    <canvas id="#{metric}-doughnut" width="185" height="185"></canvas>
-    <canvas id="#{metric}-line" width="585" height="185"></canvas>
+    <h3>
+      #{t "stats.#{metric}"}
+      <span class="stats-filter">
+        #{link_to t('stats.filter.video_count'), void, class: :active, id: "#{metric}-count"} |
+        #{link_to t('stats.filter.video_duration'), void, id: "#{metric}-duration"}
+      </span>
+    </h3>
+    <div class="metric">
+      <p id="#{metric}-legend" class="legend #{metric} count"></p>
+      <p id="#{metric}-legend-duration" class="legend #{metric} duration invisible"></p>
+      <canvas id="#{metric}-doughnut" class="#{metric} count" width="185" height="185"></canvas>
+      <canvas id="#{metric}-line" class="#{metric} count" width="585" height="185"></canvas>
+      <canvas id="#{metric}-doughnut-duration" class="#{metric} duration invisible" width="185" height="185"></canvas>
+      <canvas id="#{metric}-line-duration" class="#{metric} duration invisible" width="585" height="185"></canvas>
+    </div>
 html
   end 
 end

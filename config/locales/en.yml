@@ -235,3 +235,6 @@ en:
     no_category: "No category"
     no_series_found: "No series found"
     search: "Search for this"
+    filter:
+      video_count: "video count"
+      video_duration: "duration in hours"
