@@ -38,10 +38,10 @@ class Conf::CategoriesController < ApplicationController
   def quick
     relevant_channel = 10
     @channel_number = 40
+    YouplayChannel.prefetch_all
     @categories = current_user.categories
     uncategorized_videos = current_user.videos.where(category_id: nil, provider: :youtube).
-        group_by { |video| video.channel_topic }.
-        sort_by { |_, videos| -videos.count }.map { |entry| [entry.first, entry.last.length] }
+        group(:channel_topic).count.sort_by { |channel, count| -count }
     @uncategorized_channels = uncategorized_videos.
         select { |entry| entry.last > relevant_channel }[0..@channel_number-1].
         map do |entry|
