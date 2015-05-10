@@ -22,7 +22,15 @@
   </ul>
 </div>
 
-<%= render "search_head" %>
+<h2>
+  <%= t "stats.search_type.#{@search_type}" %><%= ":" if @search_subject %>
+  <%= @search_subject %>
+
+  <span class="stats-filter">
+    <%= link_to t('stats.filter.video_count'), void, class: :active, id: "count" %> |
+    <%= link_to t('stats.filter.video_duration'), void, id: "duration" %>
+  </span>
+</h2>
 
 <% if @watched_videos.blank? %>
 <div class="callout">

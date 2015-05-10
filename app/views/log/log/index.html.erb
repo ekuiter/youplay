@@ -1,7 +1,10 @@
 <%= @module = "log"; render "/head" %>
 
 <div class="log_head">
-  <%= render "/stats/stats/search_head" %>
+  <h2>
+    <%= t "stats.search_type.#{@search_type}" %><%= ":" if @search_subject %>
+    <%= @search_subject %>
+  </h2>
 </div>
 <%= render "pagination" %>
 <%= render "video_list" %>
