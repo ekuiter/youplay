@@ -15,7 +15,7 @@ module ControllerMixins
           channel = search.gsub("channel:", "").strip.split(":")
           result = videos.where provider: channel[0], channel_topic: channel[1]
           youplay_channel = nil
-          if result.blank?
+          if result.blank? and channel[1].blank?
             YouplayProvider.providers.each do |provider|
               begin
                 youplay_channel = YouplayChannel.new(provider: YouplayProvider.new(provider: provider), name: channel[0])
