@@ -43,8 +43,11 @@ class Providers::YoutubeProvider < Provider
   end
 
   def channel(id)
-    channel = client.profile(id) rescue raise("channel not found")
-    { id: channel.user_id, name: channel.username_display }
+    begin
+      fetch_channel(id.starts_with?('UC') ? id : "UC#{id}", :id)
+    rescue
+      fetch_channel(id, :forUsername) rescue raise("channel not found")
+    end
   end
 
   def channel_url(id)
@@ -88,6 +91,11 @@ class Providers::YoutubeProvider < Provider
   end
 
   private
+
+  def fetch_channel(channel, method)
+    channel = client.execute(api_method: api.channels.list, parameters: { part: 'snippet', method => channel }).data.items.first
+    { id: channel.id, name: channel.snippet.title }
+  end
 
   def comment_length(comments)
     if comments.length < 5
