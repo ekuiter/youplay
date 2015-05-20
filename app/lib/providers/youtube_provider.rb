@@ -94,7 +94,7 @@ class Providers::YoutubeProvider < Provider
 
   def fetch_channel(channel, method)
     channel = client.execute(api_method: api.channels.list, parameters: { part: 'snippet', method => channel }).data.items.first
-    { id: channel.id, name: channel.snippet.title }
+    { id: channel.id[2..-1], name: channel.snippet.title }
   end
 
   def comment_length(comments)
