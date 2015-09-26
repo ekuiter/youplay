@@ -17,7 +17,7 @@ gem 'rinku' # auto link video descriptions
 #gem 'xml-simple' # parse MediathekView xml
 gem 'jquery-rails'
 gem 'turbolinks'
-gem 'mysql2'
+gem 'mysql2', '~> 0.3.11'
 gem 'rails_12factor'
 gem 'unicorn'
 gem 'swfobject-rails'
