@@ -1,4 +1,4 @@
-<%= title @video.title, link: @video.url, target: '_blank', style: 'white-space: nowrap; overflow: hidden; text-overflow: ellipsis' %>
+<%= title @video.title, link: @video.url, target: '_blank', style: 'white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 10px' %>
 
 <div id="video_sidebar" class="<%= 'sidebar_noembed' unless @video.allowed?(:embedding) %>">
   <%= render "sidebar" %>
@@ -12,8 +12,4 @@
 
 <% if @video.allowed?(:commenting) or @video.description %>
   <%= render "description" %>
-<% end %>
-
-<% if @video.allowed? :commenting %>
-  <%= render "comments" %>
 <% end %>

@@ -1,3 +1,5 @@
+@import 'variables';
+
 div.clear {
   clear: both;
 }
@@ -9,21 +11,23 @@ div#flash div {
 }
 
 div#flash div.notice {
-  background-color: #a6ff00;
+    background-color: #a6ff00;
+    color: $bgcolor;
 }
 
 div#flash div.alert {
-  background-color: #ff9e99;
+    background-color: #ff9e99;
+    color: $bgcolor;
 }
 
 a {
-  color: #009;
+  color: $accentcolor;
   text-decoration: none;
 }
 
 a:hover {
-  border-bottom: 1px dotted #009;
-  color: #009;
+  color: $lightaccentcolor;
+  text-decoration: none;
 }
 
 a img {
@@ -59,14 +63,20 @@ th {
   text-align: left;
 }
 
+table {
+    border-collapse: separate;
+    border-spacing: 0px;
+}
+
 table.striped tr:nth-child(even) {
-  background-color: #eee;
+  background-color: $lightestbgcolor;
 }
 
 table td {
     padding: 3px;
-    padding-top: 4px;
-    padding-bottom: 2px;
+    padding-top: 5px;
+    padding-bottom: 3px;
+    vertical-align: middle;
 }
 
 table tr th {

@@ -1,15 +1,11 @@
-$site_width: 1160px;
-$inner_width: 1040px;
-$inner_padding: 10px;
-$sidebar_pos: fixed;
-$sidebar_padding: 10px;
-$sidebar_width: $site_width - $inner_width - 2 * $inner_padding - 2 * $sidebar_padding - 1;
+@import 'variables';
 
 body {
   margin: 0;
   padding: 0;
-  font-family: Arial, serif;
-  background: #565656 url(<%= asset_path 'background.gif' %>) repeat-x top;
+  font-family: 'Trebuchet MS', Arial, serif;
+  color: $color;
+  background: $bgcolor;
 }
 
 #wrapper {
@@ -20,7 +16,7 @@ body {
 #inner_wrapper {
   width: $inner_width;
   float: right;
-  background-color: #fff;
+  background-color: $lightbgcolor;
   padding: $inner_padding;
   margin-bottom: 20px;
 }
@@ -28,10 +24,10 @@ body {
 #sidebar {
   position: $sidebar_pos;
   width: $sidebar_width;
-  background-color: #fff;
+  background-color: $lightbgcolor;
   padding: $sidebar_padding;
   font-size: 12px;
-  border-right: 1px dotted #555;
+  border-right: 1px solid $lightestbgcolor;
 }
 
 .side-controls {
@@ -40,9 +36,13 @@ body {
   left: 50%;
   margin-left: $site_width / 2;
   padding: $sidebar_padding;
-  background-color: white;
+  background-color: $lightbgcolor;
   width: 250px;
-  border-left: 1px dotted #555;
+  border-left: 1px solid $lightestbgcolor;
+}
+
+.side-controls input {
+    margin: 3px 0;
 }
 
 #stats-controls {

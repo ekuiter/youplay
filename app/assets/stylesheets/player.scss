@@ -1,14 +1,7 @@
-div.recently_watched table {
-  font-size: 16px !important;
-}
-
-div.recently_watched table td {
-  padding: 3px;
-}
+@import 'variables';
 
 form.play_form {
   margin-bottom: 20px;
-  background-color: #eee;
   padding: 12px;
 }
 
@@ -43,8 +36,6 @@ div#video_sidebar {
   float: right;
   width: 208px;
   height: 443px;
-  border: 1px solid #999;
-  background-color: #efefef;
   padding: 15px;
 }
 
@@ -99,59 +90,7 @@ p#favorite a.favorite, p#favorite a.no_favorite {
 }
 
 #description {
-  float: left;
-  width: 519px;
-  border-right: 1px solid #999;
-  border-bottom: 1px solid #999;
   font-size: 14px;
-  margin: 8px 10px 0 0;
-  min-height: 100px;
-}
-
-#description p {
-  padding-right: 10px;
-}
-
-#comments {
-  display: inline;
-  width: 520px;
-  font-size: 14px;
-}
-
-#description h4, #comments h4 {
-  padding: 5px;
-  margin: 0;
-  border-top: 1px solid #999;
-  border-bottom: 1px solid #999;
-}
-
-#description h4 {
-  float: right;
-  border-left: 1px solid #999;
-  padding-right: 7px;
-}
-
-#comments h4 {
-  float: left;
-  border-right: 1px solid #999;
-  padding-left: 7px;
-  margin: 8px 0 0 -10px;
-}
-
-#comments .separator {
-  margin-top: 50px;
-  margin-bottom: 10px;
-}
-
-#comments .comment {
-  margin-bottom: 8px;
-}
-
-#comments .comment em {
-  display: block;
-  float: right;
-  font-size: 12px;
-  margin-top: 2px;
 }
 
 #share-form select {
@@ -159,7 +98,7 @@ p#favorite a.favorite, p#favorite a.no_favorite {
 }
 
 #share-form textarea {
-  width: 100%;
+  width: 90%;
   height: 50px;
   margin-top: 5px;
 }

@@ -2,8 +2,6 @@
 
 <% if user_signed_in? %>
     <div id="user_nav">
-      <%= t 'sidebar.user_nav.logged_in_as' %>
-      <br/>
       <span class="username">
         <%= current_user.full_name %>
       </span>

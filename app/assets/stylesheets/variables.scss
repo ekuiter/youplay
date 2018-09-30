@@ -1,0 +1,12 @@
+$site_width: 1160px;
+$inner_width: 1040px;
+$inner_padding: 10px;
+$sidebar_pos: fixed;
+$sidebar_padding: 10px;
+$sidebar_width: $site_width - $inner_width - 2 * $inner_padding - 2 * $sidebar_padding - 1;
+$bgcolor: #222;
+$lightbgcolor: #333;
+$lightestbgcolor: lighten($lightbgcolor, 10%);
+$color: #d8d8d8;
+$accentcolor: #ffba3b;
+$lightaccentcolor: lighten($accentcolor, 20%);

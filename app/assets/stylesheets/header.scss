@@ -1,3 +1,5 @@
+@import 'variables';
+
 #loading {
   position: fixed;
   display: none;
@@ -8,7 +10,7 @@
 
 #page_title {
   margin: 20px 0 20px 0;
-  color: #fff;
+  color: $color;
 }
 
 #page_title h1 {
@@ -22,11 +24,11 @@
 }
 
 #page_title a {
-  color: #fff;
+  color: $color;
 }
 
 #page_title a:hover {
-  border-bottom-color: #fff;
+  text-decoration: underline;
 }
 
 #subnav li {
@@ -37,14 +39,14 @@
 
 #subnav li a {
   display: block;
-  background-color: white;
+  background-color: $lightbgcolor;
   padding: 7px 15px 4px 15px;
   margin: 0;
 }
 
 #subnav li a:hover {
   border-bottom: none;
-  background-color: #eee;
+  background-color: $lightbgcolor;
 }
 
 #subnav li:last-child a {
@@ -52,5 +54,21 @@
 }
 
 #subnav li a.active {
-  background-color: #ddd;
+  background-color: $lightestbgcolor;
+}
+
+input, select, textarea {
+    background-color: $lightestbgcolor;
+    border: none;
+    padding: 2px 10px;
+    color: $color;
+}
+
+input {
+    height: 19px;
+}
+
+.search {
+    background-color: $lightbgcolor;
+    height: 30px;
 }

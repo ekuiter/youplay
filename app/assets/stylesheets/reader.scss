@@ -1,3 +1,5 @@
+@import 'variables';
+
 #reader ul#channels {
   float: right;
   margin-right: 10px;
@@ -50,11 +52,7 @@ ul#channels li span.checked {
 }
 
 #reader table tr:nth-child(even) {
-  background-color: white;
-}
-
-#reader table tr:nth-child(odd) {
-  background-color: #eee;
+    background-color: $lightestbgcolor;
 }
 
 #reader table td {
