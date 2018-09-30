@@ -122,6 +122,7 @@ en:
     duration: "Duration"
     all_videos: "All videos"
     only_favorites: "Only favorites"
+    random: "Random"
     deleted: "Log entry deleted."
     stats: "Stats for this"
   conf:

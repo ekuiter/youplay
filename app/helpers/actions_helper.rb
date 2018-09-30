@@ -24,6 +24,7 @@ module ActionsHelper
     [
       { name: t('video_list.all_videos'), path: log_path },
       { name: t('video_list.only_favorites'), path: log_path(search: "favorites") },
+      { name: t('video_list.random'), path: search_path(@search, nil, log_random_path) },
       { name: t('video_list.stats'), path: search_path(@search, nil, stats_path) }      
     ]
   end

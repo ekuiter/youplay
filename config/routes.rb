@@ -29,6 +29,7 @@ Youplay::Application.routes.draw do
   end
   
   namespace :log do
+    get "random" => "log#random", as: "random"
     get "favorite/:id" => "log#set_favorite", as: "set_favorite"
     delete "favorite/:id" => "log#unset_favorite", as: "unset_favorite"
     get "(:page/:results)" => "log#index"

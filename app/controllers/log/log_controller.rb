@@ -31,6 +31,16 @@ class Log::LogController < ApplicationController
     flash[:notice] = t('video_list.deleted')
     redirect_to request.referer
   end
+
+  def random
+    @categories = current_user.categories.map { |c| [c.name, c.id] }
+    @collection, @search, @search_type, @search_subject = figure_collection(params[:search])
+    if @collection.count == 0
+      redirect_to "#{play_url}?url=#{params[:search]}"
+    else
+      redirect_to @collection.sample.play_url
+    end
+  end
   
   def set_favorite
     current_user.favorites.new(video: @video).save unless @video.nil?

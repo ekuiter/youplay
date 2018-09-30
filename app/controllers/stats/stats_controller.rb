@@ -26,6 +26,22 @@ class Stats::StatsController < ApplicationController
       @duration_average = duration_stats.mean / 60
       std_dev = duration_stats.standard_deviation
       @duration_deviation = std_dev.nil? ? 0 : std_dev / 60
+      #collection.pluck(:title).group_by {|t| t[/\w+/]}
     end
+
+    # def group(arr)
+    #   hash = arr.group_by {|e| e[/\S+(\s\S+){#{@stack}}/]}
+    #   hash_series = hash.select {|k,v| v.length > 1}
+    #   new_hash = {}
+    #   @stack += 1
+    #   hash_series.each do |key, arr|
+    #     unless (tmp = group(arr)).blank?
+    #       new_hash[key] = tmp
+    #     end
+    #   end if @stack < 3
+    #   @stack -= 1
+    #   new_hash.blank? ? hash_series : new_hash
+    # end
+
   end
 end

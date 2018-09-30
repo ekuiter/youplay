@@ -1,3 +1,8 @@
+# download favorite videos on /api/log/favorites/<page>/<results>?token=<token>
+"youtube-dl -i " + JSON.parse(document.documentElement.innerText).map(function(obj) {return "http://youtu.be/" + obj.url;}).join(" ")
+# oder im Log:
+"youtube-dl -i " + $$(".videos .title a[href*=play]").map(function(video) { return "http://youtu.be/" + video.search.split(":")[1]; }).join(" ")
+
 def upgrade; defect = []; include YoutubeConnector; include HttpRequest; @client = youtube_connect current_user: User.first, access_token: User.first.access_token, refresh_token: User.first.refresh_token, expires_in: User.first.expires_in; Video.all.each do |v| begin; v.url = v.url.gsub('&amp;feature=player_embedded', ''); v.channel_topic = @client.profile(@client.video_by(v.url).author.uri.gsub('http://gdata.youtube.com/feeds/api/users/', '')).user_id; v.save; rescue; defect.push v; end; end; defect; end
 
 def defect; @videos = []; include YoutubeConnector; include HttpRequest; @client = youtube_connect current_user: User.first, access_token: User.first.access_token, refresh_token: User.first.refresh_token, expires_in: User.first.expires_in; Video.all.each do |v| begin; @client.video_by(v.url); rescue; @videos.push v; end; end; @videos; end
