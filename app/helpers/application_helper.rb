@@ -52,7 +52,7 @@ module ApplicationHelper
   end
   
   def ajax_channel(provider, channel, tag)
-    "<#{tag} class=\"ajax-user\" data-user=\"#{provider}:#{channel}\">#{image_tag "loading-small.gif"}</#{tag}>".html_safe
+    "<#{tag} class=\"ajax-user\" data-user=\"#{provider}:#{channel}\">#{image_tag "loading-small.svg"}</#{tag}>".html_safe
   end
   
   def user_browser

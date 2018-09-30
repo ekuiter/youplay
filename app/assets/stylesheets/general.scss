@@ -64,7 +64,9 @@ table.striped tr:nth-child(even) {
 }
 
 table td {
-  padding: 3px;
+    padding: 3px;
+    padding-top: 4px;
+    padding-bottom: 2px;
 }
 
 table tr th {
