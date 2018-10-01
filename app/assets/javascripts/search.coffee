@@ -22,8 +22,9 @@ search.prepare.submit = ->
     
 search.prepare.engine = ->
   engine = new Bloodhound
-    limit: 15
-    remote: "/api/log/%QUERY/0/15?token=#{token}"
+    remote:
+      url: "/api/log/%QUERY/0/15?token=#{token}"
+      wildcard: "%QUERY"
     prefetch: "/api/log/?token=#{token}"
     datumTokenizer: (d) ->
       Bloodhound.tokenizers.whitespace d.title
@@ -37,6 +38,7 @@ search.prepare.form = (engine) ->
   $('#search').typeahead null,
     displayKey: "title"
     source: engine.ttAdapter()
+    limit: 15
     templates:
       suggestion: (video) ->
         "<a href=\"/play?#{video.provider}:#{video.url}\">

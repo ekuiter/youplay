@@ -29,11 +29,11 @@ a:hover {
   color: $lightaccentcolor;
 }
 
-#reader table a, .ajax-user a, .videos table a {
+#reader table a, .ajax-user a, .videos table a, .tt-dataset a {
     color: $lightestaccentcolor;
 }
 
-#reader table a:hover, .ajax-user a:hover, .videos table a:hover {
+#reader table a:hover, .ajax-user a:hover, .videos table a:hover, .tt-dataset a:hover {
     text-decoration: underline;
 }
 
