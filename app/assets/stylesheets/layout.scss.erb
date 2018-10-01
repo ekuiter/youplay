@@ -39,6 +39,12 @@ body {
   background-color: $lightbgcolor;
   width: 250px;
   border-left: 1px solid $lightestbgcolor;
+  opacity: 0;
+  transition: 250ms opacity;
+}
+
+.side-controls.active {
+    opacity: 1;
 }
 
 .side-controls input {

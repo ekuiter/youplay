@@ -57,11 +57,19 @@
   background-color: $lightestbgcolor;
 }
 
-input, select, textarea {
+button, input, select, textarea {
     background-color: $lightestbgcolor;
     border: none;
     padding: 2px 10px;
     color: $color;
+}
+
+button.active {
+    color: $accentcolor;
+}
+
+.pagination button {
+    padding: 3px 5px;
 }
 
 input {

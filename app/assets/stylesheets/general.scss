@@ -27,7 +27,14 @@ a {
 
 a:hover {
   color: $lightaccentcolor;
-  text-decoration: none;
+}
+
+#reader table a, .ajax-user a, .videos table a {
+    color: $lightestaccentcolor;
+}
+
+#reader table a:hover, .ajax-user a:hover, .videos table a:hover {
+    text-decoration: underline;
 }
 
 a img {
@@ -69,7 +76,7 @@ table {
 }
 
 table.striped tr:nth-child(even) {
-  background-color: $lightestbgcolor;
+  background-color: $tablestripecolor;
 }
 
 table td {

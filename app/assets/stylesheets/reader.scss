@@ -34,7 +34,7 @@ ul#channels li span.checked {
 }
 
 #reader h3 img.delete {
-  margin-right: 10px;
+  margin-right: 8px;
 }
 
 #subscribe table {
@@ -52,7 +52,7 @@ ul#channels li span.checked {
 }
 
 #reader table tr:nth-child(even) {
-    background-color: $lightestbgcolor;
+    background-color: $tablestripecolor;
 }
 
 #reader table td {
@@ -61,4 +61,9 @@ ul#channels li span.checked {
 
 #reader h3 {
   margin: 11px 0 7px 7px;
+}
+
+#reader .ajax-user img {
+    width: 16px;
+    height: 16px;
 }

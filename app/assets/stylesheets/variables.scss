@@ -7,6 +7,8 @@ $sidebar_width: $site_width - $inner_width - 2 * $inner_padding - 2 * $sidebar_p
 $bgcolor: #222;
 $lightbgcolor: #333;
 $lightestbgcolor: lighten($lightbgcolor, 10%);
+$tablestripecolor: lighten($lightbgcolor, 3%);
 $color: #d8d8d8;
 $accentcolor: #ffba3b;
 $lightaccentcolor: lighten($accentcolor, 20%);
+$lightestaccentcolor: lighten($lightaccentcolor, 10%);

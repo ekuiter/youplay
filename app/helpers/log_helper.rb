@@ -1,6 +1,10 @@
-module LogHelper  
-  def link_to_page(title, page)
-    link_to title, log_path(page, @results, search: @search)
+module LogHelper
+  def js_redirect(url)
+    "window.location.href = ('#{escape_javascript(url)}')"
+  end
+  
+  def button_to_page(title, page)
+    button_tag title, onclick: js_redirect(log_path(page, @results, search: @search))
   end
 
   def pages
@@ -18,9 +22,9 @@ module LogHelper
     (current_page-range..current_page+range).each do |page|
       if (1..@page_count).include? page
         if page == current_page
-          pages << page.to_s
+          pages << button_tag(page.to_s, class: :active)
         else
-          pages << link_to(page, log_path(page, @results, search: @search))
+          pages << button_tag(page, onclick: js_redirect(log_path(page, @results, search: @search)))
         end
       end
     end
@@ -32,9 +36,9 @@ module LogHelper
     (1..(@results_range.max / @results_range.min)).each do |this|
       result_number = @results_range.min*this
       if result_number == @results
-        results << result_number.to_s
+        results << button_tag(result_number, class: :active)
       else
-        results << link_to(result_number, log_path(@current_page, result_number, search: @search))
+        results << button_tag(result_number, onclick: js_redirect(log_path(@current_page, result_number, search: @search)))
       end
     end
     results
