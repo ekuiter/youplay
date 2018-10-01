@@ -31,6 +31,15 @@
   text-decoration: underline;
 }
 
+#subnav {
+    opacity: 0;
+    transition: $duration opacity;
+}
+
+#subnav:hover {
+    opacity: 1;
+}
+
 #subnav li {
   float: right;
   padding: 0;

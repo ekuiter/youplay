@@ -7,9 +7,6 @@ search.init = ->
   if search.module == "log"
     engine = search.prepare.engine()
     search.prepare.form(engine)
-  $('#search').keyup(() ->
-    if $(this).val() == "+++"
-      $('.side-controls').addClass('active'))
 
 search.prepare.module = ->
   search.module = if window.location.pathname.indexOf("stats") == -1 then "log" else "stats"

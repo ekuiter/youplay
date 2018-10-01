@@ -14,15 +14,10 @@ en:
   imprint: "Imprint"
   modules:
     player: "Player"
-    player_description: "Play back your favourite videos."
     log: "Log"
-    log_description: "See your watched videos."
     stats: "Stats"
-    stats_description: "Get to know your %{application_name} usage."
     conf: "Conf"
-    conf_description: "Configure %{application_name}."
     reader: "Reader"
-    reader_description: ""
   devise:
     login: "Login"
     username: "User name"

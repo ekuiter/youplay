@@ -1,6 +1,3 @@
 <h1 style="<%= options[:style] %>">
-<%= content %>
-  <span class="module_description">
-    <%= t "modules.#{@module}_description", application_name: t('application.name') if @module %>
-  </span>
+<%= content unless @module %>
 </h1>

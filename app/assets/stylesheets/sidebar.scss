@@ -2,6 +2,12 @@
 
 #sidebar {
     text-align: right;
+    opacity: 0;
+    transition: $duration opacity;
+}
+
+#sidebar:hover {
+    opacity: 1;
 }
 
 #sidebar.signed_out img {
