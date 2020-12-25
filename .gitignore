@@ -6,3 +6,5 @@
 config/database.yml
 config/settings.yml
 .idea
+*~
+youplay.html
